@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daumsoft.dataAnalyticsManager.restFullApi.mapper.ProjectRestMapper">
+	
+	<select id="preprocessedDataList" resultType="java.util.HashMap">
+		/* preprocessDataSql.preprocessedDataList */
+		SELECT
+			id
+			, name
+			, command
+			, statistic_info
+			, sample_data
+			, progress_state
+			, create_date
+			, filename
+			, filepath
+			, amount
+		FROM "ML_PREPROCESSED_DATA" 
+		WHERE delete_flag = FALSE 
+			AND ml_original_data_id=#{originalDataSequencePk}
+		ORDER BY id DESC
+	</select>
+	
+	<select id="preprocessedData" resultType="java.util.HashMap" parameterType="int">
+		/* preprocessDataSql.preprocessedData */
+		SELECT
+			name
+			, command
+			, statistic_info
+			, sample_data
+			, progress_state
+			, create_date
+			, filename
+			, filepath
+			, amount
+		FROM "ML_PREPROCESSED_DATA"
+		WHERE delete_flag = FALSE
+		    AND id = #{preprocessedDataSequencePk}
+	</select>
+   
+   <insert id="insertPreprocessedData" parameterType="preprocessedData">
+		/* preprocessDataSql.insertPreprocessedData */
+		INSERT INTO 
+   			"ML_PREPROCESSED_DATA"(
+   				"PREPROCESSED_DATA_SEQUENCE_PK"
+   				, "PROJECT_SEQUENCE_FK1"
+   				, "COMMAND"
+   				, "NAME"
+   				, "CREATE_DATETIME"
+   				, "PROGRESS_STATE"
+   				, "PROGRESS_START_DATETIME"
+   				, "ORIGINAL_DATA_SEQUENCE_FK2"
+   			) VALUES (
+   				#{preprocessedDataSequencePk}
+   				,#{projectSequenceFk1}
+   				,#{command}
+   				,#{name}
+   				,#{createDatetime}
+   				,#{progressState}
+   				,#{progressStartDatetime}
+   				,#{originalDataSequenceFk2}
+   			)
+   </insert>
+   
+   <update id="updatePreprocessedData" parameterType="preprocessedData">
+		/* preprocessDataSql.updatePreprocessedData */
+		UPDATE "ML_PREPROCESSED_DATA"
+   		SET
+   		<trim prefixOverrides=",">
+   			<if test='filepath != null and filepath != ""' >,filepath = #{filepath}</if>
+   			<if test='filename != null and filename != ""' >,filename = #{filename}</if>
+   			<if test='summary != null and summary != ""' >,summary = #{summary}</if>
+   			<if test='progressState != null and progressState != ""' >,progress_state = #{progressState}</if>
+   			<if test='progressEndDatetime != null and progressEndDatetime != ""' >,progress_end_date = #{progressEndDatetime}</if>
+   			<if test='columns != null and columns != ""' >,column_info = #{columns}</if>
+   			<if test='statistics != null and statistics != ""' >,statistic_info = #{statistics}</if>
+   			<if test='statistics != null and statistics != ""' >,sample_data = #{statistics}</if>
+   			<if test='amount != null and amount != ""' >,amount = #{amount}</if>
+   			<if test='deleteFlag != null and deleteFlag != ""' >,delete_flag = #{deleteFlag}</if>
+		</trim>
+		WHERE id = #{preprocessedDataSequencePk}
+   </update>
+ 
+</mapper>

@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>배치관리 - 배치 신청 목록</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/green.css" rel="stylesheet">
+
+<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="css/scroller.bootstrap.min.css" rel="stylesheet">
+
+<link href="css/switchery.min.css" rel="stylesheet">
+
+<link href="css/bootstrap-datetimepicker.css" rel="stylesheet"><!-- bootstrap-datetimepicker -->
+<link href="css/daterangepicker.css" rel="stylesheet"><!-- bootstrap-datetimepicker -->
+
+<link href="css/custom.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet"> <!-- //디자인팀 작업 CSS -->
+
+</head>
+
+
+<body class="nav-md">
+	<div id="root">
+		<div class="container body">
+			<div class="main_container">
+
+				<!-- [left 메뉴] -->
+				<div class="col-md-3 left_col">
+					<div class="left_col scroll-view">
+						<div class="navbar nav_title" style="border: 0px;">
+							<a href="/" class="site_title"><i class="fa fa-cubes"></i> <span>데이터분석시스템</span></a>
+						</div>
+						<div class="clearfix"></div>
+						<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+							<div class="menu_section active">
+								<ul class="nav side-menu" style="">
+									<li>
+										<a href="/algorithm"><i class="fa fa-home"></i> 알고리즘 조회</a>
+									</li>
+									<li>
+										<a href="/sandboxMng"><i class="fa fa-edit"></i> 샌드박스 관리 </a>
+									</li>
+									<li>
+										<a href="/projectMng"><i class="fa fa-desktop"></i> 프로젝트 관리</a>
+									</li>
+									<li>
+										<a href="/jobMng"><i class="fa fa-table"></i> 잡 관리</a>
+									</li>
+									<li class="active">
+										<a href="/batchMng"><i class="fa fa-bar-chart-o"></i> 배치 관리</a>
+									</li>
+								</ul>
+							</div>
+						</div><!-- //sidebar-menu -->
+					</div><!-- //left_col scroll-view -->
+				</div>
+				<!-- //[left 메뉴] -->
+
+				<!-- [top 메뉴] -->
+				<div class="top_nav">
+					<div class="nav_menu">
+						<nav><div class="nav toggle"><a id="menu_toggle"><i class="fa fa-bars"></i></a></div><ul class="nav navbar-nav navbar-right"></ul></nav>
+					</div>
+				</div>
+				<!-- //[top 메뉴] -->
+				
+				<!-- [컨텐츠] -->
+				<div>
+					<div>
+						<div class="right_col" role="main" id="myContentsWrap">
+							<div class="row">
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<div class="x_panel">
+										<div class="x_title">
+											<h2><strong>배치 신청 목록</strong></h2>
+											<ul class="nav navbar-right panel_toolbox">
+												<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+												<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a></li>
+												<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+											</ul>
+											<div class="clearfix"></div>
+										</div><!-- //x_title -->
+										<div class="row">
+											<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+												<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".batchModal">배치신청</button>
+											</div>
+										</div>
+										<div class="x_content">
+											<table id="" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+												<thead>
+													<tr >
+														<th>배치명</th>
+														<th>데이터 이름</th>
+														<th>데이터 경로</th>
+														<th>데이터 전처리</th>
+														<th>모델경로</th>
+														<th>요청시각</th>
+														<th>실행주기</th>
+														<th>진행상태</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>ParkingAreaRegression</td>
+														<td>주차장데이터</td>
+														<td>~/preprocess/2019/01/D001001</td>
+														<td>GAS_USAGE, DATE->NOTNULL</td>
+														<td>~/model/2019/01/M2019010100000001</td>
+														<td>2019/01/01 11:23:22</td>
+														<td>0/5 * * * * ?</td>
+														<td>배치등록완료</td>
+													</tr>
+													<tr>
+														<td>ParkingAreaRegression</td>
+														<td>주차장데이터</td>
+														<td>~/preprocess/2019/01/D001001</td>
+														<td>GAS_USAGE, DATE->NOTNULL</td>
+														<td>~/model/2019/01/M2019010100000002</td>
+														<td>2019/01/01 13:23:22</td>
+														<td>0/5 * * * * ?</td>
+														<td>거절 / 중복적용</td>
+													</tr>
+													<tr>
+														<td>RequstModel</td>
+														<td>요청모델</td>
+														<td>~/preprocess/2019/01/D001001</td>
+														<td>GAS_USAGE, DATE->NOTNULL</td>
+														<td>~/model/2019/01/M2019010100000003</td>
+														<td>2019/01/01 13:23:22</td>
+														<td>0/5 * * * * ?</td>
+														<td>신청중</td>
+													</tr>
+												</tbody>
+											</table>
+										</div><!-- //x_content -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //[컨텐츠] -->
+
+				<!-- [모달 팝업] -->
+				<div class="modal fade batchModal" id="batchModal" tabindex="-1" role="dialog" aria-hidden="false" >
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header">
+							  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+							  <h2 class="modal-title" id=""><strong>배치 추가</strong></h2>
+							</div>
+							<div class="modal-body">
+								<form class="form-horizontal form-label-left">
+									<h5><strong>필수 파라미터</strong></h5>
+									<div class="form-group">
+										<div class="col-md-2 col-sm-2 col-xs-12">
+											<label class="control-label  text-left">모델</label>
+										</div>
+										<div class="col-md-10 col-sm-10 col-xs-12">
+											<div class="row">
+												<div class="col-md-10 col-sm-3 col-xs-12">
+												  <input type="text" class="form-control" placeholder="">
+												</div>
+												<div class="col-md-2 col-sm-2 col-xs-2">
+													<button type="button" class="btn btn-default" >조회</button>
+												</div>
+											</div>
+											<div class="row mgTop_10">
+												<div class="col-md-12 col-sm-12 col-xs-12 projList">
+													<ul class="border_ccc mgTop_10">
+														<li data-dismiss="modal" data-toggle="modal" data-target="#infoModal" class="active cusor">M001001</li>
+														<li data-dismiss="modal" data-toggle="modal" data-target="#infoModal" class="cusor">M001002</li>
+														<li data-dismiss="modal" data-toggle="modal" data-target="#infoModal" class="cusor">M001003</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div><!-- // form-group -->
+									<div class="form-group">
+										<div class="col-md-2 col-sm-2 col-xs-12">
+											<label class="control-label  text-left">실행주기</label>
+										</div>
+										<div class="col-md-10 col-sm-10 col-xs-12">
+											<input type="text" class="form-control" placeholder="">
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-2 col-sm-2 col-xs-12">
+											<label class="control-label  text-left">요청사항</label>
+										</div>
+										<div class="col-md-10 col-sm-10 col-xs-12">
+											<textarea class="form-control" rows="4"></textarea>
+										</div>
+									</div>
+									<div class="text-right">
+										<div class="btn-group">
+											<button type="button" class="btn btn-primary">등록</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //[모달 팝업] -->
+				
+				<!-- [모달 팝업] -->
+				<div class="modal fade infoModal" id="infoModal" tabindex="-1" role="dialog" aria-hidden="false">
+					<div class="modal-dialog modal-sm">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+								<h2 class="modal-title" id=""><strong>학습 정보<small>(M001001)</small></strong></h2>
+							</div>
+							<div class="modal-body">
+								<div>
+									<table class="table table-hover table-bordered">
+										<tbody>
+											<tr>
+											  <th scope="row">라이브러리</th>
+											  <td>Light GBM</td>
+											</tr>
+											<tr>
+											  <th scope="row">알고리즘</th>
+											  <td>Regression</td>
+											</tr>
+											<tr>
+											  <th scope="row">TRAIN_X</th>
+											  <td>GAS_USAGE</td>
+											</tr>
+											<tr>
+											  <th scope="row">TRAIN_Y</th>
+											  <td>PRICE</td>
+											</tr>
+											<tr>
+											  <th scope="row">ITERATION</th>
+											  <td>3</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div>
+									<h4><b>성능평가</b></h4>
+									<div id="abilityDiv" class="modelTestArea" style="margin-left: -30px;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //[모달 팝업] -->
+
+				<footer>
+					<div class="pull-right">Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a></div><div class="clearfix"></div>
+				</footer>
+			</div><!-- //main_container -->
+		</div><!-- //container body -->
+	</div><!-- //root -->
+
+	<!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- iCheck -->
+    <script src="js/icheck.min.js"></script>
+	<script src="js/moment.min.js"></script>
+	<script src="js/daterangepicker.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="js/custom.min.js"></script>
+	
+
+	<!-- amchart Resources -->
+	<script src="js/amchart/core.js"></script>
+	<script src="js/amchart/charts.js"></script>
+	<script src="js/amchart/animated.js"></script>
+
+	<script type="text/javascript">
+		am4core.ready(function() {
+		am4core.options.commercialLicense = true; 
+
+		// Themes begin
+		am4core.useTheme(am4themes_animated);
+		// Themes end
+
+		// Create chart instance
+		var chart = am4core.create("abilityDiv", am4charts.XYChart);
+
+		/*==================================================================
+		// abilityDiv
+		// 성능평가 차트
+		//=================================================================*/
+		//chart.scrollbarX = new am4core.Scrollbar();
+		// Add data
+		chart.data = [{
+		  "category": "TRA",
+		  "score": 80
+		}, {
+		  "category": "TEST",
+		  "score": 70
+		}];
+
+		// Create axes
+		var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+		categoryAxis.dataFields.category = "category";
+		categoryAxis.renderer.grid.template.location = 0;
+		categoryAxis.renderer.minGridDistance = 30;
+		categoryAxis.renderer.labels.template.horizontalCenter = "right";
+		categoryAxis.renderer.labels.template.verticalCenter = "middle";
+		categoryAxis.tooltip.disabled = true;
+		//categoryAxis.renderer.minHeight = 110;
+
+		var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+		valueAxis.renderer.minWidth = 50;
+
+		// Create series
+		var series = chart.series.push(new am4charts.ColumnSeries());
+
+		series.dataFields.valueY = "score";
+		series.dataFields.categoryX = "category";
+		series.name = "성능";
+
+		series.tooltipText = "[{categoryX}: bold]{valueY}[/]";
+		
+		series.columns.template.strokeWidth = 0;
+
+		series.columns.template.column.cornerRadiusTopLeft = 10;
+		series.columns.template.column.cornerRadiusTopRight = 10;
+		series.columns.template.column.fillOpacity = 0.8;
+		
+
+		// Cursor
+		//chart.cursor = new am4charts.XYCursor();
+		chart.legend = new am4charts.Legend();
+
+
+		
+	}); // end am4core.ready()
+	</script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>데이터 분석 시스템 로그인</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/green.css" rel="stylesheet">
+
+<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="css/scroller.bootstrap.min.css" rel="stylesheet">
+
+<link href="css/switchery.min.css" rel="stylesheet">
+
+<link href="css/bootstrap-datetimepicker.css" rel="stylesheet"><!-- bootstrap-datetimepicker -->
+<link href="css/daterangepicker.css" rel="stylesheet"><!-- bootstrap-datetimepicker -->
+
+
+<link href="css/custom.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet"> <!-- //디자인팀 작업 CSS -->
+    
+</head>
+    
+    
+
+     
+    <body class="nav-md loginwrap">
+        <div id="root">
+            <div class="container body">
+            <div class="main_container">
+                <div class="loginArea">
+            <div class="loginLogo">
+            <!--  <img src="images/logo.png"> -->
+            <h1 class="loginH1">데이터 분석 시스템</h1>
+            </div>
+
+            <div class="loginWrapper">
+            <div class="loginbox">
+                <form action="/authenticate" method="post" id="loginForm">
+                    <div class="logininput">
+                        <div class="userId">
+                            <input type="text" id="userId" name="userId" placeholder="아이디">
+                        </div>
+                        <div class="userPw">
+                            <input type="password" id="userPw" name="userPw" placeholder="비밀번호">
+                        </div>
+
+                        <div class="loginBtn">
+                            <button type="button" id="loginBtn" onclick="fnLogin()">로그인</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="login_sub">
+                    <ul>
+                        <li><a href="#" class="idBtn" data-toggle="modal" data-target=".loginidModal">아이디찾기</a></li>
+                        <li><a href="#" class="passwordBtn" data-toggle="modal" data-target=".loginpwModal">비밀번호찾기</a></li>
+                        <li><a href="#" class="joinBtn" data-toggle="modal" data-target=".loginjoinModal">회원가입</a></li>
+                    </ul>
+                </div>
+            </div>
+            </div> <!--loginWrapper-->
+
+            </div><!--loginArea-->        
+             
+            
+            
+            
+            
+                <!-- [아이디 찾기 모달 팝업] -->
+                <div class="modal fade loginidModal in" id="loginidModal" tabindex="-1" role="dialog" aria-hidden="false"> <!-- //-->
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                          </button>
+                          <h2 class="modal-title" id=""><strong>아이디 찾기</strong></h2>
+                        </div>
+                        <div class="modal-body row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <form class="form-horizontal form-label-left">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="domain_name">이름</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                          <input type="text" class="form-control" placeholder="홍길동" name="domain_name" id="domain_name">
+                                        </div>
+                                    </div>                                    
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="domain_model">이메일</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                          <input type="text" class="form-control" placeholder="이메일" name="domain_model" id="domain_model">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="control-label col-md-12 col-sm-12 col-xs-12 text-left"><a href="#" class="find_link">비밀번호 찾기</a></label>                                        
+                                    </div>
+                                    
+                                </form>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-success" data-dismiss="modal">확인</button>
+                        </div>
+                    </div><!-- //modal-content -->
+                </div>
+            </div>
+                <!-- [//아이디 찾기 모달 팝업] -->
+                
+                
+                <!-- [비밀번호 찾기 모달 팝업] -->
+                <div class="modal fade loginpwModal in" id="loginpwModal" tabindex="-1" role="dialog" aria-hidden="false"> <!-- //-->
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                          </button>
+                          <h2 class="modal-title" id=""><strong>비밀번호 찾기</strong></h2>
+                        </div>
+                        <div class="modal-body row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                
+                                <form class="form-horizontal form-label-left">    
+                                    
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label class="pdLeft_10">
+                                                <input type="checkbox" class="flat" checked="checked"> 이메일로 찾기
+                                            </label>
+                                        </div>
+                                    </div> 
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="domain_name">이름</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                          <input type="text" class="form-control" placeholder="사용자 아이디" name="domain_name" id="domain_name">
+                                        </div>
+                                    </div>                                    
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="domain_model">이메일</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                          <input type="text" class="form-control" placeholder="abc@daumsoft.com" name="domain_model" id="domain_model">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="control-label col-md-12 col-sm-12 col-xs-12 text-left"><a href="#" class="find_link">아이디 찾기</a></label>                                        
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-success" data-dismiss="modal">확인</button>
+                        </div>
+                    </div><!-- //modal-content -->
+                </div>
+            </div>
+                <!-- [//비밀번호 찾기 모달 팝업] -->
+                
+                
+                <!-- [회원가입 모달 팝업] -->
+                <div class="modal fade loginjoinModal in" id="loginjoinModal" tabindex="-1" role="dialog" aria-hidden="false"> <!-- //-->
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                          </button>
+                          <h2 class="modal-title" id=""><strong>회원가입</strong></h2>
+                        </div>
+                        <div class="modal-body row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                
+                                <form class="form-horizontal form-label-left">
+                                    
+                                    
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="domain_name">아이디</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                          <input type="text" class="form-control" placeholder="abc@daumsoft.com" name="domain_name" id="domain_name">
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="domain_name">비밀번호</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                          <input type="password" class="form-control" placeholder="비밀번호" name="domain_name" id="domain_name">
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="domain_name">비밀번호 확인</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                          <input type="password" class="form-control" placeholder="비밀번호" name="domain_name" id="domain_name">
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="domain_name">이름</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                          <input type="text" class="form-control" placeholder="홍길동" name="domain_name" id="domain_name">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">이메일</label>
+                                        
+                                        <div class="col-md-9 col-sm-9 col-xs-9">
+                                          <input type="text" class="form-control" placeholder="이메일" name="domain_name" id="domain_name">
+                                        </div>
+                                        
+                                        <div class="col-md-4 col-sm-4 col-xs-4 email_domain">
+                                            <select class="form-control">
+                                                <option>이메일 선택</option>
+                                                <option>@ gmail.com</option>
+                                                <option>@ naver.com</option>
+                                                <option>@ nate.com</option>
+                                                <option>@ daum.net</option>
+                                                <option>직접입력</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                   <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="domain_name">휴대폰 번호</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                          <input type="text" class="form-control" placeholder="홍길동" name="domain_name" id="domain_name">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                          <button type="button" class="btn btn-success" data-dismiss="modal">회원가입</button>
+                        </div>
+                    </div><!-- //modal-content -->
+                </div>
+            </div>
+                <!-- [//회원가입 찾기 모달 팝업] -->
+                
+                
+                
+            </div><!--main_container-->
+            
+            
+            
+            <div class="footer">
+                <div>
+                    <div class="daumsoft_logo">
+                        <a href="#">다음소프트로고</a>
+                    </div>
+
+                    <div class="footer_sub">
+                        <ul>
+                            <li><a href="#">이용약관</a></li>
+                            <li><a href="#">개인정보처리방침</a></li>
+                        </ul>
+                        
+                        <ul>
+                            <li>|주| 다음소프트 | 서울특별시 용산구 독서당로</li>
+                            <li>Tel. 02-565-0531</li>
+                            <li>Fax. 02-565-0532</li>
+                        </ul>
+                    </div>
+                </div>
+            </div> <!--footer-->
+            
+	    </div><!--container-->  
+	  </div><!--root-->
+        
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- iCheck -->
+    <script src="js/icheck.min.js"></script>
+	<script src="js/moment.min.js"></script>
+	<script src="js/daterangepicker.js"></script>
+    <!-- Datatables -->
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+
+
+    <script src="js/dataTables.fixedHeader.min.js"></script>
+    <script src="js/dataTables.keyTable.min.js"></script>
+    <script src="js/dataTables.responsive.min.js"></script>
+    <script src="js/responsive.bootstrap.js"></script>
+    <script src="js/dataTables.scroller.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="js/custom.min.js"></script>
+	</body>
+
+</html>

@@ -1,0 +1,1081 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>프로젝트 관리</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/green.css" rel="stylesheet">
+
+<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="css/scroller.bootstrap.min.css" rel="stylesheet">
+
+<link href="css/switchery.min.css" rel="stylesheet">
+
+<link href="css/bootstrap-datetimepicker.css" rel="stylesheet"><!-- bootstrap-datetimepicker -->
+<link href="css/daterangepicker.css" rel="stylesheet"><!-- bootstrap-datetimepicker -->
+
+<link href="css/custom.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet"> <!-- //디자인팀 작업 CSS -->
+
+</head>
+
+
+<body class="nav-md">
+	<div id="root">
+		<div class="container body">
+			<div class="main_container">
+
+				<!-- [left 메뉴] -->
+				<div class="col-md-3 left_col">
+					<div class="left_col scroll-view">
+						<div class="navbar nav_title" style="border: 0px;">
+							<a href="/" class="site_title"><i class="fa fa-cubes"></i> <span>데이터분석시스템</span></a>
+						</div>
+						<div class="clearfix"></div>
+						<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+							<div class="menu_section active">
+								<ul class="nav side-menu" style="">
+									<li>
+										<a href="/algorithm"><i class="fa fa-home"></i> 알고리즘 조회</a>
+									</li>
+									<li>
+										<a href="/sandboxMng"><i class="fa fa-edit"></i> 샌드박스 관리 </a>
+									</li>
+									<li class="active">
+										<a href="/projectMng"><i class="fa fa-desktop"></i> 프로젝트 관리</a>
+									</li>
+									<li>
+										<a href="/jobMng"><i class="fa fa-table"></i> 잡 관리</a>
+									</li>
+									<li>
+										<a href="/batchMng"><i class="fa fa-bar-chart-o"></i> 배치 관리</a>
+									</li>
+								</ul>
+							</div>
+						</div><!-- //sidebar-menu -->
+					</div><!-- //left_col scroll-view -->
+				</div>
+				<!-- //[left 메뉴] -->
+
+				<!-- [top 메뉴] -->
+				<div class="top_nav">
+					<div class="nav_menu">
+						<nav><div class="nav toggle"><a id="menu_toggle"><i class="fa fa-bars"></i></a></div><ul class="nav navbar-nav navbar-right"></ul></nav>
+					</div>
+				</div>
+				<!-- //[top 메뉴] -->
+				
+				<!-- [컨텐츠] -->
+				<div>
+					<div class="right_col" role="main" id="myContentsWrap">
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="x_panel">
+									<div class="x_title">
+										<h2 class="pdTop_15"><strong>주자창 데이터 분석<small>주자창 데이터를 이용한 회귀분석</small></strong></h2>
+										<ul class="nav navbar-right panel_toolbox">
+											<div class="pdTB_10">생성일 : 2019-01-02 10:33</div>
+											<div class="">인스턴스 정보 : <input class="inputArea" type="text" class="inputArea" name="" value="ParkingAreaRegression"></div>
+										</ul> 
+										<div class="clearfix"></div>
+									</div><!-- //x_title -->
+								</div>
+							</div>
+							
+						</div>
+						<div class="row">
+							<div class="col-md-4 col-sm-4 col-xs-12">
+								<div class="x_panel">
+									<div class="x_title posiRelative"><strong>원본리스트</strong>
+										<button class="btn btn-dark btn-xs originPlusBtn" type="button" data-toggle="modal" data-target=".originModal"><i class="fa fa-plus"></i></button>
+									</div>
+									<div class="x_content">
+										<div class="projList">
+											<h2 class="projListDateTitle">2019.01.10</h2>
+											<ul>
+												<li><a href="javascript:">D2019011000000001</a></li>
+												<li><a href="javascript:">D2019011000000002</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="x_panel">
+									<div class="x_title"><strong>전처리된  리스트</strong></div>
+									<div class="x_content">
+										<div class="projList">
+											<h2 class="projListDateTitle">2019.01.10</h2>
+											<ul>
+												<li><a href="javascript:">P2019011000000001</a></li>
+												<li><a href="javascript:">P2019011000000002</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="x_panel">
+									<div class="x_title"><strong>모델 리스트</strong></div>
+									<div class="x_content">
+										<div class="projList">
+											<h2 class="projListDateTitle">2019.01.10</h2>
+											<ul>
+												<li><a href="javascript:">M2019011000000001</a></li>
+												<li class="active"><a href="javascript:">M2019011000000002</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-8 col-sm-8 col-xs-12">
+								<div class="x_panel">
+									<div class="x_title posiRelative">
+										<strong>데이터 셋  : D2019010100000001</strong>
+										<button type="button" class="btn btn-default btn-xs deleteBtn" >삭제</button>
+									</div>
+									<div class="x_content">
+										<div class="text-right">
+											<div class="btn-group">
+												<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".preprocessingModal">전처리</button>
+											</div>
+										</div>
+										<div>
+											<h4><strong>데이터셋 정보</strong></h4>
+											<table class="table table-bordered jambo_table">
+												<thead>
+													<tr>
+														<th>이름</th>
+														<th>경로</th>
+														<th>생성시간</th>
+														<th>생성자</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>주차장데이터</td>
+														<td>~/upload/2019/01/D2019010100000001</td>
+														<td>2019/01/01 11:23:22</td>
+														<td>DAUMSOFT</td>
+													</tr>
+													<tr>
+														<td>주차장데이터</td>
+														<td>~/upload/2019/01/D2019010100000001</td>
+														<td>2019/01/01 11:23:22</td>
+														<td>DAUMSOFT</td>
+													</tr>
+												</tbody>
+											</table>
+										</div><!-- //데이터셋 테이블 -->
+										<div>
+											<h4><strong>데이터셋 생성에 사용된 파일리스트</strong></h4>
+											<table class="table table-bordered table-striped table-hover">
+												<thead>
+													<tr>
+														<th>파일명</th>
+														<th>크기</th>
+														<th>데이터 종류</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>/smartcity/local parkinglot area/busan_event20190101.json</td>
+														<td>50KB</td>
+														<td>JSON</td>
+													</tr>
+													<tr>
+														<td>/smartcity/local parkinglot area/busan_event20190101.json</td>
+														<td>50KB</td>
+														<td>JSON</td>
+													</tr>
+												</tbody>
+											</table>
+										</div><!-- //데이터셋 파일리스트 테이블 -->
+
+										<div>
+											<select class="form-control">
+												<option>test</option>
+											</select>
+											<div class="chartArea">그래프 영역</div>
+										</div><!-- //그래프 영역 -->
+									</div>
+								</div><!-- //x_panel : 데이터 셋 -->
+
+								<div class="x_panel">
+									<div class="x_title posiRelative">
+										<strong>전처리 셋  : P2019010100000001</strong>
+										<button type="button" class="btn btn-default btn-xs deleteBtn" >삭제</button>
+									</div>
+									<div class="x_content">
+										<div class="text-right">
+											<div class="btn-group">
+												<button type="button" class="btn btn-success" data-toggle="modal" data-target=".learningModal">학습</button>
+											</div>
+										</div>
+										<div>
+											<h4><strong>전처리 셋 정보</strong></h4>
+											<table class="table table-bordered jambo_table">
+												<thead>
+													<tr>
+														<th>이름</th>
+														<th>경로</th>
+														<th>생성시간</th>
+														<th>완료시간</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>주차장데이터</td>
+														<td>~/processed/2019/01/D2019010100000001</td>
+														<td>2019/01/01 11:23:22</td>
+														<td class="text-center"><button class="btn btn-danger btn-xs">중지</button></td>
+													</tr>
+													<tr>
+												</tbody>
+											</table>
+										</div><!-- //전처리 셋 정보 -->
+										<div>
+											<h4><strong>데이터 정보</strong></h4>
+											<table class="table table-bordered table-striped table-hover">
+												<thead>
+													<tr>
+														<th>파일명</th>
+														<th>크기</th>
+														<th>데이터 종류</th>
+														<th>갯수</th>
+														<th>관리</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>P2019010100000001</td>
+														<td>50KB</td>
+														<td>JSON</td>
+														<td>1,000</td>
+														<td class="text-center"><button class="btn btn-default btn-xs">상세보기</button></td>
+													</tr>
+													
+												</tbody>
+											</table>
+										</div><!-- //데이터 정보 -->
+										<div>
+											<h4><strong>전처리 프로세스</strong></h4>
+											<table class="table table-bordered table-striped table-hover">
+												<thead>
+													<tr>
+														<th>필드</th>
+														<th>처리방식</th>
+														<th>처리대상 수</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>GAS_USAGE, DATE</td>
+														<td>NULL 값 제거</td>
+														<td>100</td>
+													</tr>
+													<tr>
+														<td>GAS_USAGE</td>
+														<td>비정상적인 값 제거 값 < 0 or 값 >500</td>
+														<td>200</td>
+													</tr>
+												</tbody>
+											</table>
+										</div><!-- //전처리 프로세스 -->
+										<div>
+											<select class="form-control">
+												<option>test</option>
+											</select>
+											<div class="chartArea">그래프 영역</div>
+										</div><!-- //그래프 영역 -->
+									</div>
+								</div><!-- //x_panel : 전처리 셋 -->
+
+								<div class="x_panel">
+									<div class="x_title posiRelative">
+										<strong>모델 : M2019010100000001</strong>
+										<button type="button" class="btn btn-default btn-xs deleteBtn" >삭제</button>
+									</div>
+									<div class="x_content">
+										<div class="text-right">
+											<div class="btn-group">
+												<button type="button" class="btn btn-dark" data-toggle="modal" data-target=".requesBatchtModal">배치요청</button>
+												
+											</div>
+										</div>
+										<div>
+											<h4><strong>모델 정보</strong></h4>
+											<table class="table table-bordered jambo_table">
+												<thead>
+													<tr>
+														<th>이름</th>
+														<th>경로</th>
+														<th>생성시간</th>
+														<th>완료시간</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>주차장데이터</td>
+														<td>~/upload/2019/01/D2019010100000001</td>
+														<td>2019/01/01 11:23:22</td>
+														<td class="text-center"><button class="btn btn-danger btn-xs">중지</button></td>
+													</tr>
+												</tbody>
+											</table>
+											<div class="text-right">
+												<div class="btn-group">
+													<button type="button" class="btn btn-default" >LOAD</button>
+													<button type="button" class="btn btn-default" data-toggle="modal" data-target=".modelTestModal">테스트</button>
+													
+												</div>
+											</div>
+										</div><!-- //모델 정보 -->
+										<div>
+											<h4><strong>파일 리스트</strong></h4>
+											<table class="table table-bordered table-striped table-hover">
+												<thead>
+													<tr>
+														<th>파일명</th>
+														<th>크기</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>M2019010100000001</td>
+														<td>20KB</td>
+													</tr>
+													
+												</tbody>
+											</table>
+										</div><!-- //파일 리스트 -->
+
+										<div class="clearfix row">
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<h4><strong>학습 정보</strong></h4>
+												<table class="table table-bordered ">
+													<tr>
+														<th>라이브러리</th>
+														<td colspan="2">sklearn</td>
+													</tr>
+													<tr>
+														<th>알고리즘</th>
+														<td colspan="2">RandomForestRegressor</td>
+													</tr>
+													<tr>
+														<th>학습 소요 시간</th>
+														<td colspan="2">00:02:43 </td>
+													</tr>
+													<tr>
+														<th>모델 성능 평가</th>
+														<td colspan="2">0.7823</td>
+													</tr>
+													<tr>
+														<th rowspan="4">모델 파라미터</th>
+														<td>cretiertion</td>
+														<td>gini</td>
+													</tr>
+													<tr>
+														<td>splitter</td>
+														<td>best</td>
+													</tr>
+													<tr>
+														<td>max_depth</td>
+														<td>None</td>
+													</tr>
+													<tr>
+														<td>min_samples_split</td>
+														<td>2</td>
+													</tr>
+													<tr>
+														<th rowspan="3">학습 파라미터</th>
+														<td>X</td>
+														<td>datetime, temp…</td>
+													</tr>
+													<tr>
+														<td>Y</td>
+														<td>target</td>
+													</tr>
+													<tr>
+														<td>samples_weight</td>
+														<td>None</td>
+													</tr>
+													
+												</table>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<h4><strong>성능 평가</strong></h4>
+												<div id="abilityDiv"></div>
+											</div>
+										</div>
+									</div>
+								</div><!-- //x_panel : 모델정보 -->
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<!-- //[컨텐츠] -->
+
+				<!-- [학습용 원본 데이터 생성화면 모달 팝업] -->
+				<div class="modal fade originModal" tabindex="-1" role="dialog" aria-hidden="false" >
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+							  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+							  <h2 class="modal-title" id=""><strong>학습용 원본 데이터 생성화면</strong></h2>
+							</div>
+							<div class="modal-body">
+								<div class="clearfix">
+									<div class="col-md-5 col-sm-5 col-xs-12">
+										<div class="x_panel">
+											<div class="x_title"><strong>샌드박스 파일브라우저</strong></div>
+											<div class="x_content">
+												<div class="projList">
+												<ul class="pdLeft_20">
+													<li class="pdTB_5"><a href="javascript:">yatap_regeression_data.json</a></li>  
+													<li class="pdTB_5 active"><a href="javascript:">parking_area_data.json</a></li>
+												</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-7 col-sm-7 col-xs-12">
+										<div class="x_panel">
+											<div class="x_title"><strong>미리보기</strong></div>
+											<div class="x_content">
+											<pre>p_id date day_of_week time pm10 pm25 
+											P0001 2018-08-05 Sun 14    16.3 0.0 0.0 4
+											P0002 2018-09-03 Mon 09P0001 2018-04-25 Wed 06 95 54 4 10.5 15.6 5.4 2
+											P0003 2018-01-29 Mon 11    7.9 0.0 0.0 1
+											P0001 2018-11-24 Sat 20       
+											P0002 2018-10-12 Fri 05 37 72 2 -8.3 0.0 0.0 1</pre>
+
+											</div>
+											<div class="form-group mg_5">
+												<label class="control-label ta_left">원본 데이터 명 : </label>
+												<input type="text" class="form-control" placeholder="" value="주차장데이터분석">
+											</div>
+											<div class="text-right">
+												<button type="button" class="btn btn-success" >완료</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //[학습용 원본 데이터 생성화면 모달 팝업] -->
+
+				<!-- [전처리 모달 팝업] -->
+				<div class="modal fade preprocessingModal" id="preprocessingModal" tabindex="-1" role="dialog" aria-hidden="false" >
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+							  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+							  <h2 class="modal-title" id=""><strong>전처리</strong></h2>
+							</div>
+							<div class="modal-body">
+								<form class="form-horizontal form-label-left">
+									<div class="form-group">
+										<h5><strong>전처리 추가</strong></h5>
+										<label class="control-label col-md-2 col-sm-2 col-xs-12 text-left">필드 명</label>
+										<div class="col-md-3 col-sm-3 col-xs-12">
+										  <input type="text" class="form-control" placeholder="필드 명">
+										</div>
+										<label class="control-label col-md-2 col-sm-2 col-xs-12 text-left">처리방식</label>
+										<div class="col-md-3 col-sm-3 col-xs-10">
+											<select class="form-control">
+												<option>NULL</option>
+											</select>
+										</div>
+									</div><!-- // form-group -->
+									<div class="form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12 text-left">파라미터</label>
+										<div class="col-md-3 col-sm-3 col-xs-10">
+											<select class="form-control">
+												<option>NULL</option>
+											</select>
+										</div>
+										<label class="control-label col-md-2 col-sm-2 col-xs-12 text-left">Value</label>
+										<div class="col-md-3 col-sm-3 col-xs-10">
+											<select class="form-control">
+												<option>NULL</option>
+											</select>
+											 <!-- <input type="text" class="form-control" placeholder=""> //Value Input 일 때 -->
+										</div>
+										<div class="col-md-2 col-sm-2 col-xs-2">
+											<button type="button" class="btn btn-default" >추가</button>
+										</div>
+									</div><!-- // form-group -->
+									<div class="form-group pdBottom_20 bdBottom_f3f3f3">
+										<h5><strong>등록된 전처리  리스트</strong></h5>
+										<textarea class="form-control" rows="4"></textarea>
+									</div><!-- // form-group -->
+									<div class="form-group">
+										<h5>
+											<strong>미리보기</strong>
+											<div class="text-right">
+												<div class="btn-group">
+													<button type="button" class="btn btn-primary">테스트</button>
+												</div>
+											</div>
+										</h5>
+										<div class="row clearfix">
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<textarea class="form-control" rows="4">{ "channelId" : 101, "documentUnitId" : 29639, "documentId" : "3006910418", "title" : "여행 경비로 다퉜습니다.. 어떤 상황인지 꼭 조언좀 부탁드립니다! 카톡내용",</textarea>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-12 pull-right">
+												<textarea class="form-control" rows="4">{ "channelId" : 101, "documentUnitId" : 29639, "documentId" : "3006910418", "title" : "여행 경비로 다퉜습니다.. 어떤 상황인지 꼭 조언좀 부탁드립니다! 카톡내용",</textarea>
+											</div>
+										</div>
+										<div class="text-right mgTop_5">
+											<div class="btn-group">
+												<button type="button" class="btn btn-success">전처리 데이터 셋 생성</button>
+											</div>
+										</div>
+									</div><!-- // form-group -->
+								</form>
+							</div>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //[전처리 모달 팝업] -->
+
+				<!-- [학습 모달 팝업] -->
+				<div class="modal fade learningModal" tabindex="-1" role="dialog" aria-hidden="false"  >
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header">
+							  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+							  <h2 class="modal-title" id=""><strong>전처리 셋 학습</strong></h2>
+							</div>
+							<div class="modal-body">
+								<div class="clearfix">
+									<div class="pull-left"><button type="button" class="btn btn-default" ><i class="fa fa-angle-left"></i> PREV</button></div>
+									<div class="pull-right"><button type="button" class="btn btn-default" >NEXT <i class="fa fa-angle-right"></i></button></div>
+								</div>
+								<div class="pdTop_10" role="tabpanel" data-example-id="togglable-tabs">
+									<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+										<li role="presentation" class="active"><a href="#tab_content1" id="algorithm-tab" role="tab" data-toggle="tab" aria-expanded="true">알고리즘</a></li>
+										<li role="presentation" class=""><a href="#tab_content2" role="tab" id="parameter-tab" data-toggle="tab" aria-expanded="false">파라미터 설정</a></li>
+										<li role="presentation" class=""><a href="#tab_content3" role="tab" id="analysis-tab" data-toggle="tab" aria-expanded="false">분석 정보 확인</a></li>
+								  </ul>
+								  <div id="learningTab" class="tab-content">
+									<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="algorithm-tab">
+										<form class="form-horizontal form-label-left">
+											<div class="form-group pdBottom_10">
+												<label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">검색</label>
+												<div class="col-md-7 col-sm-7 col-xs-10">
+												  <input type="text" class="form-control" placeholder="검색조건">
+												</div>
+												<button type="button" class="btn btn-default" >조회</button>
+											</div><!-- // form-group -->
+											<div class="form-group">
+												<label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">검색 결과</label>
+												<div class="col-md-7 col-sm-7 col-xs-10 mgTop_10">
+													<div class="projList border_ccc">
+														<ul>
+															<li><a href="javascript:">M2019011000000001</a></li>
+															<li class="active"><a href="javascript:">M2019011000000002</a></li>
+														</ul>
+													</div>
+												</div>
+												<button type="button" class="btn btn-default" >선택</button>
+											</div><!-- // form-group -->
+											<div class="form-group">
+												<label class="control-label col-md-12 col-sm-12 col-xs-12 text-left">알고리즘 선택 결과 확인 </label>
+												<div class="col-md-12 col-sm-12 col-xs-12">
+													<textarea class="form-control" rows="8">라이브러리:Light GBM 알고리즘 Regression 
+													설명 : 데이터를 예측하기 위해서 사용
+													필수 파라미터: TRAIN_X, TRAIN_Y, …</textarea>
+												</div>
+											</div><!-- // form-group -->
+										</form>
+									</div><!-- //tab_content1 -->
+									<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="parameter-tab">
+										<p class="ta_right bold">※ 파라미터 변경을 요청하지 않으면 기본값이 적용됩니다.</p>
+										<div>
+											<h5><strong>모델 파라미터 </strong></h5>
+											<div class="maxHeight_250 overY_scroll">
+												<table class="table table-bordered ">
+													<colgroup>
+														<col width="">
+														<col width="">
+														<col width="">
+														<col width="200px">
+													</colgroup>
+													<thead>
+														<th>파라미터 이름</th>
+														<th>타입</th>
+														<th>기본값</th>
+														<th>변경할 값</th>
+													</thead>
+													<tbody>
+														<tr>
+															<td>criterion</td>
+															<td>string</td>
+															<td>gini</td>
+															<td><input type="text" class="form-control" placeholder="입력창"></td>
+														</tr>
+														<tr>
+															<td>splitter</td>
+															<td>string</td>
+															<td>best</td>
+															<td><input type="text" class="form-control" placeholder="입력창"></td>
+														</tr>
+														<tr>
+															<td>max_depth</td>
+															<td>int</td>
+															<td>None</td>
+															<td><input type="text" class="form-control" placeholder="입력창"></td>
+														</tr>
+														<tr>
+															<td>min_sample_split</td>
+															<td> int, float</td>
+															<td>2</td>
+															<td><input type="text" class="form-control" placeholder="입력창"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div>
+											<h5><strong>학습 파라미터  </strong></h5>
+											<div class="maxHeight_250 overY_scroll">
+												<table class="table table-bordered ">
+													<colgroup>
+														<col width="">
+														<col width="">
+														<col width="">
+														<col width="200px">
+													</colgroup>
+													<thead>
+														<th>파라미터 이름</th>
+														<th>타입</th>
+														<th>기본값</th>
+														<th>변경할 값</th>
+													</thead>
+													<tbody>
+														<tr>
+															<td>X</td>
+															<td>array_like, sparse matrix    </td>
+															<td></td>
+															<td><input type="text" class="form-control" placeholder="입력창"></td>
+														</tr>
+														<tr>
+															<td>Y</td>
+															<td>array_like</td>
+															<td></td>
+															<td><input type="text" class="form-control" placeholder="입력창"></td>
+														</tr>
+														<tr>
+															<td>sample_weight  </td>
+															<td>array_like</td>
+															<td>None</td>
+															<td><input type="text" class="form-control" placeholder="입력창"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div><!-- //tab_content2 -->
+									<div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="analysis-tab">
+										<table class="table table-bordered">
+											<tr>
+												<th>라이브러리</th>
+												<td>Sklearn</td>
+											</tr>
+											<tr>
+												<th>알고리즘</th>
+												<td>RandomForestRegressor</td>
+											</tr>
+											<tr>
+												<th>모델 파라미터</th>
+												<td>
+													<textarea rows="7" class="form-control">"MODEL_PARAMETERS": [
+    {
+      “name”: “criterion”,
+      “value”: “gin”
+    },
+    {
+      “name”: “splitter”,
+      “default”: “best”
+    }, 
+    …. 
+    …. 
+													</textarea>
+												</td>
+											</tr>
+											<tr>
+												<th>학습 파라미터</th>
+												<td>
+													<textarea rows="7" class="form-control">"TRAIN_PARAMETERS": [
+    {
+      “name”: “X”,
+      “value”: “[datetime, temperature, , … ]”
+      },
+    {
+      “name”: “y”,
+      “value”: “target”
+    },
+    .…
+													</textarea>
+												</td>
+											</tr>
+										</table>
+										<div class="ta_right">
+											<button type="button" class="btn btn-default">학습시작</button>
+										</div>
+									</div><!-- //tab_content3 -->
+
+
+								  </div><!-- //learningTab -->
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<!-- //[학습 모달 팝업] -->
+
+				<!-- [배치요청 모달 팝업] -->
+				<div class="modal fade requesBatchtModal" tabindex="-1" role="dialog" aria-hidden="false">
+					<div class="modal-dialog modal-sm">
+						<div class="modal-content">
+							<div class="modal-header">
+							  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+							  <h2 class="modal-title" id=""><strong>모델 배치 요청</strong></h2>
+							</div>
+							<div class="modal-body">
+								<div class="bdBottom_f3f3f3">
+									<h5><strong>데이터</h5>
+									<div class="projList">
+										<ul>
+											<li>주차장 데이터</li>
+											<li>기상 데이터</li>
+											<li>(야탑 1동)</li>
+										</ul>
+									</div>
+								</div>
+								<div class="bdBottom_f3f3f3">
+									<h5><strong>전처리</h5>
+									<div class="projList">
+										<ul>
+											<li>ID -> NOTNULL</li>
+										</ul>
+									</div>
+								</div>
+								<div class="bdBottom_f3f3f3">
+									<h5><strong>모델정보</h5>
+									<table class="table table-bordered ">
+										<thead>
+											<tr>
+												<th class="text-center">항목</th>
+												<th class="text-center">내용</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>라이브러리</th>
+												<td>Light GBM</td>
+											</tr>
+											<tr>
+												<th>알고리즘</th>
+												<td>Regression</td>
+											</tr>
+											<tr>
+												<th>TRAIN_X</th>
+												<td>GAS_USAGE</td>
+											</tr>
+											<tr>
+												<th>TRAIN_Y</th>
+												<td>PRICE</td>
+											</tr>
+											<tr>
+												<th>ITERATION</th>
+												<td>3</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div>
+									<h5><strong>배치 주기</h5>
+									<div class="clearfix row">
+										<div class="col-md-9 col-sm-9 col-xs-10">
+											<input type="text" class="form-control" placeholder="0/5 * * * *  ">
+										</div>
+										<div class="col-md-3 col-sm-3 text-right ">
+											<button type="button" class="btn btn-success mg_0">신청</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //[배치요청 모달 팝업] -->
+
+				<!-- [모델 테스트 모달 팝업] -->
+				<div class="modal fade modelTestModal" tabindex="-1" role="dialog" aria-hidden="false" >
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header">
+							  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+							  <h2 class="modal-title" id=""><strong>모델 테스트</strong></h2>
+							</div>
+							<div class="modal-body">
+								<div >
+									<h5 class="modal-title"><strong>테스트 데이터 선택</strong></h5>
+									
+									<div class="form-group">
+										<h5><strong>샌드박스 파일 리스트</strong></h5>
+										<div class="projList border_ccc mg_0">
+											<ul class="height_150 overY_scroll">
+												<li><a href="javascript:">'par'parkingstreet_train_201909191746.json', </a></li>
+												<li class="active"><a href="javascript:">kingstreet_train_201909191432.json',</a></li>
+												<li><a href="javascript:">'parkingstreet_twohours_apply_2019100115.json',</a></li>
+												<li><a href="javascript:">'parkingstreet__week_apply_20191001.json'</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="form-group">
+										<h5><strong>테스트 데이터 미리보기</strong></h5>
+										<div class="projList border_ccc mg_0">
+											<ul class="height_150 overY_scroll">
+												<li class="active"><a href="javascript:">P0001 2018-08-05 Sun 14 16.3 0.0 0.0 4</a></li>
+												<li><a href="javascript:">P0002 2018-09-03 Mon 09 20.2 0.2 0.2 3 </a></li>
+												<li><a href="javascript:">P0001 2018-04-25 Wed 06  10.5 15.6 5.4 2</a></li>
+												<li><a href="javascript:">P0003 2018-01-29 Mon 11 7.9 0.0 0.0 1</a></li>
+												<li><a href="javascript:">P0001 2018-11-24 Sat 20  20.2 0.2 0.2 3 </a></li>
+												<li><a href="javascript:">P0002 2018-10-12 Fri 05 -8.3 0.0 0.0 1</a></li>
+											</ul>
+										</div>
+									</div>
+									
+									<div class="text-right ">
+										<button type="button" class="btn btn-success mg_0">선택</button>
+									</div>
+									
+								</div>
+								<div >
+									<h5 class="modal-title"><strong>테스트 결과</strong></h5>
+									<form class="form-horizontal form-label-left">
+										<div class="form-group">
+											<textarea class="form-control" rows="5">정확도 결과
+“score_result”: 0.9756
+예측 결과
+“predict_result": [242.103, 290.508, 102.375, …]
+</textarea>
+										</div>
+										<div class="text-right ">
+											<button type="button" class="btn btn-primary mg_0">테스트 요청</button>
+										</div>
+									</form>
+								</div>
+								
+								
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<!-- //[모델 테스트 모달 팝업] -->
+
+				<footer>
+					<div class="pull-right">Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a></div><div class="clearfix"></div>
+				</footer>
+			</div><!-- //main_container -->
+		</div><!-- //container body -->
+	</div><!-- //root -->
+
+	<!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- iCheck -->
+    <script src="js/icheck.min.js"></script>
+	<script src="js/moment.min.js"></script>
+	<script src="js/daterangepicker.js"></script>
+    <!-- Datatables -->
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+
+
+    <script src="js/dataTables.fixedHeader.min.js"></script>
+    <script src="js/dataTables.keyTable.min.js"></script>
+    <script src="js/dataTables.responsive.min.js"></script>
+    <script src="js/responsive.bootstrap.js"></script>
+    <script src="js/dataTables.scroller.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="js/custom.min.js"></script>
+
+	<!-- amchart Resources -->
+	<script src="js/amchart/core.js"></script>
+	<script src="js/amchart/charts.js"></script>
+	<script src="js/amchart/animated.js"></script>
+	
+	<script type="text/javascript">
+		am4core.ready(function() {
+		am4core.options.commercialLicense = true; 
+
+		// Themes begin
+		am4core.useTheme(am4themes_animated);
+		// Themes end
+
+		// Create chart instance
+		var chart = am4core.create("abilityDiv", am4charts.XYChart);
+		//var resultChart = am4core.create("modelTestDiv", am4charts.XYChart);	//모델 테스트 모달 팝업 내 차트
+
+
+		/*==================================================================
+		// abilityDiv
+		// 성능평가 차트
+		//=================================================================*/
+		//chart.scrollbarX = new am4core.Scrollbar();
+		// Add data
+		chart.data = [{
+		  "category": "TRA",
+		  "score": 80
+		}, {
+		  "category": "TEST",
+		  "score": 70
+		}];
+
+		// Create axes
+		var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+		categoryAxis.dataFields.category = "category";
+		categoryAxis.renderer.grid.template.location = 0;
+		categoryAxis.renderer.minGridDistance = 30;
+		categoryAxis.renderer.labels.template.horizontalCenter = "right";
+		categoryAxis.renderer.labels.template.verticalCenter = "middle";
+		categoryAxis.tooltip.disabled = true;
+		categoryAxis.renderer.minHeight = 110;
+
+		var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+		valueAxis.renderer.minWidth = 50;
+
+		// Create series
+		var series = chart.series.push(new am4charts.ColumnSeries());
+
+		series.dataFields.valueY = "score";
+		series.dataFields.categoryX = "category";
+		series.tooltipText = "[{categoryX}: bold]{valueY}[/]";
+		
+		series.columns.template.strokeWidth = 0;
+
+		series.columns.template.column.cornerRadiusTopLeft = 10;
+		series.columns.template.column.cornerRadiusTopRight = 10;
+		series.columns.template.column.fillOpacity = 0.8;
+		
+
+		// Cursor
+		chart.cursor = new am4charts.XYCursor();
+
+		/*==================================================================
+		// modelTestDiv
+		// 모델 테스트 모달 팝업 내 차트
+		//=================================================================
+		// Add data
+		resultChart.data = [{
+		  "score": "0",
+		  "AType": 1,
+		  "BType": 5
+		}, {
+		  "score": "1",
+		  "AType": 1,
+		  "BType": 2
+		}, {
+		  "score": "1938",
+		  "AType": 2,
+		  "BType": 3
+		}, {
+		  "score": "2",
+		  "AType": 3,
+		  "BType": 4
+		}, {
+		  "score": "3",
+		  "AType": 5,
+		  "BType": 1
+		}, {
+		  "score": "4",
+		  "AType": 3,
+		  "BType": 2
+		}, {
+		  "score": "5",
+		  "AType": 1,
+		  "BType": 2
+		}, {
+		  "score": "6",
+		  "AType": 2,
+		  "BType": 1
+		}, {
+		  "score": "7",
+		  "AType": 3,
+		  "BType": 5
+		}, {
+		  "score": "8",
+		  "AType": 4,
+		  "BType": 3
+		}, {
+		  "score": "9",
+		  "AType": 1,
+		  "BType": 2
+		}];
+
+		// Create category axis
+		var categoryAxis = resultChart.xAxes.push(new am4charts.CategoryAxis());
+		categoryAxis.dataFields.category = "score";
+		categoryAxis.renderer.opposite = true;
+
+		// Create value axis
+		var valueAxis = resultChart.yAxes.push(new am4charts.ValueAxis());
+		valueAxis.renderer.inversed = true;
+		valueAxis.renderer.minLabelPosition = 0.01;
+
+		// Create series
+		var series1 = resultChart.series.push(new am4charts.LineSeries());
+		series1.dataFields.valueY = "AType";
+		series1.dataFields.categoryX = "score";
+		series1.name = "실제 값";
+		series1.strokeWidth = 3;
+		series1.bullets.push(new am4charts.CircleBullet());
+		//series1.tooltipText = "Place taken by {name} in {categoryX}: {valueY}";
+		series1.legendSettings.valueText = "{valueY}";
+		series1.visible  = false;
+
+		var series2 = resultChart.series.push(new am4charts.LineSeries());
+		series2.dataFields.valueY = "BType";
+		series2.dataFields.categoryX = "score";
+		series2.name = '예측 값';
+		series2.strokeWidth = 3;
+		series2.bullets.push(new am4charts.CircleBullet());
+		//series2.tooltipText = "Place taken by {name} in {categoryX}: {valueY}";
+		//series2.legendSettings.valueText = "{valueY}";
+
+		// Add chart cursor
+		resultChart.cursor = new am4charts.XYCursor();
+		resultChart.cursor.behavior = "zoomY";
+
+		// Add legend
+		resultChart.legend = new am4charts.Legend();
+		*/
+		}); // end am4core.ready()
+	</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout/defaultLayout">
+
+<head>
+	<meta charset="UTF-8">
+</head>
+
+<body>
+	<th:block layout:fragment="content">
+		<script th:src="@{dist/user/project/projectManage.js}"></script>
+		<form method="POST" id="projectManageForm" class="height_0" name="projectManageForm">
+			<input type="hidden" id="projectType" name="projectType" value="M" />
+		</form>
+
+		<!-- page content -->
+		<div>
+			<div class="right_col" role="main" id="myContentsWrap">
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2><strong>머신러닝 관리</strong></h2>
+								<div class="clearfix"></div>
+							</div><!-- //x_title -->
+
+							<div class="x_content">
+								<div class="clearfix">
+									<div class="search_box">
+										<form class="form-inline">
+											<div class="form-group col-md-12">
+												<div class="col-md-2 col-sm-2  selectBox">
+													<select id="search_option" class="form-control width_100p">
+														<option value="all">전체</option>
+														<option value="name">이름</option>
+														<option value="description">설명</option>
+														<option value="create_datetime">생성일</option>
+														<option th:if="${session.userAuth} == 'admin'"
+															value="regtUser">등록자
+														</option>
+													</select>
+												</div>
+
+
+												<label class="col-sm-1 col-form-label text-right"
+													for="search_word">검색어</label>
+												<div class="col-sm-3">
+													<div class="input-group width_100p">
+														<input type="text" class="form-control" name="search_word"
+															id="search_word">
+														<span class="input-group-btn">
+															<button type="button" id="search_button"
+																class="btn btn-primary borderRadius">검색</button>
+														</span>
+													</div>
+												</div>
+											</div>
+
+										</form>
+									</div>
+									<!--search_box-->
+
+									<table id="datatable-checkbox"
+										class="table table-striped table-bordered bulk_action width_100p">
+										<thead>
+											<tr>
+												<th><input type="checkbox" id="check_all" class="flat"></th>
+												<th>projectSequencePk</th>
+												<th>이름</th>
+												<th>설명</th>
+												<th>생성일</th>
+												<th th:if="${session.userAuth} == 'admin'">등록자</th>
+												<th>수정</th>
+											</tr>
+										</thead>
+										<tbody id="tbodyHtml">
+
+										</tbody>
+									</table>
+
+									<div class="row">
+										<div class="col-md-7">
+											<div class="dataTables_paginate paging_simple_numbers"
+												id="datatable-buttons_paginate">
+												<ul class="pagination">
+													<!-- 동적 추가 부분-->
+												</ul>
+											</div>
+										</div>
+
+										<div class="col-md-5 text-right">
+											<div class="btn-group">
+												<button type="button" id="delete_button"
+													class="btn btn-default mgRight_5"
+													onClick="fnDeleteProjcet()">삭제</button>
+												<button type="button" class="btn btn-success" data-toggle="modal"
+													data-target=".infoModal" onClick="fnAddProjcetModal()">등록</button>
+											</div>
+										</div>
+									</div>
+								</div><!-- //x_content -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /page content -->
+
+		<!-- 프로젝트 모달 -->
+		<div class="modal fade infoModal" tabindex="-1" role="dialog" aria-hidden="false">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+						</button>
+						<h2 class="modal-title" id="myModalLabel"><strong><span id="modalTitle"></span></strong>
+						</h2>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal form-label-left">
+							<div class="form-group pdTB_10">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12 ta_left">프로젝트 명</label>
+								<div class="col-md-9 col-sm-9 col-xs-12">
+									<input type="text" class="form-control" id="name" placeholder="프로젝트 명">
+									<input type="hidden" class="form-control" id="projectSequencePk">
+								</div>
+							</div>
+							<div class="form-group pdTB_10">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12 ta_left">설명</label>
+								<div class="col-md-9 col-sm-9 col-xs-12">
+									<textarea class="form-control" id="description" rows="5"
+										placeholder="프로젝트 설명"></textarea>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" id="saveProjectBtn"></button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //프로젝트 모달 -->
+
+	</th:block>
+</body>
+
+</html>

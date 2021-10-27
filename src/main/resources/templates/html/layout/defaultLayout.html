@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<title>데이터 분석 시스템</title>
+
+	<!-- 공통 css, js, meta tag -->
+	<th:block th:replace="fragments/commonHead"></th:block>
+</head>
+
+<body class="nav-md">
+
+	<!-- 로딩바 -->
+	<div id="loading" class="disp_none">
+		<div class="loading"><img id="loading-image" src="images/spin.gif" alt="Loading..." /></div>
+		<div class="loadingBox"></div>
+	</div>
+	<!-- //로딩바 -->
+
+	<div id="root">
+		<div class="container body">
+			<div class="main_container">
+
+				<!-- [left 메뉴] -->
+				<div class="col-md-3 left_col">
+					<div class="left_col scroll-view">
+						<div class="navbar nav_title border_0">
+							<a href="/" class="site_title"><i class="fa fa-cubes"></i> <span>데이터분석시스템</span></a>
+						</div>
+						<div class="clearfix"></div>
+						<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+
+							<!-- 공통 데이터분석 시스템 메뉴 구성 -->
+							<th:block th:replace="fragments/commonMenu"></th:block>
+
+						</div><!-- //sidebar-menu -->
+					</div><!-- //left_col scroll-view -->
+				</div>
+				<!-- //[left 메뉴] -->
+
+				<!-- [top navigation 구성] -->
+				<th:block th:replace="fragments/commonTopNavi"></th:block>
+				<!-- //[top navigation 구성] -->
+
+				<!-- [컨텐츠] -->
+				<!-- content body 구성 -->
+				<th:block layout:fragment="content"></th:block>
+				<!-- //[컨텐츠] -->
+
+				<!-- 공통 footer -->
+				<footer th:replace="fragments/commonFooter :: commonFooter"></footer>
+				<!-- //공통 footer -->
+
+
+			</div><!-- //main_container -->
+		</div><!-- //container body -->
+	</div><!-- //root -->
+
+	<!-- 공통 javascript -->
+	<th:block th:replace="fragments/commonScript"></th:block>
+	<!-- //공통 javascript -->
+
+</body>
+
+</html>

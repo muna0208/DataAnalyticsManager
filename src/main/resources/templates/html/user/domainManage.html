@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+  layout:decorator="layout/defaultLayout">
+
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/js/lib/jstree/themes/default/style.css}" rel="stylesheet" />
+  <link href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" />
+</head>
+
+<body>
+  <th:block layout:fragment="content">
+    <script th:src="@{dist/user/project/model.js}"></script>
+    <script th:src="@{dist/user/deeplearningProject/deepLearningDetail.js}"></script>
+    <script th:src="@{dist/user/domainManage.js}"></script>
+    <script th:src="@{js/lib/jstree/jstree.js}"></script>
+    <script th:src="@{dist/user/dataManage.js}"></script>
+    <script th:src="@{/gentelella/vendors/dropzone/dist/min/dropzone.min.js}"></script>
+
+    <!-- page content -->
+    <input type="hidden" id="userId" th:value="${session.userId}" />
+    <input type="hidden" id="userId" th:value="${session.userAuth}" />
+
+    <div>
+      <div>
+        <div class="right_col" role="main" id="domain_wrap">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2><strong>도메인 관리</strong></h2>
+                  <div class="clearfix"></div>
+                </div><!-- //x_title -->
+
+                <div class="x_content">
+                  <div class="search_box">
+                    <form class="form-inline">
+                      <div class="form-group col-md-3">
+                        <label class="control-label col-md-3 col-sm-3">유형</label>
+                        <div class="col-md-8 col-sm-8 ">
+                          <select id="type" class="form-control width_100p">
+                            <option value="all" class="learning">전체</option>
+                            <option value="machine" class="learning">머신러닝</option>
+                            <option value="deep" class="learning">딥러닝</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-3 mgRight_40">
+                        <label class="control-label col-md-4 col-sm-4">카테고리</label>
+                        <div class="col-md-8 col-sm-8 ">
+                          <select id="search_option" class="form-control width_100p">
+                            <option>전체</option>
+                            <!-- 동적 추가 부분 -->
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-5">
+                        <fieldset class="row">
+
+                          <div class="col-md-2">
+                            <label class="control-label">등록일</label>
+                          </div>
+                          <div class="col-md-5">
+                            <div class="control-group">
+                              <div class="controls row">
+                                <div class="col-md-12 xdisplay_inputx form-group row has-feedback">
+                                  <input type="text" class="form-control has-feedback-left width_100p" id="single_cal1"
+                                    placeholder="First Name" aria-describedby="inputSuccess2Status">
+                                  <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                  <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-5">
+                            <div class="control-group">
+                              <div class="controls row">
+                                <div class="col-md-12 xdisplay_inputx form-group row has-feedback">
+                                  <input type="text" class="form-control has-feedback-left width_100p" id="single_cal2"
+                                    placeholder="First Name" aria-describedby="inputSuccess2Status2">
+                                  <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                  <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </fieldset>
+
+                      </div>
+
+
+                      <div class="form-check col-md-3 mgTop_20">
+                        <label class="col-sm-3 col-md-3 col-form-label">검색어</label>
+                        <div class="col-sm-9 col-md-9">
+                          <div class="input-group">
+                            <input type="text" id="search_word" class="form-control minWidth_100">
+                            <span class="input-group-btn">
+                              <button type="button" id="search_button" class="btn btn-primary borderRadius">검색</button>
+                            </span>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="col-md-1 pull-right mgTop_20 mgRight_90">
+                        <button type="button" id="my_domain" class="btn btn-dark">마이 도메인</button>
+                      </div>
+
+
+                    </form>
+                  </div>
+                  <!--search_box-->
+
+                  <table id="domain_board"
+                    class="table table-striped table-bordered dt-responsive nowrap bulk_action domain_table"
+                    cellspacing="0" width="100%">
+                    <thead>
+                      <tr class="headings">
+                        <th><input type="checkbox" id="check_all" class="flat"></th>
+                        <th class="column-title">NO</th>
+                        <th class="column-title">카테고리</th>
+                        <th class="column-title ta_center">도메인 제목</th>
+                        <th class="column-title">등록자</th>
+                        <th class="column-title">등록일</th>
+                        <th class="bulk-actions" colspan="5">
+                          <a class="antoo">선택된 데이터 ( <span class="action-cnt"> </span> ) <i
+                              class="fa fa-chevron-down"></i></a>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyHtml">
+                      <!-- <tr>
+                        <td class="a-center"><input type="checkbox" class="flat" name="table_records"></td>
+                        <td>1</td>
+                        <td>제조</td>
+                        <td class="bold table_title">제조설비 이상 감지 모니터링
+                                                        <div class="btngroup domaintitle_btn">
+                                                            <button class="btn btn-xs" type="button">모델</button>
+                                                            <button class="btn btn-xs" type="button">전처리 데이터</button>
+                                                            <button class="btn btn-xs" type="button">원본 데이터</button>
+                                                            <button class="btn btn-xs" type="button" data-toggle="modal" data-target=".modelTestModal">테스트</button>
+                                                        </div>
+                                                    </td>
+                        <td>cityhub04</td>
+                        <td>2020.01.01</td>
+                      </tr> -->
+                    </tbody>
+                  </table>
+
+                  <div class="row">
+                    <div class="col-md-7">
+                      <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
+                        <ul class="pagination">
+                          <!-- 동적 추가 부분 -->
+                        </ul>
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-5 text-right">
+                      <div class="btn-group">
+                        <button type="button" id="delete_button" class="btn btn-default mgRight_5">삭제</button>
+                        <button type="button" id="modifyBtn" class="btn btn-default mgRight_5" data-toggle="modal"
+                          data-target=".domainModifyModal">수정</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal"
+                          data-target=".domainRegisterModal">등록</button>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- //x_content -->
+              </div>
+
+
+              <!-- [도메인 등록 모달 팝업] -->
+              <div class="modal fade domainRegisterModal" id="domainRegisterModal" tabindex="-1" role="dialog"
+                aria-hidden="false">
+                <!-- //-->
+                <div class="modal-dialog modal-md">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                      </button>
+                      <h2 class="modal-title" id=""><strong>도메인 등록</strong></h2>
+                    </div>
+                    <div class="modal-body row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+
+                        <form class="form-horizontal form-label-left">
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">* 카테고리</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <select id="register_category" class="form-control">
+                                <!-- 동적 추가 -->
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="domain_name">* 도메인
+                              제목</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="text" id="register_title" class="form-control" placeholder="">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="domain_name"> 도메인
+                              설명</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="text" id="register_description" class="form-control" placeholder="">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">* 프로젝트</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <select id="register_project" class="form-control">
+                                <!-- 동적 추가 -->
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">* 모델</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <select id="register_model" class="form-control">
+                                <!-- 동적 추가 -->
+                              </select>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" id="register_button" class="btn btn-default"
+                        data-dismiss="modal">등록</button>
+                    </div>
+                  </div><!-- //modal-content -->
+                </div>
+              </div>
+              <!-- //[도메인 등록 모달 팝업] -->
+
+              <!-- [도메인 수정 모달 팝업] -->
+              <div class="modal fade domainModifyModal" id="domainModifyModal" tabindex="-1" role="dialog"
+                aria-hidden="false">
+                <!-- //-->
+                <div class="modal-dialog modal-md">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                      </button>
+                      <h2 class="modal-title" id=""><strong>도메인 수정</strong></h2>
+                    </div>
+                    <div class="modal-body row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+
+                        <form id="modify_form" class="form-horizontal form-label-left">
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">* 카테고리</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <select id="modify_category" class="form-control">
+                                <!-- 동적 추가 -->
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="domain_name">* 도메인
+                              제목</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="text" id="modify_title" class="form-control" placeholder="">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="domain_name"> 도메인
+                              설명</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="text" id="modify_description" class="form-control" placeholder="">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">* 프로젝트</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <select id="modify_project" class="form-control">
+                                <!-- 동적 추가 -->
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">* 모델</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <select id="modify_model" class="form-control">
+                                <!-- 동적 추가 -->
+                              </select>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" id="modify_button" class="btn btn-default">수정</button>
+                    </div>
+                  </div><!-- //modal-content -->
+                </div>
+              </div>
+              <!-- //[도메인 수정 모달 팝업] -->
+
+              <!-- [모델 테스트 모달 팝업] -->
+              <div class="modal fade modelTestModal in" tabindex="-1" role="dialog" aria-hidden="false">
+                <div class="modal-dialog modal-lg test">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><span
+                          aria-hidden="true">×</span></button>
+                      <h2 class="modal-title" id=""><strong>모델 테스트</strong></h2>
+                    </div>
+                    <div class="modal-body">
+                      <div>
+                        <h5 class="modal-title"><strong>테스트 데이터 선택</strong></h5>
+
+                        <div class="clearfix mgTop_15">
+                          <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="x_panel popup_tree">
+
+                              <div class="x_title"><strong>내부 보관 디렉토리</strong></div>
+                              <div class="datascroll mgTop_30 mgBottom_10">
+                                <div id="jstree_currentDir"></div>
+                                <div class="x_content">
+                                  <div id="jstree_fileBrowser"></div>
+                                </div>
+                              </div>
+                              <!--//x_content-->
+                              <button onclick="refreshTree('jstree_fileBrowser')" type="button"
+                                class="btn btn-secondary btn-sm"><i class="fa fa-refresh"></i></button>
+                              <button id="treeCreate_jstree_fileBrowser" type="button"
+                                class="btn btn-secondary btn-sm"><i class="fa fa-plus"></i>폴더추가</button>
+                              <button id="treeUpdate_jstree_fileBrowser" type="button"
+                                class="btn btn-secondary btn-sm"><i class="fa fa-edit"></i>수정</button>
+                              <button id="treeDelete_jstree_fileBrowser" type="button"
+                                class="btn btn-secondary btn-sm"><i class="fa fa-trash"></i>삭제</button>
+                            </div>
+                            <!--//popup_tree-->
+                          </div>
+
+                          <div class="col-md-6 col-sm-6 col-xs-12">
+
+                            <div class="x_panel">
+                              <div class="x_title"><strong>데이터 미리보기(상위 10개)</strong></div>
+                              <div class="x_content">
+
+                                <div class="datascroll mgTop_30 mgBottom_10">
+                                  <table id="jstree_dataSampleTable"
+                                    class="table table-bordered table-striped table-hover"></table>
+                                </div><!-- //테이블 -->
+                              </div><!-- //x_content -->
+                            </div><!-- //x_panel -->
+                          </div>
+                        </div>
+
+                        <h5 class="modal-title mgTop_15"><strong>테스트 결과</strong></h5>
+                        <div class="clearfix mgTop_15">
+
+                          <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="x_panel popup_tree">
+                              <div class="x_content">
+                                <form class="form-horizontal form-label-left">
+                                  <div class="datascroll">
+                                    <div id="modelTestResult" class="mgBottom_10">
+                                    </div>
+                                    <table class="table table-bordered jambo_table" id="testResultTable">
+                                    </table>
+                                  </div>
+                                </form>
+                                <!-- 동적 추가 -->
+                              </div>
+                              <!--//x_content-->
+                            </div>
+                            <!--//popup_tree-->
+                          </div>
+
+                          <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="x_panel">
+                              <div id="modelResultChart" class="height_216"></div>
+                            </div><!-- //x_panel -->
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" id="testButton" class="btn btn-primary mg_0">테스트 요청</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- [//모델 테스트 모달 팝업] -->
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    <!-- /page content -->
+
+  </th:block>
+</body>
+
+</html>

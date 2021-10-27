@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daumsoft.dataAnalyticsManager.restFullApi.mapper.UserMngMapper">
+
+	<select id="getUserInfo" parameterType="user" resultType="user">
+		/* userSql.getUserInfo */
+		SELECT 
+			id
+			, user_id
+			, user_auth
+			, user_name
+			, email
+		FROM 
+			"USER" 
+		WHERE 
+			user_id = #{userId} 
+		AND 
+			user_pw = #{userPw}
+		AND 
+			use_flag = true
+   </select>
+
+	<update id="updateLastAccessDate">
+		/* userSql.updateLastAccessDate */
+		UPDATE 
+		   "USER"
+		SET 
+			last_access_date = NOW()
+		WHERE 
+			user_id = #{userId}
+   </update>
+
+	<select id="getTotalUserCount" resultType="int">
+		/* userSql.getTotalUserCount */
+		SELECT 
+			COUNT(id)
+		FROM
+			"USER"
+		<where>
+			<choose>
+				<when test="option == 'userName' and value != null">
+					user_name ILIKE '%'||#{value}||'%'
+				</when>
+				<when test="option == 'userId' and value != null">
+					user_id ILIKE '%'||#{value}||'%'
+				</when>
+				<when test="option == 'email' and value != null">
+					email ILIKE '%'||#{value}||'%'
+				</when>
+				<when test="option == 'registerer' and value != null">
+					registerer ILIKE '%'||#{value}||'%'
+				</when>
+				<when test="option == 'all' and value != null">
+					(user_name ILIKE '%'||#{value}||'%'
+					OR user_id ILIKE '%'||#{value}||'%'
+					OR email ILIKE '%'||#{value}||'%'
+					OR registerer ILIKE '%'||#{value}||'%')
+				</when>
+			</choose>
+			<if test="admin == true">
+				AND user_auth = 'admin'
+			</if>
+		</where>
+	</select>
+
+	<select id="userAsGet" parameterType="hashmap" resultType="user">
+		/* userSql.userAsGet */
+		SELECT
+		    id, user_id, user_name, email, use_flag, registerer, updater, user_auth
+		    , COALESCE(to_char(last_access_date, 'YYYY-MM-DD HH24:MI:SS'), '-') AS "lastAccessDate" 
+		    , COALESCE(to_char(update_date, 'YYYY-MM-DD HH24:MI:SS'), '') AS "updateDate"
+		    , to_char(register_date, 'YYYY-MM-DD HH24:MI:SS') AS "insertDate"
+		FROM 
+			"USER" AS u
+		<where>
+			<choose>
+				<when test="option == 'userName' and value != null">
+						user_name 
+					ILIKE 
+						'%'||#{value}||'%'
+				</when>
+				<when test="option == 'userId' and value != null">
+						user_id 
+					ILIKE 
+						'%'||#{value}||'%'
+				</when>
+				<when test="option == 'email' and value != null">
+						email 
+					ILIKE 
+						'%'||#{value}||'%'
+				</when>
+				<when test="option == 'registerer' and value != null">
+					registerer ILIKE '%'||#{value}||'%'
+				</when>
+				<when test="option == 'all' and value != null">
+					(user_name ILIKE '%'||#{value}||'%'
+					OR user_id ILIKE '%'||#{value}||'%'
+					OR email ILIKE '%'||#{value}||'%'
+					OR registerer ILIKE '%'||#{value}||'%')
+				</when>
+			</choose>
+			<if test="admin == true">
+				AND user_auth = 'admin'
+			</if>
+		</where>
+		ORDER BY "insertDate" DESC
+		LIMIT
+			10
+		OFFSET
+			#{pageNo}
+	</select>
+
+	<select id="userAsGetOne" resultType="user">
+		/* userSql.userAsGetOne */
+		SELECT
+		    id, user_id, user_name, email, use_flag, registerer, updater, user_auth
+		    , COALESCE(to_char(last_access_date, 'YYYY-MM-DD HH24:MI:SS'), '-') AS last_access_date 
+		    , COALESCE(to_char(update_date, 'YYYY-MM-DD HH24:MI:SS'), '') AS update_date
+		    , to_char(register_date, 'YYYY-MM-DD HH24:MI:SS') AS register_date
+		FROM "USER" AS u 
+		WHERE 
+		   user_id = #{userId}
+   </select>
+
+	<insert id="userAsPost">
+		/* userSql.userAsPost */
+		INSERT INTO 
+			"USER"(
+				user_id
+				, user_name
+				, email
+				, user_pw
+				, register_date
+				, update_date
+				, registerer
+				, updater
+				, user_auth
+				, use_flag
+				, last_access_date
+				, phone_number
+			) VALUES (
+				#{user.userId}
+				, #{user.userName}
+				, #{user.email}
+				, #{user.userPw}
+				, NOW()
+				, NOW()
+		<choose>
+			<when test="currentName != null">
+				, #{currentName}
+				, #{currentName}
+			</when>
+			<otherwise>
+				, #{user.userName}
+				, #{user.userName}
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="user.userAuth != null">
+				, #{user.userAuth}
+				, #{user.useFlag}
+			</when>
+			<otherwise>
+				, 'user'
+				, true
+			</otherwise>
+		</choose>
+		, NOW()
+		<choose>
+			<when test="user.phoneNumber == null">
+				, ''
+			</when>
+			<otherwise>
+				, #{user.phoneNumber}
+			</otherwise>
+		</choose>
+		)
+	</insert>
+
+	<delete id="userAsDelete" parameterType="list">
+		/* userSql.userAsDelete */
+		DELETE FROM
+			"USER"
+		WHERE
+		<foreach collection="list" item="item" index="index" separator="OR">
+				user_id = #{item}
+		</foreach>
+	</delete>
+
+	<update id="userAsPatch">
+		/* userSql.userAsPatch */
+		UPDATE
+			"USER"
+		SET
+			user_name = #{user.userName}
+			, email = #{user.email}
+			, user_pw = #{user.userPw}
+		<if test="user.userAuth != null">
+				, user_auth = #{user.userAuth}
+				, use_flag = #{user.useFlag}
+		</if>
+		, last_access_date = NOW()
+			, update_date = NOW()
+		WHERE
+			user_id = #{modifyingId}
+	</update>
+
+	<update id="useFlagAsPatch">
+		/* userSql.useFlagAsPatch */
+		UPDATE
+			"USER"
+		SET
+			use_flag = NOT use_flag
+		WHERE
+			user_id = #{userId}
+	</update>
+
+	<select id="findUser" parameterType="user" resultType="user">
+		/* userSql.findUser */
+		SELECT 
+			user_id
+		FROM
+			"USER"
+		<where>
+			<if test="userName != null and userName != 'null' and userName != ''">
+				AND user_name = #{userName}
+			</if>
+			<if test="email != null and email != 'null' and email != ''">
+				AND email = #{email}
+			</if>
+			AND use_flag = TRUE
+		</where>
+	</select>
+
+	<update id="updateTempPassword" parameterType="user">
+		/* userSql.updateTempPassword */
+		UPDATE 
+			"USER" 
+		SET
+			user_pw = #{userPw}
+		WHERE 
+			user_id = #{userId}
+	</update>
+</mapper>

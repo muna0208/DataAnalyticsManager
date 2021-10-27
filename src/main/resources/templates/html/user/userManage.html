@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+  layout:decorator="layout/defaultLayout">
+
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <th:block layout:fragment="content">
+    <script th:src="@{dist/user/userManage.js}"></script>
+    <script th:src="@{dist/login.js}"></script>
+
+    <!-- page content -->
+    <div>
+      <div>
+        <div class="right_col" role="main" id="domain_wrap">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2><strong>사용자 관리</strong></h2>
+
+                  <ul class="nav navbar-right user_nav">
+                    <li><a href="#" id="admin"><i class="fa fa-user"></i>관리자</a></li>
+                    <li><a href="#" id="self_modify" data-toggle="modal" data-target=".usermodalPopup_3"><i
+                          class="fa fa-pencil"></i>정보수정</a></li>
+                    <li><a href="/logout"><i class="fa fa-sign-out"></i>로그아웃</a></li>
+                  </ul>
+
+                  <div class="clearfix"></div>
+                </div><!-- //x_title -->
+
+                <div class="x_content">
+                  <div class="search_box">
+                    <form class="form-inline">
+                      <div class="form-group col-md-12">
+                        <div class="col-md-2 col-sm-2 selectBox">
+                          <select id="search_option" class="form-control width_100p">
+                            <option value="all">전체</option>
+                            <option value="userName">이름</option>
+                            <option value="userId">아이디</option>
+                            <option value="email">이메일</option>
+                            <option value="registerer">등록자</option>
+                          </select>
+                        </div>
+
+
+                        <label class="col-sm-1 col-form-label text-right pdright_25" for="search_word">검색어</label>
+                        <div class="col-sm-3">
+                          <div class="input-group width_100p">
+                            <input type="text" class="form-control" name="search_word" id="search_word">
+                            <span class="input-group-btn">
+                              <button type="button" id="search_button" class="btn btn-primary borderRadius">검색</button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </form>
+                  </div>
+                  <!--search_box-->
+
+
+
+                  <table id="user_board"
+                    class="table table-striped table-bordered dt-responsive nowrap bulk_action user_table"
+                    cellspacing="0" width="100%">
+                    <thead>
+                      <tr class="headings">
+                        <th id="header"><input type="checkbox" id="check_all" class="flat"></th>
+                        <th class="column-title">NO</th>
+                        <th class="column-title">이름</th>
+                        <th class="column-title">아이디</th>
+                        <th class="column-title">이메일</th>
+                        <th class="column-title">최근 접속일</th>
+                        <th class="column-title">등록자</th>
+                        <th class="column-title">사용여부</th>
+                        <th class="bulk-actions" colspan="7">
+                          <a class="antoo">선택된 데이터 ( <span class="action-cnt"> </span>
+                            ) <i class="fa fa-chevron-down"></i></a>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyHtml">
+                      <!-- <tr class="user_info">
+                                          <td class="a-center"><input type="checkbox" class="flat"
+                                                  name="table_records"></td>
+                                          <td>1</td>
+                                          <td>홍길동</td>
+                                          <td data-toggle="modal" data-target=".usermodalPopup_2"
+                                              class="cusor">admin</td>
+                                          <td>abc@naver.com</td>
+                                          <td>2019.01.01</td>
+                                          <td>관리자</td>
+                                          <td>
+                                              <div class="switch_box">
+                                                  <label class="switch">
+                                                      <input type="checkbox" checked="">
+                                                      <span class="slider round"></span>
+                                                  </label>
+                                              </div>
+                                          </td>
+                                      </tr> -->
+
+                    </tbody>
+                  </table>
+
+                  <div class="row">
+                    <div class="col-md-7">
+                      <div class="dataTables_paginate paging_simple_numbers" id="datatable-buttons_paginate">
+                        <ul class="pagination">
+                          <!-- 동적 추가 부분-->
+                        </ul>
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-5 text-right">
+                      <div class="btn-group">
+                        <button type="button" id="delete_button" class="btn btn-default mgRight_5">삭제</button>
+                        <button type="button" class="btn btn-success" data-toggle="modal"
+                          data-target=".usermodalPopup_1">등록</button>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- //x_content -->
+              </div>
+
+
+              <!-- [사용자등록 모달 팝업] -->
+              <div class="modal fade usermodalPopup_1" id="usermodalPopup_1" tabindex="-1" role="dialog"
+                aria-hidden="false">
+                <!-- //-->
+                <div class="modal-dialog modal-md">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                      </button>
+                      <h2 class="modal-title" id=""><strong>사용자 등록</strong></h2>
+                    </div>
+                    <div class="modal-body row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+
+                        <form class="form-horizontal form-label-left">
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">* 아이디</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="text" class="form-control" placeholder="영문, 숫자 포함 (4 ~ 12자)"
+                                name="register_id" id="register_id">
+                              <button type="button" id="dup2" class="btn btn-default dup">중복
+                                확인</button>
+                              <div class="invalid-feedback">
+                                이미 사용 중인 아이디입니다.
+                              </div>
+                              <div class="valid-feedback">
+                                사용 가능한 아이디입니다.
+                              </div>
+
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="register__name">*
+                              이름</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="text" class="form-control" placeholder="영문, 숫자" name="register_name"
+                                id="register_name">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="register__email">*
+                              이메일</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="text" class="form-control" placeholder="abdc1234@vaiv.kr"
+                                name="register_email" id="register_email">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left"
+                              for="register__password">* 비밀번호</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="password" class="form-control" placeholder="영문, 숫자 포함 (8 ~ 15자)"
+                                name="register_password" id="register_password">
+                              <i class="eye fa fa-eye fa-lg"></i>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left"
+                              for="register__password2">* 비밀번호 확인</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="password" class="form-control" placeholder="영문, 숫자 포함 (8 ~ 15자)"
+                                name="register_password2" id="register_password2">
+                              <i class="eye fa fa-eye fa-lg"></i>
+                            </div>
+                          </div>
+
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">* 사용자
+                              권한</label>
+                            <div class="radio col-md-9 col-sm-9 col-xs-12">
+                              <label>
+                                <input type="radio" class="flat" checked name="iCheck_register" value="user"> 사용자
+                              </label>
+
+                              <label>
+                                <input type="radio" class="flat" name="iCheck_register" value="admin">
+                                관리자
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">* 사용자
+                              여부</label>
+                            <div class="radio col-md-9 col-sm-9 col-xs-12">
+                              <label>
+                                <input type="radio" class="flat" checked name="iCheck2_register" value="true"> 사용
+                              </label>
+
+                              <label>
+                                <input type="radio" class="flat" name="iCheck2_register" value="false">
+                                미사용
+                              </label>
+                            </div>
+                          </div>
+
+                        </form>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" id="store_button" class="btn btn-primary">저장</button>
+                    </div>
+                  </div><!-- //modal-content -->
+                </div>
+              </div>
+              <!-- //[사용자등록 모달 팝업] -->
+
+
+
+              <!-- [사용자수정 모달 팝업] -->
+              <div class="modal fade usermodalPopup_2" id="usermodalPopup_2" tabindex="-1" role="dialog"
+                aria-hidden="false">
+                <!-- //-->
+                <div class="modal-dialog modal-md">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                      </button>
+                      <h2 class="modal-title" id=""><strong>사용자 수정</strong></h2>
+                    </div>
+                    <div class="modal-body row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+
+                        <form class="form-horizontal form-label-left">
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">* 아이디</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="text" class="form-control" placeholder="영문, 숫자 포함 (4 ~ 12자)" name="modify_id"
+                                id="modify_id" readonly>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="modify_name">*
+                              이름</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="text" class="form-control" placeholder="영문, 숫자" name="modify_name"
+                                id="modify_name">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="modify_email">*
+                              이메일</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="text" class="form-control" placeholder="abdc1234@vaiv.kr"
+                                name="modify_email" id="modify_email">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="modify_password">*
+                              비밀번호</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="password" class="form-control" placeholder="영문, 숫자 포함 (8 ~ 15자)"
+                                name="modify_password" id="modify_password">
+                              <i class="eye fa fa-eye fa-lg"></i>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="modify_password2">*
+                              비밀번호 확인</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="password" class="form-control" placeholder="영문, 숫자 포함 (8 ~ 15자)"
+                                name="modify_password2" id="modify_password2">
+                              <i class="eye fa fa-eye fa-lg"></i>
+                            </div>
+                          </div>
+
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">* 사용자
+                              권한</label>
+                            <div class="radio col-md-9 col-sm-9 col-xs-12">
+                              <label>
+                                <input type="radio" class="flat userAuth user" name="iCheck_modify" value="user"> 사용자
+                              </label>
+
+                              <label>
+                                <input type="radio" class="flat userAuth admin" name="iCheck_modify" value="admin">
+                                관리자
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">* 사용자
+                              여부</label>
+                            <div class="radio col-md-9 col-sm-9 col-xs-12">
+                              <label>
+                                <input type="radio" id="use" class="flat" name="iCheck2_modify" value="true"> 사용
+                              </label>
+
+                              <label>
+                                <input type="radio" id="unuse" class="flat" name="iCheck2_modify" value="false">
+                                미사용
+                              </label>
+                            </div>
+                          </div>
+
+                        </form>
+                      </div>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" id="modify_button" class="btn btn-primary" data-dismiss="modal">저장</button>
+                    </div>
+                  </div><!-- //modal-content -->
+                </div>
+              </div>
+              <!-- //[사용자수정 모달 팝업] -->
+
+
+              <!-- [회원정보수정 모달 팝업] -->
+              <div class="modal fade usermodalPopup_3" id="usermodalPopup_3" tabindex="-1" role="dialog"
+                aria-hidden="false">
+                <!-- //-->
+                <div class="modal-dialog modal-md">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                      </button>
+                      <h2 class="modal-title" id=""><strong>회원정보 수정</strong></h2>
+                    </div>
+                    <div class="modal-body row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+
+                        <form class="form-horizontal form-label-left">
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">* 아이디</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="text" class="form-control" placeholder="영문, 숫자 포함 (4 ~ 12자)" name="myself_id"
+                                id="myself_id" readonly>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="myself_name">*
+                              이름</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="text" class="form-control" placeholder="영문, 숫자" name="myself_name"
+                                id="myself_name">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="myself_email">*
+                              이메일</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="text" class="form-control" placeholder="abdc1234@vaiv.kr"
+                                name="myself_email" id="myself_email">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="myself_password">*
+                              비밀번호</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="password" class="form-control" placeholder="영문, 숫자 포함 (8 ~ 15자)"
+                                name="myself_password" id="myself_password">
+                              <i class="eye fa fa-eye fa-lg"></i>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12 text-left" for="myself_password2">*
+                              비밀번호 확인</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                              <input type="password" class="form-control" placeholder="영문, 숫자 포함 (8 ~ 15자)"
+                                name="myself_password2" id="myself_password2">
+                              <i class="eye fa fa-eye fa-lg"></i>
+                            </div>
+                          </div>
+
+                        </form>
+                      </div>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" id="alter_button" class="btn btn-primary">저장</button>
+                    </div>
+                  </div><!-- //modal-content -->
+                </div>
+              </div>
+              <!-- //[회원정보수정 모달 팝업] -->
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </th:block>
+</body>
+
+</html>

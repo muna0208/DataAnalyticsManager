@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout/defaultLayout">
+
+<head>
+	<meta charset="UTF-8">
+	<link th:href="@{/js/lib/jstree/themes/default/style.css}" rel="stylesheet" />
+</head>
+
+<body>
+	<th:block layout:fragment="content">
+		<script th:src="@{dist/user/dashBoard.js}"></script>
+		<script th:src="@{dist/user/deeplearningProject/deepLearningDetail.js}"></script>
+		<script th:src="@{dist/user/project/model.js}"></script>
+		<script th:src="@{/gentelella/vendors/dropzone/dist/min/dropzone.min.js}"></script>
+		<script th:src="@{dist/user/dataManage.js}"></script>
+		<script th:src="@{js/lib/jstree/jstree.js}"></script>
+
+		<!-- page content -->
+		<div class="container body">
+			<div class="main_container">
+
+				<!-- [컨텐츠] -->
+				<div class="dashboard_wrap">
+					<div>
+						<div class="right_col" role="main" id="myContentsWrap">
+							<div class="row">
+								<div class="col-md-12 col-sm-12 col-xs-12">
+
+									<div class="numbox">
+										<a href="/domainManage">
+											<p>도메인</p>
+											<span><em class="domainCount">- </em>건</span>
+										</a>
+
+										<a href="#">
+											<p>머신러닝 모델</p>
+											<span><em class="machineModelCount">- </em>건</span>
+										</a>
+
+										<a href="#">
+											<p>딥러닝 모델</p>
+											<span><em class="deepModelCount">- </em>건</span>
+										</a>
+
+										<a href="/projectManage">
+											<p>머신러닝 프로젝트</p>
+											<span><em class="machineProjectCount">- </em>건</span>
+										</a>
+
+										<a href="/deepLearningManage">
+											<p>딥러닝 프로젝트</p>
+											<span><em class="deepProjectCount">- </em>건</span>
+										</a>
+									</div>
+
+									<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".How_popup">How to use</button> -->
+									<button type="button" class="btn btn-primary"
+										onclick="location.href='/userGuide'">How to use</button>
+
+									<div class="x_panel">
+										<div class="x_title">
+											<div class="col-md-8 col-sm-8 col-xs-8 text-right">
+												<h2>저장 용량</h2>
+											</div>
+											<div class="clearfix"></div>
+										</div>
+										<div id="sizeChart" class="height_300 mgTB_30"></div>
+
+										<div class="x_title">
+											<div class="col-md-8 col-sm-8 col-xs-8 text-right">
+												<h2>최근 분석 내역</h2>
+											</div>
+
+											<div class="clearfix"></div>
+										</div><!-- //x_title -->
+										<div class="row">
+
+										</div>
+										<div id="content" class="x_content">
+											
+											<!-- //x_content -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- //[컨텐츠] -->
+
+					<!-- [모달 팝업] -->
+					<div class="modal fade How_popup" id="How_popup" tabindex="-1" role="dialog" aria-hidden="false">
+						<div class="modal-dialog modal-md">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"><span
+											aria-hidden="true">×</span></button>
+								</div>
+								<div class="modal-body">
+									<form class="form-horizontal form-label-left">
+
+										<i class="fa fa-frown-o"></i>
+										<p class="noresult">최근 사용 내역이 없습니다</p>
+
+										<div class="text-center">
+											<div class="btn-group">
+												<button type="button" class="btn btn-primary howtouse">How to
+													use</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- //[테스트 모달 팝업] -->
+					<div id="testModal"></div>
+				</div><!-- //main_container -->
+			</div><!-- //container body -->
+			<!-- /page content -->
+	</th:block>
+</body>
+
+</html>

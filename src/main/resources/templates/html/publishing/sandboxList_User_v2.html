@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>샌드박스 관리(사용자화면 - 목록)</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/green.css" rel="stylesheet">
+
+<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="css/scroller.bootstrap.min.css" rel="stylesheet">
+
+<link href="css/switchery.min.css" rel="stylesheet">
+
+<link href="css/bootstrap-datetimepicker.css" rel="stylesheet"><!-- bootstrap-datetimepicker -->
+<link href="css/daterangepicker.css" rel="stylesheet"><!-- bootstrap-datetimepicker -->
+
+
+<link href="css/custom.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet"> <!-- //디자인팀 작업 CSS -->
+
+</head>
+
+
+<body class="nav-md">
+	<div id="root">
+		<div class="container body">
+			<div class="main_container">
+
+				<!-- [left 메뉴] -->
+				<div class="col-md-3 left_col">
+					<div class="left_col scroll-view">
+						<div class="navbar nav_title" style="border: 0px;">
+							<a href="/" class="site_title"><i class="fa fa-cubes"></i> <span>데이터분석시스템</span></a>
+						</div>
+						<div class="clearfix"></div>
+						<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+							<div class="menu_section active">
+								<ul class="nav side-menu" style="">
+									<li>
+										<a href="/algorithm"><i class="fa fa-home"></i> 알고리즘 조회</a>
+									</li>
+									<li class="active">
+										<a href="/sandboxMng"><i class="fa fa-edit"></i> 샌드박스 관리 </a>
+									</li>
+									<li>
+										<a href="/projectMng"><i class="fa fa-desktop"></i> 프로젝트 관리</a>
+									</li>
+									<li>
+										<a href="/jobMng"><i class="fa fa-table"></i> 잡 관리</a>
+									</li>
+									<li>
+										<a href="/batchMng"><i class="fa fa-bar-chart-o"></i> 배치 관리</a>
+									</li>
+								</ul>
+							</div>
+						</div><!-- //sidebar-menu -->
+					</div><!-- //left_col scroll-view -->
+				</div>
+				<!-- //[left 메뉴] -->
+
+				<!-- [top 메뉴] -->
+				<div class="top_nav">
+					<div class="nav_menu">
+						<nav><div class="nav toggle"><a id="menu_toggle"><i class="fa fa-bars"></i></a></div><ul class="nav navbar-nav navbar-right"></ul></nav>
+					</div>
+				</div>
+				<!-- //[top 메뉴] -->
+				
+				<!-- [컨텐츠] -->
+				<div>
+					<div>
+						<div class="right_col" role="main" id="myContentsWrap">
+							<div class="row">
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<div class="x_panel">
+										<div class="x_title">
+											<h2><strong>샌드박스 목록<small>Users</small></strong></h2>
+											<ul class="nav navbar-right panel_toolbox">
+												<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+												<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a></li>
+												<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+											</ul>
+											<div class="clearfix"></div>
+										</div><!-- //x_title -->
+										<div class="row">
+											<div class="col-md-12 col-sm-12 col-xs-12 text-right">
+												<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".adminModal">탬플릿 관리</button>
+												<button type="button" class="btn btn-success" data-toggle="modal" data-target=".sandModal">샌드박스 추가</button>
+											</div>
+										</div>
+										<div class="x_content">
+											<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap bulk_action" cellspacing="0" width="100%">
+												<thead>
+													<tr class="headings">
+														<th><input type="checkbox" id="check-all" class="flat"></th>
+														<th class="column-title">인스턴트 이름</th>
+														<th class="column-title">템플릿 명</th>
+														<th class="column-title">키페어</th>
+														<th class="column-title">상태</th>
+														<th class="column-title">모듈상태</th>
+														<th class="column-title">iP</th>
+														<th class="column-title">가용구역</th>
+														<th class="bulk-actions" colspan="7">
+															<a class="antoo" >선택된 데이터 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+														</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td class="a-center "><input type="checkbox" class="flat" name="table_records"></td>
+														<td class="" data-toggle="modal" data-target=".infoModal" role="button">ParkingAreaRegression</td>
+														<td>주차장데이터_M1.SMALL</td>
+														<td>DAUMSOFT</td>
+														<td>BUILD</td>
+														<td>-</td>
+														<td>10.1.1.2</td>
+														<td>nova</td>
+													</tr>
+													<tr>
+														<td class="a-center "><input type="checkbox" class="flat" name="table_records"></td>
+														<td class="" data-toggle="modal" data-target=".infoModal" role="button">RequestModel</td>
+														<td>RequestModel</td>
+														<td>DAUMSOFT</td>
+														<td>RUN</td>
+														<td>SUCCESS</td>
+														<td>10.1.1.3</td>
+														<td>nova</td>
+													</tr>
+												</tbody>
+											</table>
+										</div><!-- //x_content -->
+
+										
+										<!-- [인스턴트 이름 모달 팝업] -->
+										<div class="modal fade infoModal" tabindex="-1" role="dialog" aria-hidden="false">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<div class="modal-header">
+													  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+													  </button>
+													  <h2 class="modal-title" id=""><strong>템플릿 정보</strong></h2>
+													</div>
+													<div class="modal-body">
+														<table class="table table-bordered jambo_table"> <!-- text-center -->
+															<thead>
+																<tr>
+																	<th class="column-title">이름</th>
+																	<th>일반</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>VCPUs</th>
+																	<td>4</td>
+																</tr>
+																<tr>
+																	<td>Root 디스크</th>
+																	<td>20GB</td>
+																</tr>
+																<tr>
+																	<td>Ephemeral 디스크</th>
+																	<td>0GB</td>
+																</tr>
+																<tr>
+																	<td>모든 디스크</th>
+																	<td>20GB</td>
+																</tr>
+																<tr>
+																	<td>RAM</th>
+																	<td>2,048 MB</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+													<div class="modal-footer">
+													  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- //[인스턴트 이름 모달 팝업] -->
+
+
+										<!-- [템플릿관리 모달 팝업] -->
+										<div class="modal fade adminModal" id="adminModal" tabindex="-1" role="dialog" aria-hidden="false">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<div class="modal-header">
+													  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+													  <h2 class="modal-title" id=""><strong>템플릿 관리</strong></h2>
+													</div>
+													<div class="modal-body">
+														<div class="" role="tabpanel" data-example-id="togglable-tabs">
+														  <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+															<li role="presentation" class="active"><a href="#tab_content1" id="list-tab" role="tab" data-toggle="tab" aria-expanded="true">탬플릿 목록</a></li>
+															<li role="presentation" class=""><a href="#tab_content2" role="tab" id="apply-tab" data-toggle="tab" aria-expanded="false">탬플릿 신청목록</a></li>
+														  </ul>
+														  <div id="adminModalTempleteTab" class="tab-content">
+															<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="list-tab">
+																<div class="row">
+																	<div class="col-md-6 col-sm-9 col-xs-12">
+																		<div class="x_panel">
+																			<div class="x_title h5"><strong>템플릿 목록</strong></div>
+																			<div class="x_content">
+																				<ul>
+																					<li class="pdTB_10 activeSel"><a role="button">주차장 데이터</a></li>
+																					<li class="pdTB_10"><a role="button">주차장 데이터2</a></li>
+																					<li class="pdTB_10"><a role="button">주차장 데이터3</a></li>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-md-6 col-sm-9 col-xs-12">
+																		<div class="x_panel">
+																			<div class="x_title h5"><strong>템플릿 정보</strong></div>
+																			<div class="x_content">
+																				<div>
+																					<h6>A. 데이터 사용가능 목록</h6>
+																					<ul class="mgBottom_20">
+																						<li>1. 주차장 데이터</li>
+																						<li>2. 기상 데이터 </li>
+																					</ul>
+																					<h6>B. 인스턴스 정보</h6>
+																					<ul class="mgBottom_20">
+																						<li>1. 분당동, 수내동, 정자동</li>
+																						<li>2. 분당동</li>
+																					</ul>
+																					<h6>C. 기간</h6>
+																					<ul>
+																						<li>2019.03.01 ~ 2019.06.01</li>
+																					</ul>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div><!-- //tab_content1 -->
+															<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="apply-tab">
+																<div class="row">
+																	<div class="col-md-6 col-sm-9 col-xs-12">
+																		<div class="x_panel">
+																			<div class="x_title h5">
+																				<strong>템플릿 신청 중</strong>
+																				<div class="btn-group">
+																					<button data-toggle="dropdown" class="btn btn-dark dropdown-toggle" type="button">신청현황 <i class="caret"></i> </button>
+																					<button class="btn btn-dark " type="button"><i class="fa fa-plus"></i></button>
+																					<ul class="dropdown-menu">
+																						<li><a href="#">신청완료</a></li>
+																						<li><a href="#">처리중</a></li>
+																						<li><a href="#">생성중</a></li>
+																						<li><a href="#">생성완료</a></li>
+																						<li><a href="#">거절</a></li>
+																					</ul>
+																				</div>
+																			</div>
+																			<div class="x_content">
+																				<ul>
+																					<li class="pdTB_10 activeSel"><a role="button">야탑1동 주차장 데이터</a></li>
+																					<li class="pdTB_10"><a role="button">야탑1동 주차장 데이터2</a></li>
+																					<li class="pdTB_10"><a role="button">야탑1동 주차장 데이터3</a></li>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-md-6 col-sm-9 col-xs-12">
+																		<div class="x_panel">
+																			<!-- [리스트에서 보이는 영역]
+																			<div class="x_title h5"><strong>커스텀 샌드박스  신청 정보</strong></div>
+																			<div class="x_content">
+																				<div>
+																					<h6>A. 데이터 사용가능 목록</h6>
+																					<ul class="mgBottom_20">
+																						<li>1. 주차장 데이터</li>
+																						<li>2. 기상 데이터</li>
+																					</ul>
+																					<h6>B. 인스턴스정보</h6>
+																					<ul class="mgBottom_20">
+																						<li>야탑1동</li>
+																						<li>야탑동</li>
+																					</ul>
+																					<h6>C. 기간</h6>
+																					<ul class="mgBottom_20">
+																						<li>2019.03.01 ~ 2019.06.01</li>
+																					</ul>
+																					<h6>D. 진행정보</h6>
+																					<ul>
+																						<li>신청일 : 2019.8.1</li>
+																						<li>상태 : 샌드박스 템플릿 생성 중</li>
+																					</ul>
+																				</div>
+																				<div class="text-right"><button type="button" class="btn btn-default">신청취소</button></div>
+																			</div>
+																			<!-- [리스트에서 보이는 영역]-->
+
+																			<!-- [리스트에서 + 버튼 누르면 보이는 영역]-->
+																			<div class="x_title h5"><strong>커스텀 샌드박스 추가요청</strong></div>
+																			<div class="x_content">
+																				<form class="form-horizontal form-label-left">
+																					<fieldset>
+																					<div class="form-group pdBottom_10 bdBottom_f3f3f3">
+																						<label class="control-label col-md-3 col-sm-3 col-xs-12 ta_left">샌드박스 명</label>
+																						<div class="col-md-9 col-sm-9 col-xs-12">
+																						  <input type="text" class="form-control" placeholder="커스텀 샌드박스 명">
+																						</div>
+																					</div>
+																					<div class="form-group pdBottom_10 bdBottom_f3f3f3">
+																						<div class="col-md-7 col-sm-6 col-xs-6">
+																							<label class="control-label labelTitle">허가 된 데이터 사용가능 목록</label>
+																							<div>
+																							  <div><label><input type="checkbox" class="flat" checked="checked"> 주차장 데이터</label></div>
+																							  <div><label><input type="checkbox" class="flat"> 대기 환경 데이터</label></div>
+																							  <div><label><input type="checkbox" class="flat" checked="checked"> 기상 데이터</label></div>
+																							</div>
+																						</div>
+																						<div class="col-md-4 col-sm-6 col-xs-6">
+																							<label class="control-labe labelTitle">주차장데이터</label>
+																							<div>
+																							  <div><label><input type="checkbox" class="flat" checked="checked"> 야탑1동</label></div>
+																							  <div><label><input type="checkbox" class="flat"> 분당동</label></div>
+																							  <div><label><input type="checkbox" class="flat"> 수내동</label></div>
+																							  <div><label><input type="checkbox" class="flat"> 정자동</label></div>
+																							  <div><label><input type="checkbox" class="flat" checked="checked"> 한남동</label></div>
+																							</div>
+																						</div>
+																					</div>
+																					<div class="form-group pdBottom_10 bdBottom_f3f3f3">
+																						<label class="control-label col-md-3 col-sm-3 col-xs-12 ta_left">기간 선택</label>
+																						<div class="col-md-9 col-sm-9 col-xs-12">
+																							<div class="control-group">
+																							  <div class="controls">
+																								<div class="input-prepend input-group">
+																								  <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+																								  <input type="text" data-date-container="#adminModal" name="reservation" id="reservation" class="form-control" value="01/01/2016 - 01/25/2016" readonly/>
+																								</div>
+																							  </div>
+																							</div>
+																						</div>
+																					</div>
+																					<div class="text-center">
+																						<button class="btn btn-primary" type="button">샌드박스 템플릿  추가 요청</button>
+																					</div>
+																					</fieldset>
+																				</form>
+																			</div>
+																			<!-- //[리스트에서 + 버튼 누르면 보이는 영역]-->
+																		</div>
+																	</div>
+																</div>
+															</div><!-- //tab_content2 -->
+														  </div><!-- //adminModalTempleteTab -->
+														</div>
+													</div>
+
+													<div class="modal-footer">
+													  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- //[템플릿관리 모달 팝업] -->
+										
+										<!-- [샌드박스 추가 모달 팝업] -->
+										<div class="modal fade sandModal" id="sandModal" tabindex="-1" role="dialog" aria-hidden="false" > <!-- //-->
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<div class="modal-header">
+													  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+													  </button>
+													  <h2 class="modal-title" id=""><strong>샌드박스 추가</strong></h2>
+													</div>
+													<div class="modal-body">
+														<div class="col-md-12 col-sm-12 col-xs-12">
+															<div class="x_panel">
+																<div class="x_title h5"><strong>기본정보</strong></div>
+																<form class="form-horizontal form-label-left">
+																	<div class="form-group">
+																		<label class="control-label col-md-2 col-sm-2 col-xs-12 text-left">인스턴스 명</label>
+																		<div class="col-md-10 col-sm-10 col-xs-12">
+																		  <input type="text" class="form-control" placeholder="인스턴스 명">
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+														<div class="pdTB_30">
+															<div class="clearfix">
+																<div class="col-md-6 col-sm-9 col-xs-12">
+																	<div class="x_panel">
+																		<div class="x_title h5"><strong>서버 성능 선택</strong></div>
+																		<div class="x_content">
+																			<ul>
+																				<li class="pdTB_10 activeSel"><a role="button">M1,SMALL</a></li>
+																				<li class="pdTB_10"><a role="button">M1.HIGH</a></li>
+																			</ul>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6 col-sm-9 col-xs-12">
+																	<div class="x_panel">
+																		<div class="x_title h5"><strong>서버정보</strong></div>
+																		<div class="x_content height_200 overY_scroll">
+																			<table class="table table-hover" cellspacing="0" width="100%">
+																			  <thead>
+																				<tr>
+																				  <th>이름</th>
+																				  <th>일반</th>
+																				</tr>
+																			  </thead>
+																			  <tbody>
+																				<tr>
+																				  <td>VCPUs</td>
+																				  <td>4</td>
+																				</tr>
+																				<tr>
+																				  <td>Root 디스크</td>
+																				  <td>20GB</td>
+																				</tr>
+																				<tr>
+																				  <td>Ephemeral 디스크</td>
+																				  <td>0GB</td>
+																				</tr>
+																				<tr>
+																				  <td>모든 디스크</td>
+																				  <td>20GB</td>
+																				</tr>
+																				<tr>
+																				  <td>RAM</td>
+																				  <td>2,048 MB</td>
+																				</tr>
+																			  </tbody>
+																			</table>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="pdTB_30">
+															<div class="clearfix">
+																<div class="col-md-6 col-sm-9 col-xs-12">
+																	<div class="x_panel">
+																		<div class="x_title h5"><strong>분석용 템플릿 선택</strong></div>
+																		<div class="x_content">
+																			<ul>
+																				<li class="pdTB_10 activeSel"><a role="button">주차장 데이터</a></li>
+																				<li class="pdTB_10"><a role="button">야탑1동 주차장 데이터</a></li>
+																			</ul>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-6 col-sm-9 col-xs-12">
+																	<div class="x_panel">
+																		<div class="x_title h5"><strong>서버정보</strong></div>
+																		<div class="x_content height_200 overY_scroll">
+																			<h6>A. 데이터 사용가능 목록</h6>
+																			<ul class="mgBottom_20">
+																				<li>1. 주차장 데이터</li>
+																				<li>2. 기상 데이터 </li>
+																			</ul>
+																			<h6>B. 인스턴스 정보</h6>
+																			<ul class="mgBottom_20">
+																				<li>1. 분당동, 수내동, 정자동</li>
+																				<li>2. 분당동</li>
+																			</ul>
+																			<h6>C. 기간</h6>
+																			<ul>
+																				<li>2019.03.01 ~ 2019.06.01</li>
+																			</ul>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="text-right">
+															<button type="button" class="btn btn-primary">추가</button>
+														</div>
+													</div>
+													<div class="modal-footer">
+													  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+													</div>
+												</div><!-- //modal-content -->
+											</div>
+										</div>
+										<!-- //[샌드박스 추가 모달 팝업] -->
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //[컨텐츠] -->
+
+
+				<footer>
+					<div class="pull-right">Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a></div><div class="clearfix"></div>
+				</footer>
+			</div><!-- //main_container -->
+		</div><!-- //container body -->
+	</div><!-- //root -->
+
+	<!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- iCheck -->
+    <script src="js/icheck.min.js"></script>
+	<script src="js/moment.min.js"></script>
+	<script src="js/daterangepicker.js"></script>
+    <!-- Datatables -->
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+
+
+    <script src="js/dataTables.fixedHeader.min.js"></script>
+    <script src="js/dataTables.keyTable.min.js"></script>
+    <script src="js/dataTables.responsive.min.js"></script>
+    <script src="js/responsive.bootstrap.js"></script>
+    <script src="js/dataTables.scroller.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="js/custom.min.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function(e) {
+
+			//테이블 상단 버튼 영역
+			var addBtn	= '<button class="btn btn-default btn-sm mg_0 mgLeft_5"><i class="fa fa-play "></i></button>';
+			addBtn		+= '<button class="btn btn-default btn-sm mg_0 mgLeft_5"><i class="fa fa-stop "></i></button>';
+			addBtn		+= '<button class="btn btn-default btn-sm mg_0 mgLeft_5">삭제</button>';
+			$(".dataTables_filter").append(addBtn);
+
+		});
+	</script>
+</body>
+</html>

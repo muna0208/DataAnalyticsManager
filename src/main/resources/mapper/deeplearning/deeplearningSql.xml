@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daumsoft.dataAnalyticsManager.restFullApi.mapper.DeeplearningRestMapper">
+    
+   <select id="checkDuplicateOriginalData" resultType="int" parameterType="hashmap">
+		SELECT COUNT(id) FROM "DL_ORIGINAL_DATA"
+		WHERE project_id=#{id} 
+			AND parent_dir = #{path}
+			AND delete_flag = FALSE
+   </select>
+   
+   	<select id="getOriginalDataList" resultType="hashmap"  parameterType="hashmap">
+		SELECT 
+			id
+			,project_id
+			,parent_dir
+			,dir_summary
+			,files_summary
+			,files_count
+			,create_date
+			,progress_state
+			,progress_start_date
+			,progress_end_date
+			,delete_flag
+			,type
+		FROM "DL_ORIGINAL_DATA" 
+		WHERE delete_flag = FALSE 
+			AND project_id=#{id}
+		ORDER BY id DESC
+	</select>
+	
+   	<select id="getOriginalData" resultType="hashmap"  parameterType="hashmap">
+		SELECT 
+			id
+			,project_id
+			,parent_dir
+			,dir_summary
+			,files_summary
+			,files_count
+			,create_date
+			,progress_state
+			,progress_start_date
+			,progress_end_date
+			,delete_flag
+			,type
+		FROM "DL_ORIGINAL_DATA" 
+		WHERE delete_flag = FALSE 
+			AND id=#{id}
+		ORDER BY id DESC
+	</select>
+	
+   	<select id="getPreTrainedModelList" resultType="hashmap" >
+		SELECT 
+			id
+			,neural_network
+			,number_of_layer
+			,size
+			,number_of_class
+			,number_of_parm
+			,description
+			,architecture
+		FROM "PRETRAINED_NETWORK" 
+		ORDER BY neural_network ASC
+	</select>
+	
+   	<select id="getNeuralLayerParameterList" resultType="hashmap" >
+		SELECT 
+			name
+			,parameter
+			,library_function_description
+		FROM "NEURAL_LAYER" 
+		WHERE use_flag = TRUE 
+		AND library_object_name = 'keras.layers'
+		ORDER BY name ASC
+	</select>
+	
+   	<select id="getNeuralLayerOptimizers" resultType="hashmap" >
+		SELECT 
+			name
+		FROM "NEURAL_LAYER" 
+		WHERE use_flag = TRUE 
+		AND library_object_name = 'keras.optimizers'
+		ORDER BY name ASC
+	</select>
+   
+   	<select id="getModelList" resultType="hashmap"  parameterType="hashmap">
+		SELECT 
+			id
+			,progress_state
+			,command
+		FROM "DL_MODEL" 
+		WHERE delete_flag = FALSE 
+			AND project_id=#{projectId}
+			AND dl_original_data_id=#{orgId}
+			AND (progress_state='success' OR progress_state='ongoing')
+		ORDER BY id DESC
+	</select>
+	
+   	<select id="getModelData" resultType="hashmap"  parameterType="hashmap">
+		SELECT 
+			project_id
+			,dl_original_data_id
+			,command
+			,filepath
+			,filename
+			,network_summary
+			,train_summary
+			,validation_summary
+			,loss_summary
+			,accuracy_summary
+			,create_date
+			,progress_state
+			,progress_start_date
+			,progress_end_date
+			,delete_flag
+			,job_id
+		FROM "DL_MODEL" 
+		WHERE delete_flag = FALSE 
+			AND id=#{id}
+		ORDER BY id DESC
+	</select>
+		
+   	<select id="checkModelStatus" resultType="hashmap"  parameterType="hashmap">
+		SELECT 
+			id
+			,progress_state
+			,create_date
+			,progress_end_date
+		FROM "DL_MODEL" 
+		WHERE delete_flag = FALSE 
+			AND id=#{modelId}
+		ORDER BY id DESC
+	</select>	
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daumsoft.dataAnalyticsManager.restFullApi.mapper.ProjectRestMapper">
+	
+	<select id="originalDataList" resultType="java.util.HashMap">
+		/* originalDataSql.originalDataList */
+		SELECT 
+			id
+			, name
+			, sample_data
+			, column_info
+			, statistic_info
+		FROM "ML_ORIGINAL_DATA" 
+		WHERE delete_flag = FALSE 
+			AND project_id=#{projectSequencePk}
+		ORDER BY id DESC
+	</select>
+	
+	<select id="originalData" resultType="java.util.HashMap" parameterType="int">
+		/* originalDataSql.originalData */
+		SELECT
+			name
+			, sample_data
+			, column_info
+			, statistic_info
+		FROM "ML_ORIGINAL_DATA"
+		WHERE delete_flag = FALSE
+		    AND project_id=#{projectSequencePk}
+		    AND id = #{originalDataSequencePk}
+	</select>
+   
+   <insert id="insertOriginalData" parameterType="originalData">
+		/* originalDataSql.insertOriginalData */
+		INSERT INTO 
+   			"ML_ORIGINAL_DATA"(
+   				id
+   				, name
+   				, filepath
+   				, filename
+   				, extension
+   				, create_date
+   				, project_id
+   				, column_info
+   				, statistic_info
+   				, sample_data
+   				, amount
+   			) VALUES (
+   				#{originalDataSequencePk}
+   				,#{name}
+   				,#{filepath}
+   				,#{filename}
+   				,#{extension}
+   				,#{createDatetime}
+   				,#{projectSequenceFk1}
+   				,#{columns}
+   				,#{statistics}
+   				,#{sampleData}
+   				,#{amount}
+   			)
+   </insert>
+   
+   <update id="deleteOriginalData" parameterType="originalData">
+		/* originalDataSql.deleteOriginalData */
+		UPDATE "ML_ORIGINAL_DATA"
+   		SET
+   		<trim prefixOverrides=",">
+   			<if test='deleteFlag != null and deleteFlag != ""' >,delete_flag = #{deleteFlag}</if>
+		</trim>
+		WHERE id = #{originalDataSequencePk}
+   </update>
+   
+   <select id="preprocessFunctionList" resultType="java.util.HashMap">
+		/* originalDataSql.preprocessFunctionList */
+		SELECT
+			id
+			, name
+			, library_function_name
+		FROM "PREPROCESS_FUNCTION"
+		WHERE use_flag = TRUE
+		ORDER BY name ASC
+   </select>
+   
+   <select id="preprocessFunction" resultType="java.util.HashMap">
+		/* originalDataSql.preprocessFunction */
+		SELECT 
+			library_function_description
+			, parameter
+		FROM "PREPROCESS_FUNCTION"
+		WHERE id = #{preprocessFunctionSequencePk}
+   </select>
+   
+   <select id="checkDuplicateOriginalData" resultType="int" parameterType="originalData">
+		/* originalDataSql.checkDuplicateOriginalData */
+		SELECT COUNT(id) FROM "ML_ORIGINAL_DATA"
+		WHERE project_id=#{projectSequenceFk1} 
+			AND name = #{name}
+			AND extension = #{extension}
+			AND delete_flag = FALSE
+   </select>
+</mapper>

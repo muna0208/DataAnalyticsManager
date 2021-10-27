@@ -1,0 +1,82 @@
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    
+    converters:
+      preferred-json-mapper: gson
+
+  thymeleaf:
+    prefix: classpath:templates/html/
+    check-template-location: true
+    suffix: .html
+    mode: HTML5
+    cache: false
+    
+  datasource:
+    hikari:
+       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+       jdbc-url: jdbc:log4jdbc:postgresql://10.1.22.2:5432/DATA_ANALYTICS_SYSTEM?useUnicode=true&characterEncoding=utf-8
+       username: smartcity
+       password: smartcity
+       connection-test-query: SELECT 1
+  main:
+    allow-bean-definition-overriding: true
+# spring-boot-devtool    
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: false
+
+  servlet:
+    multipart:
+      max-file-size: 10GB
+      max-request-size: 10GB
+      location: ${java.io.tmpdir}
+      file-size-threshold: 1GB
+      enabled: true
+      
+  redis:
+    host: 10.1.22.2
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        min-idle: 2
+
+# spring-boot-starter-actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+            
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 3030
+
+
+module:
+  ip: http://10.1.1.61
+  port: 8002
+  method: /analyticsModule
+  localFiles: /localFile?path=/&command=get_list
+  healthCheck: /healthCheck
+  asyncSecond: 5000
+  asyncPeriod: 360
+
+filePath: /home/dasolution/files/
+fileTestPath: C:/data
+sampleFilePath: /home/dasolution/daSample/
+sampleFileTestPath: C:/daSample/
+isTest: true
+userMaxSpace: 3GB

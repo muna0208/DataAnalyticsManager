@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout/defaultLayout">
+
+<head>
+	<meta charset="UTF-8">
+</head>
+
+<body>
+	<th:block layout:fragment="content">
+		<script th:src="@{dist/user/project/originalData.js}"></script>
+		<script th:src="@{dist/user/project/model.js}"></script>
+		<script th:src="@{dist/user/project/preprocessedData.js}"></script>
+		<script th:src="@{dist/user/dataManage.js}"></script>
+		<script th:src="@{/gentelella/vendors/dropzone/dist/min/dropzone.min.js}"></script>
+
+		<link th:href="@{/js/lib/jstree/themes/default/style.css}" rel="stylesheet" />
+		<script th:src="@{js/lib/jstree/jstree.js}"></script>
+		<form method="POST" id="projectDetailForm" class="height_0" name="projectDetailForm">
+			<input type="hidden" id="projectType" name="projectType" value="M" />
+		</form>
+		<!-- page content -->
+		<div>
+			<div class="right_col" role="main" id="myContentsWrap">
+				<input type="hidden" id="projectSequencePk" th:value="${projectSequencePk}" />
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2 class="pdTop_15"><strong id="name"></strong><small id="description"></small></h2>
+								<ul class="nav navbar-right panel_toolbox">
+									<div class="text-right">
+										<button type="button" class="btn btn-info btn-sm"
+											onclick="fnGetMovePage('projectManage');">목록</button>
+									</div>
+									<div class="pdTB_10" id="createDataTime"></div>
+								</ul>
+								<div class="clearfix"></div>
+							</div><!-- //x_title -->
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-md-3 col-sm-12 col-xs-12">
+						<div class="x_panel">
+							<div class="x_title posiRelative"><strong>원본리스트</strong>
+								<button class="btn btn-dark btn-xs originPlusBtn" type="button" data-toggle="modal"
+									data-target=".originModal"><i class="fa fa-plus"></i></button>
+							</div>
+							<div class="x_content">
+								<div class="projList">
+									<ul id="originalDataList" class="overX_scroll pdLeft_20 pdBottom_20">
+
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="x_panel">
+							<div class="x_title"><strong>전처리된 리스트</strong></div>
+							<div class="x_content">
+								<div class="projList">
+									<ul id="preprocessedDataList" class="overX_scroll pdLeft_20 pdBottom_20">
+
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="x_panel">
+							<div class="x_title"><strong>모델 리스트</strong></div>
+							<div class="x_content">
+								<div class="projList">
+									<ul id="modelList" class="overX_scroll pdLeft_20 pdBottom_20">
+										
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-9 col-sm-12 col-xs-12">
+						<div id="wizard" class="form_wizard wizard_horizontal">
+							<ul class="wizard_steps anchor x_panel mgBottom_10 bgColor_white pdTB_20">
+								<li>
+									<a href="#step-1" id="step1" class="selected" isdone="1" rel="1">
+										<span class="step_no">1</span>
+										<span class="step_descr">
+											Step 1<br>
+											<small>원본 데이터 생성</small>
+										</span>
+									</a>
+								</li>
+								<li>
+									<a href="#step-2" id="step2" class="disabled" isdone="0" rel="2">
+										<span class="step_no">2</span>
+										<span class="step_descr">
+											Step 2<br>
+											<small>전처리 데이터 생성</small>
+										</span>
+									</a>
+								</li>
+								<li>
+									<a href="#step-3" id="step3" class="disabled" isdone="0" rel="3">
+										<span class="step_no">3</span>
+										<span class="step_descr">
+											Step 3<br>
+											<small>모델 학습</small>
+										</span>
+									</a>
+								</li>
+							</ul>
+
+							<div class="stepContainer">
+								<div id="step-1" class="content disp_block">
+									<div class="x_panel" id="machineLearning_originalData">
+										<div class="x_title posiRelative">
+											<strong><i class="fa fa-info-circle"></i> 원본 데이터를 생성해주세요</strong>
+											<div class="clearfix"></div>
+										</div>
+
+										<!--원본데이터 메인 x_content-->
+										<div class="x_content">
+											<p>
+												원본 리스트 오른쪽의
+												<button class="btn btn-dark btn-xs" type="button"><i
+														class="fa fa-plus"></i></button>
+												버튼을 클릭합니다.
+											</p>
+											<p>적합한 파일 선택 예시를 보며 적절한 파일을 선택합니다.</p>
+											<p>파일이 없을 경우 데이터 샘플로 원본 데이터를 생성할 수 있습니다.</p>
+											<p>
+												원본 데이터 생성을 원하시면
+												<button type="button" class="btn btn-success">원본 데이터 생성</button>
+												을 눌러주세요.
+											</p>
+										</div>
+									</div>
+
+								</div>
+
+								<div id="step-2" class="content disp_none">
+									<div class="x_panel" id="machineLearning_preprocess">
+										<div class="x_title posiRelative">
+											<strong><i class="fa fa-info-circle"></i> 전처리 데이터를 생성해주세요</strong>
+											<div class="clearfix"></div>
+										</div>
+
+										<!--전처리 데이터 메인 x_content-->
+										<div class="x_content">
+											<p>전처리를 원하시면 <button type="button" class="btn btn-primary">전처리</button>를
+												눌러주세요.</p>
+											<p>전처리를 위한 파라미터를 추가한 후 테스트를 해주세요.</p>
+											<p>전처리 데이터 생성을 원하시면 <button type="button" class="btn btn-success">전처리 데이터 셋
+													생성</button>을
+												눌러주세요.</p>
+										</div>
+									</div>
+									<div class="x_panel" id="originalDataDiv">
+
+										<div class="x_title posiRelative">
+											<strong>원본 데이터 : <span class="originalDataName"></span></strong>
+											<a class="collapse-link"><i class="fa fa-chevron-down floatR"></i></a>
+										</div>
+										<div class="x_content">
+											<div class="text-right">
+												<button type="button" class="btn btn-default deleteBtn"
+													id="deleteOriginalDataBtn"
+													onclick="fnDeleteOriginalData();">삭제</button>
+											</div>
+											<div>
+												<h4><strong>선택된 원본 데이터 미리보기</strong></h4>
+												<div class="overX_scroll">
+													<table id="oDataTable" class="table table-bordered jambo_table">
+
+													</table>
+												</div>
+											</div><!-- //데이터셋 테이블 -->
+											<div class="ta_center mgTop_10">
+												<button type="button" class="btn btn-default" data-toggle="modal"
+													data-target=".showdata" onclick="fnDrawOriginChart();">데이터
+													보기</button>
+												<button type="button" class="btn btn-primary" data-toggle="modal"
+													data-target=".preprocessingModal"
+													onclick="fnPreprocessingModal();">전처리</button>
+											</div>
+										</div>
+									</div><!-- //x_panel : 데이터 셋 -->
+								</div>
+								<div id="step-3" class="content disp_none">
+									<div class="x_panel" id="machineLearning_model">
+										<div class="x_title posiRelative">
+											<strong><i class="fa fa-info-circle"></i> 모델을 생성해주세요</strong>
+											<div class="clearfix"></div>
+										</div>
+
+										<!--모델 메인 x_content-->
+										<div class="x_content">
+											<p>학습을 원하시면 <button type="button" class="btn btn-success">학습</button>버튼을
+												눌러주세요.</p>
+											<p>학습을 위한 알고리즘, 파라미터 설정, 분석 정보 확인을 해주세요.</p>
+											<p>학습된 모델 생성을 원하시면 <button type="button" class="btn btn-default">학습
+													시작</button>을 눌러주세요.
+											</p>
+										</div>
+									</div>
+
+									<div class="x_panel" id="preprocessedDataDiv" style="display: none;">
+										<div class="x_title posiRelative">
+											<strong>선택된 전처리 데이터 미리보기</strong>
+											<a class="collapse-link"><i class="fa fa-chevron-down floatR"></i></a>
+										</div>
+										<div class="x_content">
+											<div class="overX_scroll">
+												<table id="pDataTable" class="table table-bordered jambo_table">
+
+												</table>
+											</div><!-- //전처리 데이터 미리보기 -->
+										</div>
+									</div><!-- //x_panel : 전처리 데이터 미리보기 -->
+
+									<div class="x_panel" id="preprocessedDiv">
+										<div class="x_title posiRelative">
+											<strong>전처리 셋 : <span class="pDataName"></span></strong>
+											<a class="collapse-link"><i class="fa fa-chevron-down floatR"></i></a>
+										</div>
+										<div class="x_content">
+											<div class="text-right">
+												<button type="button" class="btn btn-default deleteBtn"
+													id="deletePreprocessedDataBtn"
+													onclick="fnDeletePreprocessedData();">삭제</button>
+											</div>
+											<div>
+												<h4><strong>전처리 셋 정보</strong></h4>
+												<table class="table table-bordered jambo_table">
+													<thead>
+														<tr>
+															<th>이름</th>
+															<th>파일명</th>
+															<th>경로</th>
+															<th>갯수</th>
+															<th>생성시간</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td class="pDataName"></td>
+															<td id="pDataFilename"></td>
+															<td id="pDataFilepath"></td>
+															<td id="pDataAmount"></td>
+															<td id="pDataCreateDatetime"></td>
+														</tr>
+														<tr>
+													</tbody>
+												</table>
+											</div><!-- //전처리 셋 정보 -->
+
+											<div id="preprocessedDetailDiv">
+												<h4><strong>전처리 프로세스</strong></h4>
+												<table id="requestDataTable"
+													class="table table-bordered table-striped table-hover">
+
+												</table>
+											</div>
+											<div class="ta_center">
+												<button type="button" id="preprocessedDataShow" class="btn btn-default"
+													data-toggle="modal" data-target=".preshowdata"
+													onclick="fnDrawPreproChart();">전처리 데이터
+													보기</button>
+												<button type="button" class="btn btn-success" data-toggle="modal"
+													data-target=".learningModal" id="learningModalBtn">학습</button>
+											</div>
+										</div>
+									</div><!-- //x_panel : 전처리 셋 -->
+								</div>
+								<div class="x_panel" id="modelDiv" style="display: none;">
+									<div class="x_title posiRelative">
+										<strong>모델 : <span class="modelName"></span></strong>
+										<a class="collapse-link"><i class="fa fa-chevron-down floatR"></i></a>
+									</div>
+									<div class="x_content">
+										<button type="button" class="btn btn-default deleteBtn" id="deleteModelBtn"
+											onclick="fnDeleteModel();">삭제</button>
+										<div>
+											<h4><strong>모델 정보</strong></h4>
+											<table class="table table-bordered jambo_table">
+												<thead>
+													<tr>
+														<th>이름</th>
+														<th>파일명</th>
+														<th>경로</th>
+														<th>생성시간</th>
+														<th>상태</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td class="modelName"></td>
+														<td id="modelFilename"></td>
+														<td id="modelFilepath"></td>
+														<td class="text-center" id="modelCreateDatetime"></td>
+														<td id="progressState"></td>
+													</tr>
+												</tbody>
+											</table>
+											<div class="text-right">
+												<div class="btn-group">
+													<button type="button" class="btn btn-default" data-toggle="modal"
+														data-target=".modelTestModal" id="modelTestBtn">테스트</button>
+												</div>
+											</div>
+										</div><!-- //모델 정보 -->
+
+										<div class="clearfix row" id="modelDetailDiv">
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<h4><strong>학습 정보</strong></h4>
+												<div class="overY_scroll height_770">
+													<table class="table table-bordered " id="modelInfo">
+													</table>
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-12">
+												<h4><strong>테스트 결과</strong></h4>
+												<div class="clearfix">
+
+													<div>
+														<div class="x_panel">
+															<div id="modelResultChart" class="height_300"></div>
+														</div><!-- //x_panel -->
+													</div>
+													<div>
+														<div class="x_panel popup_tree">
+															<div class="x_content">
+																<form class="form-horizontal form-label-left">
+																	<div class="datascroll height_400">
+																		<div id="modelTestResult" class="mgBottom_10">
+																		</div>
+																		<table class="table table-bordered jambo_table"
+																			id="testResultTable">
+																		</table>
+																	</div>
+																</form>
+															</div>
+															<!--//x_content-->
+														</div>
+														<!--//popup_tree-->
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div><!-- //x_panel : 모델정보 -->
+							</div>
+							<div class="actionBar">
+								<div class="msgBox">
+									<div class="content"></div><a href="#" class="close">X</a>
+								</div>
+								<div class="loader">Loading</div>
+								<a href="#" class="buttonPrevious buttonDisabled btn btn-primary"
+									onclick="movePrevious();">Previous</a>
+								<a href="#" class="buttonNext btn btn-success" onclick="moveNext();">Next</a>
+							</div>
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /page content -->
+
+		<!-- [학습용 원본 데이터 생성화면 모달 팝업] -->
+		<div class="modal fade originModal" tabindex="-1" role="dialog" aria-hidden="false">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span
+								aria-hidden="true">×</span></button>
+						<h2 class="modal-title" id="myModalLabel"><strong>학습용 원본 데이터 생성화면</strong></h2>
+					</div>
+					<div class="modal-body">
+						<div class="clearfix">
+
+							<!-- //x_panel : 파일 브라우저-->
+							<div class="x_panel">
+								<div class="x_title">
+									<h2><strong>내부 보관 디렉토리</strong></h2>
+									<div class="clearfix"></div>
+								</div>
+								<div id="jstree_currentDir"></div>
+								<div class="x_content">
+									<div id="jstree_fileBrowser"></div>
+								</div>
+								<button onclick="refreshTree('jstree_fileBrowser')" type="button"
+									class="btn btn-secondary btn-sm"><i class="fa fa-refresh"></i></button>
+								<button id="treeCreate_jstree_fileBrowser" type="button"
+									class="btn btn-secondary btn-sm"><i class="fa fa-plus"></i>폴더추가</button>
+								<button id="treeUpdate_jstree_fileBrowser" type="button"
+									class="btn btn-secondary btn-sm"><i class="fa fa-edit"></i>수정</button>
+								<button id="treeDelete_jstree_fileBrowser" type="button"
+									class="btn btn-secondary btn-sm"><i class="fa fa-trash"></i>삭제</button>
+							</div>
+							<!-- //x_panel : 파일 브라우저-->
+
+							<!-- x_panel : 적합한 디렉토리 선택 예시-->
+							<div class="x_panel">
+								<div class="x_title posiRelative">
+									<strong>적합한 파일 선택 예시</strong>
+									<a class="collapse-link" id="fileExDropdown"><i class="fa fa-chevron-up floatR"></i></a>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content disp_none">
+									<div class="overX_scroll overY_scroll">
+										<img src="../../../images/testOriginalData.png" alt="샘플 원본데이터">
+									</div>
+									<!-- <div id=jstree_showSample_ml></div> -->
+									<br>
+									<br>
+									예시와 같은 데이터 형식(csv, json)을 담고있는 <i class="fa fa-file"></i><strong>파일을
+										선택</strong>해줍니다.
+									<br>
+									<br>최상위 row에는 컬럼명이 있습니다.
+									<br>하위 row에는 데이터가 있습니다.
+								</div>
+							</div>
+							<!-- //x_panel : 적합한 디렉토리 선택 예시-->
+
+							<!-- x_panel : 샘플 데이터-->
+							<div class="x_panel">
+								<div class="x_title posiRelative">
+									<strong>샘플 데이터</strong>
+									<a class="collapse-link" id="ml_sampleData"><i class="fa fa-chevron-up floatR"></i></a>
+									<div class="clearfix"></div>
+								</div>
+								<div id="sampleBrowser" class="x_content disp_none">
+									<div id=jstree_sampleData_ml></div>
+								</div>
+							</div>
+							<!-- //x_panel : 샘플 데이터-->
+
+
+							<!-- //x_panel : 미리보기-->
+							<div class="x_panel">
+								<div class="x_title posiRelative">
+									<strong>미리보기</strong>
+								</div>
+								<div class="x_content">
+
+									<div>
+										<table id="jstree_dataInfoTable" class="table table-bordered jambo_table">
+											<thead>
+												<tr>
+													<th>파일명</th>
+													<th>확장자</th>
+													<th>용량</th>
+													<th>마지막 수정시간</th>
+												</tr>
+											</thead>
+										</table>
+									</div><!-- //테이블 -->
+									<div class="datascroll mgTop_30 mgBottom_10">
+										<table id="jstree_dataSampleTable"
+											class="table table-bordered table-striped table-hover"></table>
+									</div><!-- //테이블 -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" onclick="fnCreateOriginalData();">원본 데이터
+							생성</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //[학습용 원본 데이터 생성화면 모달 팝업] -->
+
+		<!-- [전처리 모달 팝업] -->
+		<div class="modal fade preprocessingModal" id="preprocessingModal" tabindex="-1" role="dialog"
+			aria-hidden="false">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span
+								aria-hidden="true">×</span></button>
+						<h2 class="modal-title" id="myModalLabel"><strong>전처리</strong></h2>
+					</div>
+					<div class="pdTop_10" role="tabpanel" data-example-id="togglable-tabs">
+						<ul id="preprocessTab" class="nav nav-tabs bar_tabs" role="tablist">
+							<li role="presentation" id="preprocess_beginner" class="active"><a href="#tab_beginner" role="tab" id="beginner-tab"
+									data-toggle="tab" aria-expanded="true">초보자</a></li>
+							<li role="presentation" id="preprocess_expert" class=""><a href="#tab_expert" role="tab" id="expert-tab"
+									data-toggle="tab" aria-expanded="false">전문가</a></li>
+						</ul>
+						<div id="learningTab" class="tab-content">
+							<div class="form-group bdBottom_E6E9ED pdTop_15 pdRL_15">
+								<h5>
+									<strong>원본 데이터 미리보기</strong>
+								</h5>
+								<div class="row clearfix">
+									<div class="col-md-12 col-sm-12 col-xs-12 height_250 pdRL_20 overX_scroll">
+										<table id="sampleData"
+											class="table table-bordered table-striped table-hover mgTB_10">
+											<!-- 동적 추가 -->
+										</table>
+									</div>
+								</div>
+							</div>
+
+							<div role="tabpanel" class="tab-pane fade active in" id="tab_beginner"
+								aria-labelledby="beginner-tab">
+								<div class="form-horizontal form-label-left bdBottom_f3f3f3 mgBottom_40 pdRL_15 pdTop_15">
+									<h5 class="mgBottom_25"><strong>전처리 방식 결정</strong></h5>
+									<div class="form-group col-md-6 col-sm-6 col-xs-12 pdBottom_10">
+										<div class="pdTop_10 border_ddd overY_scroll pd_15 height_310">
+											<p>선택된 원본데이터에 전처리를 수행하는 방법은 다음과 같습니다.</p>
+											<p>(다양한 전처리 기능과 파라미터 수동 설정을 원하시면 "전문가" 탭으로 이동합니다)</p>
+											<br>
+											<p>다음 네 가지 전처리 타입 중 하나를 선택하여 각각의 필드(컬럼)에 전처리 데이터 생성을 요청합니다.</p>
+											<br>
+											<p>전처리 타입 설명</p>
+											<p>- numerical: 데이터가 수치형인 경우 선택하여, 변수 스케일링 (Standard Scaling)을 수행하도록 합니다.</p>
+											<p>- categorical: 데이터가 범주형인 경우 선택하여, 원핫인코딩 (OneHotEncoding)을 수행하도록 합니다.</p>
+											<p>- drop: 사용하지 않을 변수를 제거하기 위해 선택합니다.</p>
+											<p>- 사용 안 함: 전처리를 수행하지 않고, 원본 형식 그대로 사용하기 위해 선택합니다. (주로 타켓 변수에 사용)</p>
+											<br>
+											<p>화면 상단의 원본데이터 미리보기를 통해 각 필드별 데이터 미리보기가 가능합니다. [아이콘]"테스트"를 클릭하면, 전처리된 결과를 확인해볼 수 있습니다.</p>
+											<p>전처리된 결과대로 데이터를 생성하려면, [아이콘]"전처리 데이터 셋 생성"을 클릭하여 전처리 데이터 생성을 요청합니다.</p>
+										</div>
+									</div><!-- // form-group -->
+									<div class="form-group col-md-6 col-sm-6 col-xs-12 height_310 overY_scroll">
+										<table class="table table-bordered jambo_table">
+											<thead>
+												<tr class="odd">
+													<th class="col-md-1">필드명</th>
+													<th class="col-md-1">전처리 타입</th>
+												</tr>
+											</thead>
+											<tbody id="fieldsForBeginner">
+
+											</tbody>
+										</table>
+										<!-- <button type="button" class="btn btn-default" >선택</button> -->
+									</div><!-- // form-group -->
+									<div class="mgBottom_15 ta_right pdright_15">
+										<div class="btn-group text-right mgTop_15">
+											<button type="button" class="btn btn-primary"
+												onclick="fnPreprocessTest();">테스트</button>
+										</div>
+									</div>
+								</div>
+							</div><!-- //tab_algorithm -->
+							<div role="tabpanel" class="tab-pane fade" id="tab_expert" aria-labelledby="expert-tab">
+								<div class="modal-body">
+									<div class="form-horizontal form-label-left">
+										<div class="form-group">
+											<h5 class="mgBottom_25"><strong>전처리 추가</strong></h5>
+											<label class="control-label col-md-2 col-sm-2 col-xs-12 text-left">필드
+												명</label>
+											<div class="col-md-3 col-sm-3 col-xs-12">
+												<select class="form-control" id="columns"
+													onchange="getPossiblePreProcess()">
+
+												</select>
+											</div>
+											<label
+												class="control-label col-md-2 col-sm-2 col-xs-12 text-left">처리방식</label>
+											<div class="col-md-3 col-sm-3 col-xs-10">
+												<select class="form-control" id="preprocessFunction">
+
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label
+												class="control-label col-md-2 col-sm-2 col-xs-12 text-left">Parameter</label>
+											<div class="col-md-3 col-sm-3 col-xs-10">
+												<select class="form-control" id="parameters">
+
+												</select>
+											</div>
+											<label class="control-label col-md-2 col-sm-2 col-xs-12 text-left"
+												id="valueLabel">Value</label>
+											<div class="col-md-3 col-sm-3 col-xs-10 disp_none" id="selectType">
+												<select class="form-control" id="selectValue">
+
+												</select>
+											</div>
+											<div class="col-md-3 col-sm-3 col-xs-10 disp_none" id="inputType">
+												<input type="text" class="form-control" id="inputValue"
+													placeholder="test" />
+											</div>
+											<div class="col-md-2 col-sm-2 col-xs-2">
+												<button type="button" class="btn btn-default"
+													onclick="fnAddParams();">추가</button>
+											</div>
+										</div><!-- // form-group -->
+
+										<textarea id="preprocessDesc" class="form-control mgTB_15" rows="2" readonly>
+
+										</textarea>
+
+										<div class="form-group pdTop_10 pdBottom_20 bdBottom_f3f3f3">
+											<h5 class="mgBottom_25"><strong>등록된 전처리 리스트</strong></h5>
+											<table class="table table-bordered table-striped table-hover">
+												<thead>
+													<tr>
+														<th>필드명</th>
+														<th>처리방식</th>
+														<th>Parameter</th>
+														<th>Value</th>
+														<th>삭제</th>
+													</tr>
+												</thead>
+												<tbody id="preprocessListTbody">
+
+												</tbody>
+											</table>
+											<div class="text-right">
+												<div class="btn-group">
+													<button type="button" class="btn btn-primary"
+														onclick="fnPreprocessTest();">테스트</button>
+												</div>
+											</div>
+										</div><!-- // form-group -->
+										
+									</div>
+								</div><!-- // form-group -->
+							</div>
+
+							<div class="form-group pdRL_15">
+								<h5><strong>전처리 테스트 미리보기</strong></h5>
+								<div class="col-md-12 col-sm-12 col-xs-12 mgTop_15 border_E6E9ED overX_scroll">
+									<table class="table table-bordered table-striped mgTop_15 height_250" rows="4" id="preprocessTest">
+									
+									</table>
+								</div>
+								<div class="text-right">
+									<div class="btn-group mgTop_10 mgBottom_5">
+										<button type="button" class="btn btn-success"
+											onclick="fnCreatePreprocess();">전처리 데이터 셋 생성</button>
+									</div>
+								</div>
+							</div>
+						</div><!-- //learningTab -->
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //[전처리 모달 팝업] -->
+
+		<!-- [데이터보기 모달 팝업] -->
+		<div class="modal fade showdata" tabindex="-1" role="dialog" aria-hidden="false">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span
+								aria-hidden="true">×</span></button>
+						<h2 class="modal-title" id=""><strong>데이터 보기 : <span id="orgName"></span></strong></h2>
+					</div>
+					<div class="modal-body">
+						<div class="clearfix">
+
+							<div id="dataShow"></div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //[데이터보기 모달 팝업] -->
+
+		<!-- [전처리 데이터보기 모달 팝업] -->
+		<div class="modal fade preshowdata" tabindex="-1" role="dialog" aria-hidden="false">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span
+								aria-hidden="true">×</span></button>
+						<h2 class="modal-title" id=""><strong>전처리 데이터 보기 : <span id="preName"></span></strong></h2>
+					</div>
+					<div class="modal-body">
+						<div class="clearfix">
+
+							<div id="preDataShow"></div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //[전처리 데이터보기 모달 팝업] -->
+
+		<!-- [학습 모달 팝업] -->
+		<div class="modal fade learningModal" tabindex="-1" role="dialog" aria-hidden="false">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span
+								aria-hidden="true">×</span></button>
+						<h2 class="modal-title" id=""><strong>전처리 셋 학습</strong></h2>
+					</div>
+					<div class="modal-body">
+						<div class="pdTop_10" role="tabpanel" data-example-id="togglable-tabs">
+							<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+								<li role="presentation" id="learning_beginner" class="active"><a href="#tab_algorithm" role="tab"
+										id="algorithm-tab" data-toggle="tab" aria-expanded="true">초보자</a></li>
+								<li role="presentation" id="learning_expert" class=""><a href="#tab_parameter" role="tab" id="parameter-tab"
+										data-toggle="tab" aria-expanded="false">전문가</a></li>
+							</ul>
+							<div class="tab-content">
+								<div role="tabpanel" class="tab-pane fade active in" id="tab_algorithm"
+									aria-labelledby="algorithm-tab">
+									<div class="form-horizontal form-label-left">
+										<div class="form-group pdBottom_10">
+											<div class="col-md-9 pdTop_10 border_ddd">
+												<p>모델 생성을 위해 알고리즘을 선택합니다.</p>
+												<br>
+												<p>알고리즘은 크게 분류용 또는 회귀용으로 구분되며</p>
+												<p>알고리즘별 자세한 설명은 '알고리즘 조회' 화면에서 확인할 수 있습니다.</p>
+												<br>
+												<p>학습 파라미터에서 모델 생성에 필요한 X 변수와 Y 변수를 선택합니다.</p>
+												<p>X 변수 하나 이상을 선택합니다. X 변수는 모델을 학습하는 데 사용됩니다.</p>
+												<p>Y 변수는 하나만 선택합니다. Y 변수는 모델이 예측해야하는 값을 의미합니다.</p>
+												<br>
+												<p>선택을 완료한 후 <button type="button" class="btn btn-default va_super">학습
+														시작</button> 버튼을 클릭하여 모델 생성을 요청합니다.</p>
+											</div>
+										</div>
+										<div class="form-group mgTB_15">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12 text-left">알고리즘
+												선택</label>
+											<div class="col-md-4 col-sm-4 col-xs-6 mgTop_10">
+												<div class="projList border_ccc">
+													<select id="searchAlgorithmList" class="form-control">
+
+													</select>
+												</div>
+											</div>
+										</div><!-- // form-group -->
+										<div class="form-group bdBottom_E6E9ED">
+											<label class="control-label col-md-12 col-sm-12 col-xs-12 text-left mgBottom_10">알고리즘 선택
+												결과 확인 </label>
+											<div class="col-md-12 col-sm-12 col-xs-12 mgBottom_25">
+												<textarea class="form-control" rows="5" id="selectedAlgorithmResult"
+													readonly></textarea>
+											</div>
+										</div><!-- // form-group -->
+									</div>
+								</div><!-- //tab_algorithm -->
+								<div role="tabpanel" class="tab-pane fade" id="tab_parameter"
+									aria-labelledby="parameter-tab">
+									<div class="form-horizontal form-label-left">
+										<div class="form-group mgTB_25 pdRL_15">
+											<h5 class="col-md-2 col-sm-2 col-xs-12 pd_0"><strong>알고리즘
+													선택</strong></h5>
+											<div class="col-md-4 col-sm-4 col-xs-6 mgTop_10">
+												<div class="projList border_ccc">
+													<select id="searchAlgorithmList2" class="form-control">
+
+													</select>
+												</div>
+											</div>
+										</div><!-- // form-group -->
+										<div class="form-group pdRL_15 bdBottom_E6E9ED">
+											<label class="control-label col-md-12 col-sm-12 col-xs-12 text-left mgBottom_10 pdLeft_0">알고리즘 선택
+												결과 확인 </label>
+											<div class="col-md-12 col-sm-12 col-xs-12 mgBottom_25 pdLeft_0">
+												<textarea class="form-control" rows="5" id="selectedAlgorithmResult2"
+													readonly></textarea>
+											</div>
+										</div><!-- // form-group -->
+
+										<div class="form-group bdBottom_E6E9ED pdTop_15 pdRL_15">
+											<div class="mgBottom_10">
+												<h5><strong>모델 파라미터 </strong></h5>
+												<p class="ta_right bold">※ 파라미터 변경을 요청하지 않으면 기본값으로 적용됩니다.</p>
+												<div class="overY_scroll height_320">
+													<table class="table table-bordered">
+														<colgroup>
+															<col width="">
+															<col width="">
+															<col width="">
+															<col width="200px">
+														</colgroup>
+														<thead>
+															<th>파라미터 이름</th>
+															<th>타입</th>
+															<th>기본값</th>
+															<th>변경할 값</th>
+														</thead>
+														<tbody id="modelParams">
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div><!-- //tab_parameter -->
+
+									</div><!-- //learningTab -->
+								</div>
+
+								<div class="form-horizontal form-label-left">
+									<div class="form-group pdTop_15 pdRL_15 bdBottom_E6E9ED">
+										<h5>
+											<strong>전처리 데이터 미리보기</strong>
+										</h5>
+										<div class="row clearfix mgBottom_25">
+											<div class="col-md-12 col-sm-12 col-xs-12 height_250 mgTop_15 overX_scroll border_E6E9ED">
+												<table id="preprocessSampleData"
+													class="table table-striped table-hover table-bordered jambo_table mgTop_15 mgBottom_10">
+													<!-- 동적 추가 -->
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="form-group pdRL_15 ta_center bdBottom_E6E9ED">
+										<h5 class="text-left mgTop_25 mgBottom_15"><strong>학습 파라미터</strong></h5>
+										<div class="mgBottom_10">
+											<div class="form-group disp_inblock width_45p mgRight_25">
+												<p class="fontSize_14"><strong>X 파라미터</strong></p>
+												<div class="text-left mgBottom_7">
+													<input type="checkbox" class="flat" id='check_all'>
+													<label class="control-label text-left">전체 선택</label>
+												</div>
+												<div class="overX_scroll border_E6E9ED pdTop_15 pdRL_15">
+													<table class="table table-bordered jambo_table col-md-6">
+														<thead>
+															
+														</thead>
+														<tbody id="xParameters">
+		
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="form-group disp_inblock width_45p mgLeft_25">
+												<p class="fontSize_14"><strong>y 파라미터</strong></p>
+												<div class="text-left flat mgBottom_7 visi_hidden">
+													<input type="checkbox">
+													<label class="control-label text-left">전체 선택</label>
+												</div>
+												<div class="overX_scroll border_E6E9ED pdTop_15 pdRL_10">
+													<table class="table table-bordered jambo_table col-md-6">
+														<thead>
+															
+														</thead>
+														<tbody id="yParameters">
+		
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<div class="ta_right">
+							<button type="button" class="btn btn-default" onclick="fnCreateModel();">학습시작</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //[학습 모달 팝업] -->
+
+		<!-- [모델 테스트 모달 팝업] -->
+		<div class="modal fade modelTestModal" tabindex="-1" role="dialog" aria-hidden="false">
+			<div class="modal-dialog modal-lg width_1140">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span
+								aria-hidden="true">×</span></button>
+						<h2 class="modal-title" id=""><strong>모델 테스트</strong></h2>
+					</div>
+					<div class="modal-body">
+						<div>
+							<h5 class="modal-title pdLeft_10"><strong>테스트 데이터 선택</strong></h5>
+
+							<div class="clearfix mgTop_15">
+								<div class="col-md-4 col-sm-4 col-xs-12">
+									<div class="x_panel popup_tree">
+
+										<div class="x_title"><strong>내부 보관 디렉토리</strong></div>
+										<div class="datascroll mgTop_30 mgBottom_10">
+											<div id="jstree_currentDir2"></div>
+											<div class="x_content">
+												<div id="jstree_fileBrowser2"></div>
+											</div>
+										</div>
+										<!--//x_content-->
+										<button onclick="refreshTree('jstree_fileBrowser2')" type="button"
+											class="btn btn-secondary btn-sm"><i class="fa fa-refresh"></i></button>
+										<button id="treeCreate_jstree_fileBrowser2" type="button"
+											class="btn btn-secondary btn-sm"><i class="fa fa-plus"></i>폴더추가</button>
+										<button id="treeUpdate_jstree_fileBrowser2" type="button"
+											class="btn btn-secondary btn-sm"><i class="fa fa-edit"></i>수정</button>
+										<button id="treeDelete_jstree_fileBrowser2" type="button"
+											class="btn btn-secondary btn-sm"><i class="fa fa-trash"></i>삭제</button>
+									</div>
+									<!--//popup_tree-->
+								</div>
+
+								<div class="col-md-8 col-sm-8 col-xs-12">
+
+									<div class="x_panel height_372">
+										<div class="x_title"><strong>데이터 미리보기(상위 10개)</strong></div>
+										<div class="x_content">
+											<div class="datascroll mgTop_30 mgBottom_10">
+												<table id="jstree_dataSampleTable2"
+													class="table table-bordered table-striped table-hover">
+												</table>
+											</div><!-- //테이블 -->
+										</div><!-- //x_content -->
+									</div><!-- //x_panel -->
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary mg_0" onclick="fnModelTest();">테스트
+							요청</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //[모델 테스트 모달 팝업] -->
+	</th:block>
+</body>
+
+</html>

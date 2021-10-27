@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout/defaultLayout">
+
+<head>
+	<meta charset="UTF-8">
+	<link th:href="@{/gentelella/vendors/dropzone/dist/min/dropzone.min.css}" rel="stylesheet" />
+	<link th:href="@{/gentelella/vendors/dropzone/dist/min/dropzone.min.css}" rel="stylesheet" />
+	<link th:href="@{/js/lib/jstree/themes/default/style.css}" rel="stylesheet" />
+</head>
+
+<body>
+	<form method="POST" id="dataManageForm" class="disp_hidden" name="dataManageForm">
+		<input type="hidden" id="targetPath" name="targetPath" value="" />
+	</form>
+	<th:block layout:fragment="content">
+		<script th:src="@{js/lib/jstree/jstree.js}"></script>
+		<script th:src="@{dist/user/dataManage.js}"></script>
+		<script th:src="@{/gentelella/vendors/dropzone/dist/min/dropzone.min.js}"></script>
+		<!-- page content -->
+		<div class="right_col" role="main" id="myContentsWrap">
+			<div class="row">
+
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-sm-4 col-xs-12">
+					<div class="x_panel treepanel">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2><strong>데이터 관리 </strong></h2>
+								<div class="clearfix"></div>
+							</div>
+							<div id="jstree_currentDir"></div>
+							<div class="x_content datascroll mgBottom_20">
+								<div id="jstree_fileBrowser" class="jstree-open"></div>
+							</div>
+							<button onclick="refreshTree('jstree_fileBrowser')" type="button"
+								class="btn btn-secondary btn-sm"><i class="fa fa-refresh"></i></button>
+							<button id="treeCreate_jstree_fileBrowser" type="button" class="btn btn-secondary btn-sm"><i
+									class="fa fa-plus"></i>폴더추가</button>
+							<button id="treeUpdate_jstree_fileBrowser" type="button" class="btn btn-secondary btn-sm"><i
+									class="fa fa-edit"></i>수정</button>
+							<button id="treeDelete_jstree_fileBrowser" type="button" class="btn btn-secondary btn-sm"><i
+									class="fa fa-trash"></i>삭제</button>
+						</div>
+						<div class="x_content">
+							<form class="dropzone" id="uploadFileForm">
+								<input type="hidden" id="uploadFilePath" name="uploadFilePath" value="" />
+							</form>
+							<br />
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-8 col-sm-8 col-xs-12">
+				
+					<div class="x_panel">
+						<div class="x_title posiRelative">
+							<strong>선택데이터 미리보기</strong>
+								<a class="collapse-link cursor"><i class="fa fa-chevron-up floatR"></i></a>
+							<div class="clearfix"></div>							
+						</div>
+						<div class="x_content disp_none">
+							<div>
+								<table id="jstree_dataInfoTable" class="table table-bordered jambo_table"></table>
+							</div><!-- //테이블 -->
+							<div class="datascroll mgTop_30 mgBottom_10">
+								<table id="jstree_dataSampleTable"
+									class="table table-bordered table-striped table-hover"></table>
+							</div><!-- //테이블 -->
+						</div>
+					</div><!-- //x_panel : 데이터 셋 -->
+									
+					<!-- x_panel : 머신러닝 데이터 업로드 예시-->
+					<div class="x_panel">
+							<div class="x_title posiRelative">
+								<strong>머신러닝 데이터 업로드 예시</strong>
+									<a class="collapse-link cursor" id="ml_SampleUploadDropdown"><i class="fa fa-chevron-up floatR"></i></a>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content disp_none">
+								<div class="overY_scroll overX_scroll">
+									<img src="../../../images/testOriginalData.png" alt="샘플 원본데이터">
+								</div>
+								<!-- <div id=jstree_showSample_ml></div> -->
+								<br>
+								<br>
+								예시와 같은 데이터 형식(csv, json)을 담고있는 <i class="fa fa-file"></i><strong>파일을
+									업로드</strong>해줍니다.
+								<br>
+								<br>최상위 row에는 컬럼명이 있습니다.
+								<br>하위 row에는 데이터가 있습니다.
+							</div>
+					</div>
+					<!-- //x_panel : 머신러닝 데이터 업로드 예시-->
+
+					<!-- x_panel : 딥러닝 데이터 업로드 예시-->
+					<div class="x_panel">
+							<div class="x_title posiRelative">
+								<strong>딥러닝 데이터 업로드 예시</strong>
+								<a class="collapse-link cursor" id="dl_SampleUploadDropdown"><i class="fa fa-chevron-up floatR"></i></a>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content disp_none">
+								<div id=jstree_showSample_dl></div>
+								<h5>
+								<br>예시와 같이 데이터를 담고있는 최상위 <i class="fa fa-folder"></i> <strong>폴더(catdog) 를 생성</strong> 합니다.
+								<br>
+								<br>그 후 하위 타입 폴더 <i class="fa fa-folder"></i> <strong>(cat)</strong> <i class="fa fa-folder"></i> <strong>(dog) 를 생성 </strong> 합니다.
+								<br>타입 폴더 안에 타입에 맞는 <i class="fa fa-file-image-o"></i> <strong>이미지 파일(cat1.png, cat2.png, dog1.png...)을 업로드</strong> 해줍니다.
+								</h5>
+							</div>
+					</div>
+					<!-- //x_panel : 딥러닝 데이터 업로드 예시-->
+														
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+
+					<!-- fileUpload -->
+					<!-- fileUpload -->
+				</div>
+			</div>
+
+
+		</div>
+		<!-- /page content -->
+
+	</th:block>
+</body>
+
+</html>

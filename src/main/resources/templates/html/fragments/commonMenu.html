@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="commonMenu">
+	<div class="menu_section active">
+		<ul class="nav side-menu commonMenuUl">
+			<li class="active dashBoardActive">
+				<a href="/dashBoard"><i class="fa fa-home"></i> 대시 보드</a>
+			</li>
+			<li class="algorithmActive">
+				<a href="/algorithmManage"><i class="fa fa-cubes"></i> 알고리즘 조회</a>
+			</li>
+			<li class="dataManageActive">
+				<a href="/dataManage"><i class="fa fa-database"></i> 데이터 관리</a>
+			</li>
+			<li class="projectManageActive">
+				<a href="/projectManage"><i class="fa fa-gear"></i> 머신러닝 관리</a>
+			</li>
+			<li class="deepLearningManageActive">
+				<a href="/deepLearningManage"><i class="fa fa-gears"></i> 딥러닝 관리</a>
+			</li>
+			<li class="domainManageActive">
+				<a href="/domainManage"><i class="fa fa-desktop"></i> 도메인 관리</a>
+			</li>
+			<li class="userGuide">
+				<a href="/userGuide"><i class="fa fa-info-circle"></i> 사용자 가이드</a>
+			</li>
+			<li th:if="${session.userAuth.toString().equals('admin')}" class="userManageActive">
+				<a href="/userManage"><i class="fa fa-users"></i> 사용자 관리</a>
+			</li>
+		</ul>
+	</div>
+</th:block>
+
+</html>

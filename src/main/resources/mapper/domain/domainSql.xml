@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daumsoft.dataAnalyticsManager.restFullApi.mapper.DomainRestMapper">
+    <select id="domainAsGet" resultType="domain">
+        /* domainSql.domainAsGet */
+        SELECT 
+            D.id
+            , D.user_id
+            , D.category_name
+            , D.title
+            , D.model_id
+            , D.project_id
+            , to_char(D.create_date, 'YYYY-MM-DD HH24:MI:SS') AS create_date
+            , D.registerer
+            , D.description
+            , P.type
+        FROM 
+            "DOMAIN" AS D
+        JOIN
+            "PROJECT" AS P
+        ON
+            D.project_id = P.id
+        <where>
+            <choose>
+                <when test="mine == true">
+                    AND D.user_id = #{currentId}
+                </when>
+                <when test="option != '전체' and option != null">
+                        AND D.category_name = #{option}
+                </when>
+            </choose>
+            <if test="value != null and value != ''">
+                AND (D.title LIKE '%'||#{value}||'%'
+                    OR D.registerer LIKE '%'||#{value}||'%')
+            </if>
+            <if test="startDate != null and endDate != null">
+                AND
+                <![CDATA[
+                        (D.create_date >= #{startDate}
+                    AND 
+                        D.create_date <= #{endDate})
+                ]]>
+            </if>
+            AND 
+                D.delete_flag = FALSE
+            <choose>
+                <when test="type == 'machine'">
+                    AND
+                        P.type = 'M'
+                </when>
+                <when test="type == 'deep'">
+                    AND
+                        P.type = 'D'
+                </when>
+            </choose>
+        </where>
+        ORDER BY
+            D.create_date 
+        DESC
+        LIMIT 
+            10
+        OFFSET 
+            #{pageNo}
+    </select>
+
+    <select id="getDomainCount" resultType="int">
+        /* domainSql.getDomainCount */
+        SELECT 
+			COUNT(D.id)
+        FROM 
+            "DOMAIN" AS D
+        <if test="type != 'all' and type != null">
+            JOIN
+                "PROJECT" AS P
+            ON
+                D.project_id = P.id
+        </if>
+        <where>
+            <choose>
+                <when test="mine == true">
+                    AND D.user_id = #{currentId}
+                </when>
+                <when test="option != '전체' and option != null">
+                    AND D.category_name = #{option}
+                </when>
+            </choose>
+            <if test="value != null and value != ''">
+                AND (D.title LIKE '%'||#{value}||'%'
+                    OR D.registerer LIKE '%'||#{value}||'%')
+            </if>
+            <if test="startDate != null and endDate != null">
+                AND
+                <![CDATA[
+                        (D.create_date >= #{startDate}
+                    AND 
+                        D.create_date <= #{endDate})
+                ]]>
+            </if>
+            AND 
+                D.delete_flag = FALSE
+            <choose>
+                <when test="type == 'machine'">
+                    AND
+                        P.type = 'M'
+                </when>
+                <when test="type == 'deep'">
+                    AND
+                        P.type = 'D'
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <select id="domainAsGetOne" resultType="domain">
+		/* domainSql.domainAsGetOne */
+        SELECT 
+            id
+            , user_id
+            , category_name
+            , title
+            , model_id
+            , project_id
+            , to_char(create_date, 'YYYY-MM-DD') AS create_date
+            , registerer
+            , description
+        FROM 
+            "DOMAIN"
+        WHERE
+            id = #{domainId}
+        AND 
+            delete_flag = FALSE
+    </select>
+
+    <insert id="domainAsPost" parameterType="domain">
+		/* domainSql.domainAsPost */
+        INSERT INTO
+            "DOMAIN" ( 
+                category_name
+                , user_id
+                , title
+                , model_id
+                , project_id
+                , create_date
+                , registerer
+                , description
+                , update_date
+            ) VALUES ( 
+                #{categoryName} 
+                , #{userId}
+                , #{title} 
+                , #{modelId} 
+                , #{projectId}
+                , NOW()
+                , #{registerer}
+                , #{description}
+                , NOW()
+            )
+    </insert>
+
+    <update id="domainAsPatch" parameterType="domain">
+		/* domainSql.domainAsPatch */
+        UPDATE
+            "DOMAIN"
+        SET
+            category_name = #{categoryName}
+            , title = #{title}
+            , model_id = #{modelId}
+            , project_id = #{projectId}
+            , description = #{description}
+            , update_date = NOW()
+        WHERE
+            id = #{id}
+        AND
+            delete_flag = FALSE
+    </update>
+
+    <delete id="domainAsDelete" parameterType="list">
+        /* domainSql.domainAsDelete */
+        UPDATE
+            "DOMAIN"
+        SET
+            delete_flag = TRUE
+		WHERE
+        <foreach collection="list" item="item" index="index" separator="OR">
+				id = #{item}
+		</foreach>
+    </delete>
+
+    <select id="getRecentDomains" resultType="domain">
+		/* domainSql.getRecentDomains */
+        SELECT
+            D.id
+            , D.model_id
+            , D.project_id
+            , D.title
+            , P.type
+        FROM
+            "DOMAIN" AS D
+        JOIN
+            "PROJECT" AS P
+        ON
+            D.project_id = P.id
+        WHERE
+            D.delete_flag = FALSE
+        ORDER BY
+            D.create_date 
+        DESC
+        LIMIT 
+            9
+    </select>
+
+    <select id="getDownloadId" resultType="int">
+        /* domainSql.getDownloadId */
+        SELECT
+            DATA.
+        <choose>
+            <when test="dataType == 'model'">
+                id
+            </when>
+            <otherwise>
+                <choose>
+                    <when test="learningType == 'D'">
+                        <if test="dataType == 'originalData'">
+                            dl_original_data_id
+                        </if>
+                    </when>
+                    <when test="learningType == 'M'">
+                        <if test="dataType == 'originalData'">
+                            ml_original_data_id
+                        </if>  
+                        <if test="dataType == 'preprocessedData'">
+                            ml_preprocessed_data_id
+                        </if>
+                    </when>
+                </choose>
+            </otherwise>
+        </choose>
+        FROM
+        <choose>
+            <when test="learningType == 'D'">
+                    "DL_MODEL"
+                </when>
+            <when test="learningType == 'M'">
+                    "ML_MODEL"
+                </when>
+        </choose>
+        AS DATA
+        JOIN
+                "DOMAIN" AS D
+            ON
+                D.model_id = DATA.id
+        AND
+            D.id = #{domainId}
+    </select>
+</mapper>

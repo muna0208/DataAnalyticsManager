@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>딥러닝</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/green.css" rel="stylesheet">
+
+<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="css/scroller.bootstrap.min.css" rel="stylesheet">
+
+<link href="css/switchery.min.css" rel="stylesheet">
+
+<link href="css/bootstrap-datetimepicker.css" rel="stylesheet"><!-- bootstrap-datetimepicker -->
+<link href="css/daterangepicker.css" rel="stylesheet"><!-- bootstrap-datetimepicker -->
+
+<link href="css/custom.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet"> <!-- //디자인팀 작업 CSS -->
+    
+<link rel="stylesheet" href="css/jquery.treeview.css" /><!--문서트리 css-->
+
+</head>
+
+
+<body class="nav-md">
+	<div id="root">
+		<div class="container body">
+			<div class="main_container">
+
+				<!-- [left 메뉴] -->
+				<div class="col-md-3 left_col">
+					<div class="left_col scroll-view">
+						<div class="navbar nav_title" style="border: 0px;">
+							<a href="/" class="site_title"><i class="fa fa-cubes"></i> <span>데이터분석시스템</span></a>
+						</div>
+						<div class="clearfix"></div>
+						<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+							<div class="menu_section active">
+								<ul class="nav side-menu commonMenuUl">
+                                    <li class="dashBoardActive">
+                                        <a href="/dashBoard"><i class="fa fa-home"></i> 대시 보드</a>
+                                    </li>
+                                    <li class="algorithmActive">
+                                        <a href="/algorithmManage"><i class="fa fa-cubes"></i> 알고리즘 조회</a>
+                                    </li>
+                                    <li class="dataManageActive">
+                                        <a href="/dataManage"><i class="fa fa-database"></i> 데이터 관리</a>
+                                    </li>
+                                    <li class="projectManageActive">
+                                        <a href="/projectManage"><i class="fa fa-gear"></i> 머신러닝 관리</a>
+                                    </li>
+                                    <li class="deepLearningManageActive current-page">
+                                        <a href="/deepLearningManage"><i class="fa fa-gears"></i> 딥러닝 관리</a>
+                                    </li>
+                                    <li class="domainManageActive">
+                                        <a href="/domainManage"><i class="fa fa-desktop"></i> 도메인 관리</a>
+                                    </li>
+                                    <li class="userGuide">
+                                        <a href="/userGuide"><i class="fa fa-info-circle"></i> 사용자 가이드</a>
+                                    </li>
+                                    <li class="userManageActive">
+                                        <a href="/userManage"><i class="fa fa-users"></i> 사용자 관리</a>
+                                    </li>
+                                </ul>
+							</div>
+						</div><!-- //sidebar-menu -->
+					</div><!-- //left_col scroll-view -->
+				</div>
+				<!-- //[left 메뉴] -->
+
+				<!-- [top 메뉴] -->
+				<div class="top_nav">
+					<div class="nav_menu">
+						<nav><div class="nav toggle"><a id="menu_toggle"><i class="fa fa-bars"></i></a></div><ul class="nav navbar-nav navbar-right"></ul></nav>
+					</div>
+				</div>
+				<!-- //[top 메뉴] -->
+				
+				<!-- [컨텐츠] -->
+				<div>
+					<div class="right_col deeplearningWrap" role="main" id="deeplearning">
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="x_panel">
+									<div class="x_title">
+										<h2 class="pdTop_15"><strong>프로젝트 목록</strong></h2>										
+										<div class="clearfix"></div>
+									</div><!-- //x_title -->
+                                    
+                                    <div class="x_content">
+                                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                            <colgroup>
+                                                <col width="45px">
+                                            </colgroup>
+                                            <thead>
+                                                <tr class="headings">
+                                                    <th class="column-title sort_none"></th>
+                                                    <th class="column-title">이름</th>
+                                                    <th class="column-title">설명</th>
+                                                    <th class="column-title">딥러닝 종류</th>
+                                                    <th class="column-title">생성일시</th>
+                                                    <th class="column-title sort_none">사용자</th>
+                                                    <th class="column-title sort_none">수정</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input type="checkbox" class="flat" name="table_records"></td>
+                                                    <td>뷰티 감성 분류</td>
+                                                    <td>화장품 리뷰 데이터 감성 분류</td>
+                                                    <td>이미지 분류</td>
+                                                    <td>2020.02.28 / 17:02:58</td>
+                                                    <td>daumsoft</td>
+                                                    <td><button class="btn btn-xs" data-toggle="modal" data-target=".project_change" role="button">수정</button></td>
+                                                </tr>	
+
+                                                <tr>
+                                                    <td><input type="checkbox" class="flat" name="table_records"></td>
+                                                    <td>뷰티 감성 분류</td>
+                                                    <td>화장품 리뷰 데이터 감성 분류</td>
+                                                    <td>이미지 분류</td>
+                                                    <td>2020.02.28 / 17:02:58</td>
+                                                    <td>daumsoft</td>
+                                                    <td><button class="btn btn-xs" data-toggle="modal" data-target=".project_change" role="button">수정</button></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td><input type="checkbox" class="flat" name="table_records"></td>
+                                                    <td>뷰티 감성 분류</td>
+                                                    <td>화장품 리뷰 데이터 감성 분류</td>
+                                                    <td>이미지 분류</td>
+                                                    <td>2020.02.28 / 17:02:58</td>
+                                                    <td>daumsoft</td>
+                                                    <td><button class="btn btn-xs" data-toggle="modal" data-target=".project_change" role="button">수정</button></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td><input type="checkbox" class="flat" name="table_records"></td>
+                                                    <td>뷰티 감성 분류</td>
+                                                    <td>화장품 리뷰 데이터 감성 분류</td>
+                                                    <td>이미지 분류</td>
+                                                    <td>2020.02.28 / 17:02:58</td>
+                                                    <td>daumsoft</td>
+                                                    <td><button class="btn btn-xs" data-toggle="modal" data-target=".project_change" role="button">수정</button></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td><input type="checkbox" class="flat" name="table_records"></td>
+                                                    <td>뷰티 감성 분류</td>
+                                                    <td>화장품 리뷰 데이터 감성 분류</td>
+                                                    <td>이미지 분류</td>
+                                                    <td>2020.02.28 / 17:02:58</td>
+                                                    <td>daumsoft</td>
+                                                    <td><button class="btn btn-xs" data-toggle="modal" data-target=".project_change" role="button">수정</button></td>
+                                                </tr>
+
+                                            </tbody>
+                        
+                                        </table>
+                                    </div><!-- //x_content -->
+								</div>
+							</div>
+							
+						</div>
+						
+					</div>
+				</div>
+				<!-- //[컨텐츠] -->
+                
+                <!-- [project_maker 모달 팝업] -->
+                <div class="modal fade project_maker" tabindex="-1" role="dialog" aria-hidden="false" >
+					<div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                                <h2 class="modal-title" id=""><strong>프로젝트 생성</strong></h2>
+                            </div>
+                            <div class="modal-body">
+                                <div class="clearfix">
+                                    <form class="form-horizontal form-label-left">
+									<div class="form-group pdTB_10">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12 ta_left">프로젝트 이름</label>
+										<div class="col-md-9 col-sm-9 col-xs-12">
+										  <input type="text" class="form-control" placeholder="Test_Model03" value="">
+										</div>
+									</div>
+                                        
+                                    <div class="form-group pdTB_10">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12 ta_left">딥러닝 종류</label>
+										<div class="col-md-9 col-sm-9 col-xs-12">
+										  <select class="form-control">
+												<option>이미지 분류</option>
+												<option>이미지 분류1</option>
+												<option>이미지 분류2</option>
+											</select>
+										</div>
+									</div>
+                                    
+									<div class="form-group pdTB_10">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12 ta_left">프로젝트 설명</label>
+										<div class="col-md-9 col-sm-9 col-xs-12">
+										  <textarea class="form-control" rows="5"></textarea>
+										</div>
+									</div>
+								</form>
+                                </div>
+                            </div>
+                        
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">생성</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //[project_maker 모달 팝업] -->
+                
+                
+                <!-- [project_change 모달 팝업] -->
+                <div class="modal fade project_change" tabindex="-1" role="dialog" aria-hidden="false" >
+					<div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                                <h2 class="modal-title" id=""><strong>프로젝트 수정</strong></h2>
+                            </div>
+                            <div class="modal-body">
+                                <div class="clearfix">
+                                    <form class="form-horizontal form-label-left">
+									<div class="form-group pdTB_10">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12 ta_left">프로젝트 이름</label>
+										<div class="col-md-9 col-sm-9 col-xs-12">
+										  <input type="text" class="form-control" placeholder="Test_Model03" value="">
+										</div>
+									</div>
+                                        
+                                    <div class="form-group pdTB_10">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12 ta_left">딥러닝 종류</label>
+										<div class="col-md-9 col-sm-9 col-xs-12">
+										  <input type="text" class="form-control" placeholder="이미지 분류" value="" disabled>
+										</div>
+									</div>
+                                    
+									<div class="form-group pdTB_10">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12 ta_left">프로젝트 설명</label>
+										<div class="col-md-9 col-sm-9 col-xs-12">
+										  <textarea class="form-control" rows="5"></textarea>
+										</div>
+									</div>
+								</form>
+                                </div>
+                            </div>
+                        
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //[project_change 모달 팝업] -->
+                
+                
+
+				<footer>
+					<div class="pull-right">Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a></div><div class="clearfix"></div>
+				</footer>
+			</div><!-- //main_container -->
+		</div><!-- //container body -->
+	</div><!-- //root -->
+
+	<!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- iCheck -->
+    <script src="js/icheck.min.js"></script>
+	<script src="js/moment.min.js"></script>
+	<script src="js/daterangepicker.js"></script>
+    <!-- Datatables -->
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+
+
+    <script src="js/dataTables.fixedHeader.min.js"></script>
+    <script src="js/dataTables.keyTable.min.js"></script>
+    <script src="js/dataTables.responsive.min.js"></script>
+    <script src="js/responsive.bootstrap.js"></script>
+    <script src="js/dataTables.scroller.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="js/custom.min.js"></script>
+
+	<!-- amchart Resources -->
+	<script src="js/amchart/core.js"></script>
+	<script src="js/amchart/charts.js"></script>
+	<script src="js/amchart/animated.js"></script>
+	
+	<script type="text/javascript">
+		am4core.ready(function() {
+		am4core.options.commercialLicense = true; 
+
+		// Themes begin
+		am4core.useTheme(am4themes_animated);
+		// Themes end
+
+		// Create chart instance
+		var chart = am4core.create("abilityDiv", am4charts.XYChart);
+
+		/*==================================================================
+		// abilityDiv
+		// 성능평가 차트
+		//=================================================================*/
+		//chart.scrollbarX = new am4core.Scrollbar();
+		// Add data
+		chart.data = [{
+		  "category": "TRA",
+		  "score": 80
+		}, {
+		  "category": "TEST",
+		  "score": 70
+		}];
+
+		// Create axes
+		var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+		categoryAxis.dataFields.category = "category";
+		categoryAxis.renderer.grid.template.location = 0;
+		categoryAxis.renderer.minGridDistance = 30;
+		categoryAxis.renderer.labels.template.horizontalCenter = "right";
+		categoryAxis.renderer.labels.template.verticalCenter = "middle";
+		categoryAxis.tooltip.disabled = true;
+		categoryAxis.renderer.minHeight = 110;
+
+		var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+		valueAxis.renderer.minWidth = 50;
+
+		// Create series
+		var series = chart.series.push(new am4charts.ColumnSeries());
+
+		series.dataFields.valueY = "score";
+		series.dataFields.categoryX = "category";
+		series.tooltipText = "[{categoryX}: bold]{valueY}[/]";
+		
+		series.columns.template.strokeWidth = 0;
+
+		series.columns.template.column.cornerRadiusTopLeft = 10;
+		series.columns.template.column.cornerRadiusTopRight = 10;
+		series.columns.template.column.fillOpacity = 0.8;
+
+		
+
+		// Cursor
+		chart.cursor = new am4charts.XYCursor();
+		 // end am4core.ready()
+        
+        
+        
+        // Create chart instance
+		var datashowDiv = am4core.create("datashowDiv", am4charts.XYChart);
+
+		/*==================================================================
+		// datashowDiv
+		// 데이터보기 차트
+		//=================================================================*/
+		//chart.scrollbarX = new am4core.Scrollbar();
+		// Add data
+		datashowDiv.data = [{
+		  "category": "A",
+		  "score": 250
+		}, {
+		  "category": "B",
+		  "score": 150
+		}];
+
+		// Create axes
+		var categoryAxis = datashowDiv.xAxes.push(new am4charts.CategoryAxis());
+		categoryAxis.dataFields.category = "category";
+		categoryAxis.renderer.grid.template.location = 0;
+		categoryAxis.renderer.minGridDistance = 30;
+		categoryAxis.renderer.labels.template.horizontalCenter = "right";
+		categoryAxis.renderer.labels.template.verticalCenter = "middle";
+		categoryAxis.tooltip.disabled = true;
+		categoryAxis.renderer.minHeight = 110;
+
+		var valueAxis = datashowDiv.yAxes.push(new am4charts.ValueAxis());
+		valueAxis.renderer.minWidth = 50;
+
+		// Create series
+		var series = datashowDiv.series.push(new am4charts.ColumnSeries());
+
+		series.dataFields.valueY = "score";
+		series.dataFields.categoryX = "category";
+		series.tooltipText = "[{categoryX}: bold]{valueY}[/]";
+		
+		series.columns.template.strokeWidth = 0;
+
+		series.columns.template.column.cornerRadiusTopLeft = 10;
+		series.columns.template.column.cornerRadiusTopRight = 10;
+		series.columns.template.column.fillOpacity = 0.8;
+		series.columns.template.fill = am4core.color("#6a7ad5"); // fill
+		
+
+		// Cursor
+		datashowDiv.cursor = new am4charts.XYCursor();
+		}); // end am4core.ready()
+        
+		
+
+        
+	</script>
+    
+    <script type="text/javascript">
+		$(document).ready(function(e) {
+
+			//테이블 상단 버튼 영역
+			var addBtn	= '<button class="btn btn-success btn-sm mg_0 mgLeft_5" data-toggle="modal" data-target=".project_maker" role="button">프로젝트 생성</button> <button class="btn btn-default btn-sm mg_0 mgLeft_5" data-toggle="modal" data-target=".project_delete" role="button">삭제</button>';
+		
+			$(".dataTables_filter").append(addBtn);
+
+		});
+	</script>
+    
+    
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>대시보드</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/green.css" rel="stylesheet">
+
+<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="css/scroller.bootstrap.min.css" rel="stylesheet">
+
+<link href="css/switchery.min.css" rel="stylesheet">
+
+<link href="css/bootstrap-datetimepicker.css" rel="stylesheet"><!-- bootstrap-datetimepicker -->
+<link href="css/daterangepicker.css" rel="stylesheet"><!-- bootstrap-datetimepicker -->
+
+<link href="css/custom.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet"> <!-- //디자인팀 작업 CSS -->
+
+    <!-- jQuery -->
+<script src="js/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){});
+</script>
+</head>
+
+
+<body class="nav-md">
+	<div id="root">
+		<div class="container body">
+			<div class="main_container">
+
+				<!-- [left 메뉴] -->
+				<div class="col-md-3 left_col">
+					<div class="left_col scroll-view">
+						<div class="navbar nav_title" style="border: 0px;">
+							<a href="/" class="site_title"><i class="fa fa-cubes"></i> <span>데이터분석시스템</span></a>
+						</div>
+						<div class="clearfix"></div>
+						<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+							<div class="menu_section active">
+								<ul class="nav side-menu commonMenuUl">
+                                    <li class="dashBoardActive current-page">
+                                        <a href="/dashBoard"><i class="fa fa-home"></i> 대시 보드</a>
+                                    </li>
+                                    <li class="algorithmActive">
+                                        <a href="/algorithmManage"><i class="fa fa-cubes"></i> 알고리즘 조회</a>
+                                    </li>
+                                    <li class="dataManageActive">
+                                        <a href="/dataManage"><i class="fa fa-database"></i> 데이터 관리</a>
+                                    </li>
+                                    <li class="projectManageActive">
+                                        <a href="/projectManage"><i class="fa fa-gear"></i> 머신러닝 관리</a>
+                                    </li>
+                                    <li class="deepLearningManageActive">
+                                        <a href="/deepLearningManage"><i class="fa fa-gears"></i> 딥러닝 관리</a>
+                                    </li>
+                                    <li class="domainManageActive">
+                                        <a href="/domainManage"><i class="fa fa-desktop"></i> 도메인 관리</a>
+                                    </li>
+                                    <li class="userGuide">
+                                        <a href="/userGuide"><i class="fa fa-info-circle"></i> 사용자 가이드</a>
+                                    </li>
+                                    <li class="userManageActive">
+                                        <a href="/userManage"><i class="fa fa-users"></i> 사용자 관리</a>
+                                    </li>
+                                </ul>
+							</div>
+						</div><!-- //sidebar-menu -->
+					</div><!-- //left_col scroll-view -->
+				</div>
+				<!-- //[left 메뉴] -->
+
+				<!-- [top 메뉴] -->
+				<div class="top_nav">
+					<div class="nav_menu">
+						<nav><div class="nav toggle"><a id="menu_toggle"><i class="fa fa-bars"></i></a></div><ul class="nav navbar-nav navbar-right"></ul></nav>
+					</div>
+				</div>
+				<!-- //[top 메뉴] -->
+				
+				<!-- [컨텐츠] -->
+				<div class="dashboard_wrap">
+					<div>                  
+						<div class="right_col" role="main" id="myContentsWrap">
+							<div class="row">
+								<div class="col-md-12 col-sm-12 col-xs-12">
+                                    
+                                    <div class="numbox">
+                                        <div>
+                                            <p>알고리즘</p>
+                                            <span><em class="num">12</em>건</span>
+                                        </div>
+                                        
+                                        <div>
+                                            <p>데이터 모델</p>
+                                            <span><em class="num">43</em>건</span>
+                                        </div>
+                                        
+                                        <div>
+                                            <p>머신러닝</p>
+                                            <span><em class="num">21</em>건</span>
+                                        </div>
+                                    </div>
+									<div class="x_panel">
+										<div class="x_title">
+                                            <div class="col-md-8 col-sm-8 col-xs-8 text-right">
+											     <h2><strong>ADMIN</strong> 님의 최근 분석 내역</h2>
+                                            </div>
+											
+                                            <div class="col-md-4 col-sm-4 col-xs-4 text-right">
+												<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".How_popup">How to use</button>
+											</div>
+                                            
+                                            <div class="clearfix"></div>
+										</div><!-- //x_title -->
+										<div class="row">
+											
+										</div>
+										<div class="x_content">
+											<div class="analysis_box">
+                                                <p class="title">AI 처방형 분석</p>
+                                                <div>
+                                                    <button>모델</button>
+                                                    <button>전처리 데이터</button>
+                                                    <button>원본 데이터</button>
+                                                    <button>테스트</button>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="analysis_box">
+                                                <p class="title">PIO 통신 장애 분석</p>
+                                                <div>
+                                                    <button>모델</button>
+                                                    <button>전처리 데이터</button>
+                                                    <button>원본 데이터</button>
+                                                    <button>테스트</button>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="analysis_box">
+                                                <p class="title">LINK 혼잡도분석 </p>
+                                                <div>
+                                                    <button>모델</button>
+                                                    <button>전처리 데이터</button>
+                                                    <button>원본 데이터</button>
+                                                    <button>테스트</button>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="analysis_box">
+                                                <p class="title">제조설계 실험 계획법</p>
+                                                <div>
+                                                    <button>모델</button>
+                                                    <button>전처리 데이터</button>
+                                                    <button>원본 데이터</button>
+                                                    <button>테스트</button>
+                                                </div>
+                                            </div>
+										</div><!-- //x_content -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //[컨텐츠] -->
+
+				<!-- [모달 팝업] -->
+				<div class="modal fade How_popup" id="How_popup" tabindex="-1" role="dialog" aria-hidden="false" >
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header">
+							  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+							</div>
+							<div class="modal-body">
+								<form class="form-horizontal form-label-left">
+                                    
+									<i class="fa fa-frown-o"></i>
+                                    <p class="noresult">최근 사용 내역이 없습니다</p>
+                                    
+									<div class="text-center">
+										<div class="btn-group">
+											<button type="button" class="btn btn-primary howtouse">How to use</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div> -->
+
+				<footer>
+					<div class="pull-right">Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a></div><div class="clearfix"></div>
+				</footer>
+			</div><!-- //main_container -->
+		</div><!-- //container body -->
+	</div><!-- //root -->
+
+	<!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- iCheck -->
+    <script src="js/icheck.min.js"></script>
+	<script src="js/moment.min.js"></script>
+	<script src="js/daterangepicker.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="js/custom.min.js"></script>
+	
+
+	<!-- amchart Resources -->
+	<script src="js/amchart/core.js"></script>
+	<script src="js/amchart/charts.js"></script>
+	<script src="js/amchart/animated.js"></script>
+
+	<script type="text/javascript">
+		am4core.ready(function() {
+		am4core.options.commercialLicense = true; 
+
+		// Themes begin
+		am4core.useTheme(am4themes_animated);
+		// Themes end
+
+		// Create chart instance
+		var chart = am4core.create("abilityDiv", am4charts.XYChart);
+
+		/*==================================================================
+		// abilityDiv
+		// 성능평가 차트
+		//=================================================================*/
+		//chart.scrollbarX = new am4core.Scrollbar();
+		// Add data
+		chart.data = [{
+		  "category": "TRA",
+		  "score": 80
+		}, {
+		  "category": "TEST",
+		  "score": 70
+		}];
+
+		// Create axes
+		var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+		categoryAxis.dataFields.category = "category";
+		categoryAxis.renderer.grid.template.location = 0;
+		categoryAxis.renderer.minGridDistance = 30;
+		categoryAxis.renderer.labels.template.horizontalCenter = "right";
+		categoryAxis.renderer.labels.template.verticalCenter = "middle";
+		categoryAxis.tooltip.disabled = true;
+		//categoryAxis.renderer.minHeight = 110;
+
+		var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+		valueAxis.renderer.minWidth = 50;
+
+		// Create series
+		var series = chart.series.push(new am4charts.ColumnSeries());
+
+		series.dataFields.valueY = "score";
+		series.dataFields.categoryX = "category";
+		series.name = "성능";
+
+		series.tooltipText = "[{categoryX}: bold]{valueY}[/]";
+		
+		series.columns.template.strokeWidth = 0;
+
+		series.columns.template.column.cornerRadiusTopLeft = 10;
+		series.columns.template.column.cornerRadiusTopRight = 10;
+		series.columns.template.column.fillOpacity = 0.8;
+		
+
+		// Cursor
+		//chart.cursor = new am4charts.XYCursor();
+		chart.legend = new am4charts.Legend();
+
+
+		
+	}); // end am4core.ready()
+	</script>
+</body>
+</html>

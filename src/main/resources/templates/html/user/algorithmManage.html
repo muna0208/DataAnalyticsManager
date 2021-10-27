@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+    layout:decorator="layout/defaultLayout">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <th:block layout:fragment="content">
+        <script th:src="@{dist/user/algorithmManage.js}"></script>
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2><strong>알고리즘 조회 </strong></h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="search_box">
+                                    <form class="form-inline">
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label col-md-3 col-sm-3">유형</label>
+                                            <div class="col-md-8 col-sm-8 ">
+                                                <select id="type" class="form-control width_100p">
+                                                    <option value="all" class="learning">전체</option>
+                                                    <option value="machine" class="learning">머신러닝</option>
+                                                    <option value="deep" class="learning">딥러닝</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3 col-sm-3">
+                                            <label class="control-label col-md-4 col-sm-4">카테고리</label>
+                                            <div class="col-md-8 col-sm-8">
+                                                <select id="search_option" class="form-control width_100p">
+                                                    <option value="all">전체</option>
+                                                    <option value="Usage">Usage</option>
+                                                    <option value="Algorithm">Algorithm</option>
+                                                    <option value="Library">Library</option>
+                                                    <option value="Data Type">Data Type</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-5">
+                                            <label class="col-sm-3 col-md-3 col-form-label text-right pdright_25"
+                                                for="search_word">검색어</label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control minWidth_100" name="search_word"
+                                                        id="search_word">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" id="search_button"
+                                                            class="btn btn-primary borderRadius">검색</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+
+                                <table id="datatable" class="table table-striped table-bordered bulk_action">
+                                    <thead>
+                                        <tr>
+                                            <th>Usage</th>
+                                            <th>Algorithm</th>
+                                            <th>Library</th>
+                                            <th>Data Type</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyHtml">
+
+                                    </tbody>
+                                </table>
+
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <div class="dataTables_paginate paging_simple_numbers"
+                                            id="datatable-buttons_paginate">
+                                            <ul class="pagination">
+                                                <!-- 동적 추가 부분-->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /page content -->
+
+            <!-- modal -->
+            <div class="modal fade bs-example-modal-lg" tabIndex={-1} role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">×</span></button>
+                            <h4 class="modal-title" id="myModalLabel">알고리즘 세부정보</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>See details about</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <table id="datatable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>ALGORITHM</th>
+                                                <th>LIBRARY</th>
+                                                <th>USAGE</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td id="algorithmName"></td>
+                                                <td id="libraryName"></td>
+                                                <td id="libraryFunctionUasge"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Algorithm details</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <table id="datatable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>BASIC INFORAMTION</th>
+                                                <td id="libraryFunctionDescription"></td>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <br />
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Model Parameter</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content overY_scroll overX_scroll height_400">
+                                    <table id="datatable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Default</th>
+                                                <th>Type</th>
+                                                <th>Note</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="modelParamList">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Train Parameter</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content overY_scroll overX_scroll">
+                                    <table id="datatable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Default</th>
+                                                <th>Type</th>
+                                                <th>Note</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="trainParamList">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- modal -->
+
+    </th:block>
+</body>
+
+</html>

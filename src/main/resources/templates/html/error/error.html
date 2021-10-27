@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- Bootstrap -->
+  <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link th:href="@{css/font-awesome.min.css}" rel="stylesheet">
+
+  <!-- Custom Theme Style -->
+  <link th:href="@{css/custom.min.css}" rel="stylesheet">
+
+  <title>에러 페이지</title>
+</head>
+
+<body>
+  <!-- error -->
+  <div class="container body">
+    <div class="main_container">
+      <!-- page content -->
+      <div class="col-md-12">
+        <div class="col-middle">
+          <div class="text-center text-center">
+            <h1 class="error-number" th:if="${code.equals('403')}">403</h1>
+            <h1 class="error-number" th:if="${code.equals('404')}">404</h1>
+            <h1 class="error-number" th:if="${code.equals('500')}">500</h1>
+
+            <h2 th:if="${code.equals('403')}">Access denied</h2>
+            <h2 th:if="${code.equals('404')}">Sorry but we couldn't find this page</h2>
+            <h2 th:if="${code.equals('500')}">Internal Server Error</h2>
+
+            <div class="mid_center">
+              <h3><a href="javascript:history.back();">Previous page</a></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /page content -->
+    </div>
+  </div>
+
+  <!-- jQuery -->
+  <script th:src="@{js/lib/jquery.min.js}"></script>
+
+  <!-- Bootstrap -->
+  <script th:src="@{js/lib/bootstrap.min.js}"></script>
+
+  <!-- FastClick -->
+  <script th:src="@{gentelella/vendors/fastclick/lib/fastclick.js}"></script>
+  <!-- //error -->
+</body>
+
+</html>

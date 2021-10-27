@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daumsoft.dataAnalyticsManager.restFullApi.mapper.ProjectRestMapper">
+
+	<select id="projects" resultType="java.util.HashMap">
+		/* projectSql.projects */
+		SELECT 
+			id
+			, name
+			, description
+			, user_id
+			, create_date
+			, to_char(create_date, 'YYYY-MM-DD HH24:MI:SS') as "createDateOrder"
+		FROM "PROJECT" AS project
+		<where>
+			<choose>
+				<when test="option == 'name' and value != null">
+						name
+					ILIKE 
+						'%'||#{value}||'%'
+				</when>
+				<when test="option == 'description' and value != null">
+							description 
+						ILIKE 
+							'%'||#{value}||'%'
+					</when>
+				<when test="option == 'regtUser' and value != null">
+						user_id 
+					ILIKE 
+						'%'||#{value}||'%'
+				</when>
+				<when test="option == 'create_datetime' and value != null">
+							to_char(create_date, 'YYYY-MM-DD HH24:MI:SS') 
+						ILIKE 
+							'%'||#{value}||'%'
+					</when>
+				<when test="option == 'all' and value != null">
+					(name ILIKE '%'||#{value}||'%'
+						OR description ILIKE '%'||#{value}||'%'
+						OR to_char(create_date, 'YYYY-MM-DD HH24:MI:SS') ILIKE '%'||#{value}||'%'
+					<if test="currentId == ''">
+						OR user_id ILIKE '%'||#{value}||'%'
+					</if>
+					)
+				</when>
+			</choose>
+			<if test="currentId != null and currentId != 'null' and currentId != ''">
+						AND user_id = #{currentId}
+					</if>
+			AND delete_flag = false
+			AND type = #{type}
+		</where>
+		ORDER BY "createDateOrder" DESC
+		LIMIT
+			10
+		OFFSET
+			#{pageNo}
+	</select>
+
+	<select id="getProjectNameList" resultType="project">
+		/* projectSql.getProjectNameList */
+		SELECT
+			id
+			, type
+            , name
+        FROM
+			"PROJECT"
+		WHERE
+			delete_flag = FALSE
+		<if test="userAuth == 'user'">
+				AND user_id = #{currentId}
+			</if>
+	</select>
+
+	<select id="project" resultType="java.util.HashMap">
+		/* projectSql.project */
+		SELECT 
+			id
+			, name
+			, description
+			, user_id
+			, create_date
+		FROM "PROJECT" AS project
+		WHERE id = #{id}
+   </select>
+
+	<select id="checkProjectName" resultType="int" parameterType="project">
+		/* projectSql.checkProjectName */
+		SELECT count(id)
+		FROM "PROJECT"
+		WHERE name = #{name}
+			AND delete_flag = FALSE
+			AND type = #{type}
+		<if test="id != null and id != ''">
+				AND id NOT IN(#{id})
+			</if>
+	</select>
+
+	<insert id="insertProject" parameterType="project" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		/* projectSql.insertProject */
+		INSERT INTO 
+			"PROJECT"(
+				name
+				, description
+				, create_date
+				, user_id
+				, type
+			)VALUES(
+           		#{name}
+           		, #{description}
+           		, NOW()
+           		, #{userId}
+           		, #{type}
+          	)
+	</insert>
+
+	<update id="updateProject" parameterType="project">
+		/* projectSql.updateProject */
+		UPDATE "PROJECT"
+		SET
+		<trim prefixOverrides=",">
+			<if test="name != null and name != ''">,name = #{name}</if>
+			<if test="description != null and description != ''">,description = #{description}</if>
+			<if test="deleteFlag != null and deleteFlag != ''">,delete_flag = #{deleteFlag}</if>
+		</trim>
+		WHERE id = #{id}
+	</update>
+
+	<select id="getProjectCount" resultType="int">
+		/* projectSql.getProjectCount */
+		SELECT 
+            COUNT(id) 
+        FROM 
+			"PROJECT"
+		<where>
+			<choose>
+				<when test="option == 'name' and value != null">
+							name 
+						ILIKE 
+							'%'||#{value}||'%'
+					</when>
+				<when test="option == 'description' and value != null">
+							description 
+						ILIKE 
+							'%'||#{value}||'%'
+					</when>
+				<when test="option == 'regtUser' and value != null">
+						user_id 
+					ILIKE 
+						'%'||#{value}||'%'
+				</when>
+				<when test="option == 'create_datetime' and value != null">
+							to_char(create_date, 'YYYY-MM-DD HH24:MI:SS')
+						ILIKE 
+							'%'||#{value}||'%'
+					</when>
+				<when test="option == 'all' and value != null">
+					(name ILIKE '%'||#{value}||'%'
+						OR description ILIKE '%'||#{value}||'%'
+						OR to_char(create_date, 'YYYY-MM-DD HH24:MI:SS') ILIKE '%'||#{value}||'%'
+					<if test="currentId == ''">
+						OR user_id ILIKE '%'||#{value}||'%'
+					</if>
+					)
+				</when>
+			</choose>
+			<if test="currentId != null and currentId != 'null' and currentId != ''">
+						AND user_id = #{currentId}
+			</if>
+			AND delete_flag = false
+			<if test="type != null">
+				AND type = #{type}
+			</if>
+		</where>
+	</select>
+</mapper>

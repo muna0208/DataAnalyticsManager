@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daumsoft.dataAnalyticsManager.restFullApi.mapper.AlgorithmRestMapper">
+
+	<select id="algorithms" resultType="java.util.HashMap">
+		/* algorithmSql.algorithms */
+		SELECT
+			id
+			, library_function_usage
+			, name
+			, library_name
+			, support_data_type
+		from "ALGORITHM"
+		<where>
+			<choose>
+				<when test="option == 'Usage' and value != null">
+					library_function_usage ILIKE '%'||#{value}||'%'
+				</when>
+				<when test="option == 'Algorithm' and value != null">
+					name ILIKE '%'||#{value}||'%'
+				</when>
+				<when test="option == 'Library' and value != null">
+					library_name ILIKE '%'||#{value}||'%'
+				</when>
+				<when test="option == 'Data Type' and value != null">
+					support_data_type ILIKE '%'||#{value}||'%'
+				</when>
+				<when test="option == 'all' and value != null">
+					(library_function_usage ILIKE '%'||#{value}||'%'
+					OR name ILIKE '%'||#{value}||'%'
+					OR library_name ILIKE '%'||#{value}||'%'
+					OR support_data_type ILIKE '%'||#{value}||'%')
+				</when>
+			</choose>
+			<choose>
+                <when test="type == 'machine'">
+                    AND
+                        type = 'M'
+                </when>
+                <when test="type == 'deep'">
+                    AND
+                        type = 'D'
+                </when>
+            </choose>
+			AND use_flag = TRUE
+		</where>
+		ORDER BY create_date DESC
+		LIMIT
+			10
+		OFFSET
+			#{pageNo};
+	</select>
+
+	<select id="algorithm" resultType="java.util.HashMap">
+        /* algorithmSql.algorithm */
+		SELECT
+			name
+			, library_name
+			, library_function_usage
+			, library_function_description
+			, model_parameter
+			, train_parameter
+		from "ALGORITHM" where id = #{id}
+   </select>
+
+	<select id="getTotalAlgorithmCount" resultType="int">
+		/* algorithmSql.getTotalAlgorithmCount */
+		SELECT 
+			COUNT(id)
+		FROM
+			"ALGORITHM"
+		<where>
+			<choose>
+				<when test="option == 'Usage' and value != null">
+						library_function_usage ILIKE '%'||#{value}||'%'
+					</when>
+				<when test="option == 'Algorithm' and value != null">
+						name ILIKE '%'||#{value}||'%'
+					</when>
+				<when test="option == 'Library' and value != null">
+						library_name ILIKE '%'||#{value}||'%'
+					</when>
+				<when test="option == 'Data Type' and value != null">
+						support_data_type ILIKE '%'||#{value}||'%'
+					</when>
+				<when test="option == 'all' and value != null">
+						(library_function_usage ILIKE '%'||#{value}||'%'
+						OR name ILIKE '%'||#{value}||'%'
+						OR library_name ILIKE '%'||#{value}||'%'
+						OR support_data_type ILIKE '%'||#{value}||'%')
+				</when>
+			</choose>
+			<choose>
+                <when test="type == 'machine'">
+                    AND
+                        type = 'M'
+                </when>
+                <when test="type == 'deep'">
+                    AND
+                        type = 'D'
+                </when>
+            </choose>
+			AND use_flag = TRUE
+		</where>
+	</select>
+
+	<select id="searchAlgorithms" resultType="java.util.HashMap">
+		/* algorithmSql.searchAlgorithms */
+		SELECT * 
+		FROM "ALGORITHM"
+		WHERE type = #{searchType}
+		<if test="searchValue != null and searchValue != 'null' and searchValue != ''">
+			AND name ILIKE concat('%', #{searchValue}, '%') 
+			OR library_function_usage ILIKE concat('%', #{searchValue}, '%')
+		</if>
+		ORDER BY name
+	</select>
+</mapper>

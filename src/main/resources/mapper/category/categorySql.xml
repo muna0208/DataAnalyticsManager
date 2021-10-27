@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daumsoft.dataAnalyticsManager.restFullApi.mapper.UserMngMapper">
+
+    <select id="getCategoryNameList" resultType="category">
+        /* categorySql.getCategoryNameList */
+        SELECT
+            name
+        FROM
+            "CATEGORY"
+        WHERE
+            use_flag = true
+        AND
+            delete_flag = false
+    </select>
+</mapper>

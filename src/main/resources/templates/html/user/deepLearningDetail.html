@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout/defaultLayout">
+
+<head>
+	<meta charset="UTF-8">
+	<link th:href="@{/js/lib/jstree/themes/default/style.css}" rel="stylesheet" />
+</head>
+
+<body>
+	<th:block layout:fragment="content">
+		<script th:src="@{dist/user/deeplearningProject/deepLearningDetail.js}"></script>
+		<script th:src="@{dist/user/dataManage.js}"></script>
+		<script th:src="@{/gentelella/vendors/dropzone/dist/min/dropzone.min.js}"></script>
+		<script th:src="@{js/lib/jstree/jstree.js}"></script>
+		<form method="POST" id="deeplearningForm" class="height_0" name="deeplearningForm">
+			<input type="hidden" id="projectSequencePk" th:value="${projectSequencePk}" />
+		</form>
+
+		<!-- page content -->
+		<div>
+			<div class="right_col deeplearningWrap" role="main" id="deeplearning">
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="x_panel">
+							<div class="x_title">
+								<div id="proejectName"></div>
+								<ul class="nav navbar-right panel_toolbox">
+									<div class="pdTB_10" id="projectCreateDate"></div>
+								</ul>
+								<div class="clearfix"></div>
+							</div><!-- //x_title -->
+							<div class="x_content">
+								<p><span id="proejectDesc"></span></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<!-- 왼쪽 레이아웃 -->
+					<div class="col-md-3 col-sm-12 col-xs-12">
+						<div class="x_panel">
+							<div class="x_title posiRelative"><strong>원본리스트</strong>
+								<button class="btn btn-dark btn-xs originPlusBtn" type="button" data-toggle="modal" data-target=".originModal"><i class="fa fa-plus"></i></button>
+							</div>
+							<div class="x_content">
+								<div class="projList">
+									<ul id="originalDataList" class="overX_scroll pdLeft_20 pdBottom_20">
+
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="x_panel">
+							<div class="x_title"><strong>모델 리스트</strong></div>
+							<div class="x_content">
+								<div class="projList">
+									<ul id="modelList" class="overX_scroll pdLeft_20 pdBottom_20">
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--// 왼쪽 레이아웃 -->
+					
+					<!-- 오른쪽 레이아웃 -->
+					<div class="col-md-9 col-sm-12 col-xs-12" id="deepLearningMain">
+						<div class="x_panel" id="deepLearningMain_explain">
+							<div class="x_title posiRelative">
+								<strong><i class="fa fa-info-circle"></i> 모델을 생성 해 주세요</strong>
+								<div class="clearfix"></div>
+							</div>
+							<div>
+								<h5>
+								처음 사용자 이시면 <code>초보자용 모델 생성 프로세스</code>를 이용 해 주시고, 
+								<br> 숙련된 사용자 이시면 <code>전문가용 모델 생성 프로세스</code>를 이용해주시기 바랍니다.
+								</h5>
+							</div>
+						</div>
+						
+						<div class="x_panel" id="deepLearningMain_beginner_body">
+							<div class="x_title posiRelative">
+								<strong><i class="fa fa-gear"></i> 초보자용 모델 생성 프로세스</strong>
+								<a class="collapse-link"><i class="fa fa-chevron-down floatR"></i></a>
+								<div class="clearfix"></div>
+							</div>
+							<!--초보자 메인 x_content-->
+							<div class="x_content disp_none">
+								
+								<!-- 초보자 프로세스 1 -->
+								<h3 class="StepTitle"><span class="section"><strong>Pre-Trained Network을 선택해 주세요</strong></span></h3>
+								<div class="clearfix"></div>
+								<div class="form-horizontal form-label-left">
+									<div class="form-group pdTB_10">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12" style="text-align: left;">Pre-Trained 모델</label>
+										<div class="col-md-9 col-sm-9 col-xs-12">
+											<select class="form-control" id="preTrainedModel_beginner_selectBox" onchange="changePreTrainedModelDesc_beginner();"></select>
+										</div>
+									</div>
+									<div class="form-group pdTB_10">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12" style="text-align: left;">모델 상세설명</label>
+										<div class="col-md-9 col-sm-9 col-xs-12">
+											<textarea class="form-control" rows="5" readonly id="preTrainedModel_beginner_desc"></textarea>
+										</div>
+									</div>
+								</div>
+								<!--// 초보자 프로세스 1 -->
+								<div>
+									<h5>
+									기본적으로 제공되는 알고리즘 세팅으로 딥러닝 학습을 시행합니다.
+									</h5>
+								</div>
+								<div class="alert">	
+									<button type="button" data-toggle="modal" data-target=".process_6" onclick="onBeginnerMode(true);" class="btn btn-primary btn-lg btn-block">딥러닝 학습 모델 생성</button>
+								</div>
+							</div>
+							<!--// 초보자 메인 x_content-->
+						</div>
+						
+						<!--x_panel : 전문가 메인 -->
+						<div class="x_panel" id="deepLearningMain_expert_body">
+							<div class="x_title posiRelative">
+								<strong><i class="fa fa-gears"></i> 전문가용 모델 생성 프로세스</strong>
+								<a class="collapse-link" id="modelCreateDropdown"><i class="fa fa-chevron-down floatR"></i></a>
+								<div class="clearfix"></div>
+							</div>
+							
+							<!--전문가 메인 x_content-->
+							<div class="x_content disp_none">
+								<!-- 전문가 프로세스 1 -->
+								<h3 class="StepTitle"><span class="section"><strong>1. 원본데이터 미리보기 </strong></span></h3>
+								<div class="clearfix">
+										<div id="expert_process1_explain"></div>
+										<div id="org_data_img_div"></div>
+										<table id="org_data_lable_div" class="table table-striped"></table>
+								</div>
+								<!--// 전문가 프로세스 1 -->
+								
+								<!-- 전문가 프로세스 2 -->
+								<h3 class="StepTitle"><span class="section"><strong>2. Pre-Trained Network을 선택해 주세요</strong></span></h3>
+								<div class="clearfix"></div>
+								<div class="form-horizontal form-label-left">
+									<div class="form-group pdTB_10">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12" style="text-align: left;">Pre-Trained 모델</label>
+										<div class="col-md-9 col-sm-9 col-xs-12">
+											<select class="form-control" id="preTrainedModel_expert_selectBox" onchange="changePreTrainedModelDesc_expert();"></select>
+										</div>
+									</div>
+									<div class="form-group pdTB_10">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12" style="text-align: left;">모델 상세설명</label>
+										<div class="col-md-9 col-sm-9 col-xs-12">
+											<textarea class="form-control" rows="5" readonly id="preTrainedModel_expert_desc"></textarea>
+										</div>
+									</div>
+								</div>
+								<!--// 전문가 프로세스 2 -->
+								<!-- 전문가 프로세스 3 -->
+								<h3 class="StepTitle"><span class="section"><strong>3. Pre-Trained Network 분석 파라메터를 설정해 주세요</strong></span></h3>
+								<div class="clearfix"></div>
+								<div class="maxHeight_400 overY_scrollauto" id="preTrainedNetwork_table">
+									<div class="alert alert-warning alert-dismissible " role="alert">
+										아직<strong> Pre-Trained Network</strong> 를 설정하지 않았습니다.
+									</div>
+								</div>
+								<div class="row" id="preTrainedNetwork_btn"></div>
+								
+								<!--// 전문가 프로세스 3 -->
+								<!-- 전문가 프로세스 4 -->
+								<h3 class="StepTitle"><span class="section"><strong>4. 데이터 제너레이터를 설정해 주세요</strong></span></h3>
+									<div class="alert alert-warning alert-dismissible " role="alert" id="expertProcess4_alert">
+										아직<strong> Pre-Trained Network</strong> 를 설정하지 않았습니다.
+									</div>
+									<table class="table table-bordered jambo_table disp_none" id="expertProcess4_table">
+										<thead>
+											<tr>
+												<th>파라메터</th>
+												<th>입력값</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="tip"><h5><strong>랜덤 기준 값</strong></h5>랜덤 값이 다음에도 똑같이 나오기 위해서 설정하는 수치</td>
+												<td>
+													<input id="generator_random_state" type="text" class="form-control" placeholder="0" value="">
+												</td>
+											</tr>
+		
+											<tr>
+												<td class="tip"><h5><strong>사진 회전</strong></h5>사진을 랜덤하게 회전</td>
+												<td>
+													<div class="switch_box">
+														<label class="switch">
+															<input type="checkbox" id="generator_rotation" checked>
+															<span class="slider round"></span>
+														</label>
+													</div>
+												</td>
+											</tr>
+		
+											<tr>
+												<td class="tip"><h5><strong>사진 이동</strong></h5>랜덤하게 상/하/좌/우로 이동</td>
+												<td>
+													<div class="switch_box">
+														<label class="switch">
+															<input type="checkbox" id="generator_shifting" checked>
+															<span class="slider round"></span>
+														</label>
+													</div>
+												</td>
+											</tr>
+		
+											<tr>
+												<td class="tip"><h5><strong>크기 조정</strong></h5>사진의 크기를 랜덤하게 변환</td>
+												<td>
+													<div class="switch_box">
+														<label class="switch">
+															<input type="checkbox" id="generator_rescaling" checked>
+															<span class="slider round"></span>
+														</label>
+													</div>
+												</td>
+											</tr>
+		
+											<tr>
+												<td class="tip"><h5><strong>사진 반전</strong></h5>사진을 상하/좌우 반전</td>
+												<td>
+													<div class="switch_box">
+														<label class="switch">
+															<input type="checkbox" id="generator_flipping" checked>
+															<span class="slider round"></span>
+														</label>
+													</div>
+												</td>
+											</tr>
+		
+											<tr>
+												<td class="tip"><h5><strong>찌그러짐</strong></h5>사진을 랜덤하게 찌그러뜨림</td>
+												<td>
+													<div class="switch_box">
+														<label class="switch">
+															<input type="checkbox" id="generator_shearing" checked>
+															<span class="slider round"></span>
+														</label>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+<!-- 									<div class="row">
+										<div class="switch_warp">
+										<div class="pull-right">
+												<p>데이터 제너레이터 파라메터값 사용 여부</p>
+												<div class="switch_box">
+													<label class="switch">
+														<input type="checkbox" id="data_generator_chkbox" checked>
+														<span class="slider round"></span>
+													</label>
+												</div>
+										</div>
+										</div>
+									</div>	 -->								
+								<!--// 전문가 프로세스 4 -->			
+								<!-- 전문가 프로세스 5 -->
+								<h3 class="StepTitle"><span class="section"><strong>5. 파라메터를 설정해 주세요</strong></span></h3>
+									<div class="alert alert-warning alert-dismissible " role="alert" id="expertProcess5_alert">
+										아직<strong> Pre-Trained Network</strong> 를 설정하지 않았습니다.
+									</div>
+									<table class="table table-bordered jambo_table disp_none"  id="expertProcess5_table">
+										<thead>
+											<tr>
+												<th>파라메터</th>
+												<th>기본값</th>
+												<th>입력값</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="tip"><h5><strong>epoch</strong></h5>학습 반복 횟수(*모든 데이터가 학습에 사용되면 1 epoch 학습)</td>
+												<td>30</td>
+												<td>
+														<input type="text" id="train_epoch" class="form-control" placeholder="5" value="5">
+												</td>
+											</tr>
+		
+											<tr>
+												<td class="tip"><h5><strong>검증 데이터 비율</strong></h5>
+													<div class="tip_box">학습에 사용되는 데이터 중 검증 데이터를 따로 지정하여 모델의 성능을 보여줌</div>
+												</td>
+												<td>30%</td>
+												<td>
+													<select id="train_validation_ratio" class="form-control">
+														<option value="0.1">10%</option>
+														<option value="0.2">20%</option>
+														<option value="0.3" selected>30%</option>
+														<option value="0.4">40%</option>
+														<option value="0.5">50%</option>
+														<option value="0.6">60%</option>
+														<option value="0.7">70%</option>
+														<option value="0.8">80%</option>
+														<option value="0.9">90%</option>
+														<option value="1.0">100%</option>
+													</select>
+												</td>
+											</tr>
+		
+											<tr>
+												<td class="tip"><h5><strong>batch_size</strong></h5>
+													<div class="tip_box">한번에 사용되는 데이터의 양</div>
+												</td>
+												<td>16</td>
+												<td>
+													<input type="text" id="train_batch_size" class="form-control" placeholder="2" value="2">
+												</td>
+											</tr>
+		
+											<tr>
+												<td class="tip"><h5><strong>shuffle</strong></h5>학습시 데이터를 섞을지에 대한 여부</td>
+												<td>True</td>
+												<td>
+													<div class="switch_box">
+														<label class="switch">
+															<input type="checkbox" id="train_shuffle" checked>
+															<span class="slider round"></span>
+														</label>
+													</div>
+												</td>
+											</tr>
+		
+											<tr>
+												<td class="tip"><h5><strong>optimizer</strong></h5>손실함수를 최소화 시키기 위한 전략</td>
+												<td>None</td>
+												<td>
+													<select id="train_optimizer_seletbox" class="form-control"></select>
+												</td>
+											</tr>
+		
+											<tr>
+												<td class="tip"><h5><strong>learning_rate</strong></h5>1epoch의 학습에 대한 반영 비율</td>
+												<td>None</td>
+												<td>
+													<input type="text" id="train_learning_rate" class="form-control"placeholder="0.0001" value="0.0001">
+												</td>
+											</tr>
+										</tbody>
+									</table>									
+								<!--// 전문가 프로세스 5 -->
+								<div class="alert">	
+									<button type="button" id="dl_process6" data-toggle="modal" data-target=".process_6" onclick="onBeginnerMode(false);" class="btn btn-primary btn-lg btn-block">딥러닝 학습 모델 생성</button>
+								</div>
+												
+							</div>
+							<!--//전문가 메인 x_content-->
+								
+						</div>
+						<!-- //x_panel : 전문가 메인 -->
+						
+						<!--x_panel : 딥러닝 메인2 -->
+						<div class="x_panel" id="deepLearningMain2">
+							<div class="x_title posiRelative">
+								<strong><i class="fa fa-table"></i> 모델 세부 정보 <span id="model_name"></span></strong>
+								<a class="collapse-link" id="modelInfoDropdown"><i class="fa fa-chevron-up floatR"></i></a>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<div class="row">
+									<h4 class="bg_title">학습 옵션 정보</h4>
+									<div class="col-md-6 col-sm-12 col-xs-12">
+										<h4><strong>데이터 제너레이터</strong></h4>
+										<div class="maxHeight_300 overY_scrollauto">
+											<table class="table table-bordered jambo_table" id="data_generator_table">
+											</table>
+										</div>
+									</div>
+	
+									<div class="col-md-6 col-sm-12 col-xs-12 ">
+										<h4><strong>파라메터 설정</strong></h4>
+										<div class="maxHeight_300 overY_scrollauto">
+											<table class="table table-bordered jambo_table" id="data_params_table">
+											</table>
+										</div>
+									</div>
+								</div>
+	
+								<div class="row">
+									<h4 class="bg_title">모델 구조 정보</h4>
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<div class="maxHeight_300 overY_scrollauto">
+											<table class="table table-bordered jambo_table mgTop_10" id="data_modelInfo_table"></table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- //x_panel : 딥러닝 메인2 -->
+	
+						<!--x_panel : 딥러닝 메인3 -->
+						<div class="x_panel" id="deepLearningMain3">
+							<div class="x_title posiRelative">
+								<strong><i class="fa fa-book"></i> 학습결과</strong>
+								<a class="collapse-link" id="modelInfoDropdown"><i class="fa fa-chevron-up floatR"></i></a>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<div class="mgTop_20">
+									<div class="row">
+	
+										<div class="col-md-5 col-sm-12 col-xs-12">
+											<h4><strong>학습결과 정확도</strong></h4>
+											<div class="tabletitle">
+												<p><span id="accuracyResult"></span></p>
+											</div>
+											<div class="maxHeight_400 overY_scrollauto">
+												<table class="table table-bordered jambo_table" id="data_result1_table">
+												</table>
+											</div>
+										</div>
+	
+										<div class="col-md-7 col-sm-12 col-xs-12 ">
+											<h4><strong>학습결과 이미지</strong></h4>
+											<div class="tabletitle">
+												<p>예측 이미지 분류</p>
+											</div>
+											<div class="img_wrap maxHeight_400 overY_scrollauto" id="data_result2_table"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- //x_panel : 딥러닝 메인3 -->
+	
+						<!-- x_panel : 딥러닝 메인4 -->
+						<div class="x_panel" id="deepLearningMain4">
+							<div class="x_title posiRelative">
+								<strong><i class="fa fa-area-chart"></i> 손실&정확도</strong>
+								<a class="collapse-link" id="modelInfoDropdown"><i class="fa fa-chevron-up floatR"></i></a>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<div class="mgTop_20">
+									<div class="row">
+	
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<h4><strong>Model Loss</strong></h4>
+											<div id="loss_chartDiv" class="height_270"></div>
+										</div>
+	
+										<div class="col-md-6 col-sm-12 col-xs-12 ">
+											<h4><strong>Model Accuracy</strong></h4>
+											<div id="accuracy_chartDiv" class="height_270"></div>
+										</div>
+	
+										<div class="">
+											<p class="disp_inblock mgTop_15 pdLeft_10">학습 소요시간 : <span id="trainRunTime"></span>
+											</p>
+											<button type="button" class="floatR btn btn-default mgTop_10"
+												data-toggle="modal" data-target=".testmodal">테스트</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- //x_panel : 딥러닝 메인4 -->
+						
+						
+					</div>
+					<!-- //오른쪽 레이아웃 -->
+
+				</div>
+				<!-- //row -->
+			</div>
+			<!-- //deeplearning -->
+		</div>
+		<!-- //[컨텐츠] -->
+
+		<!-- [학습용 원본 데이터 생성화면 모달 팝업] -->
+		<div class="modal fade originModal" tabindex="-1" role="dialog" aria-hidden="false">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span
+								aria-hidden="true">×</span></button>
+						<h2 class="modal-title" id="myModalLabel"><strong>딥러닝 학습용 원본 데이터 생성화면</strong></h2>
+					</div>
+					<div class="modal-body">
+						<div class="clearfix">
+							<!-- //x_panel : 파일 브라우저-->
+							<div class="x_panel">
+								<div class="x_title">
+									<h2><strong>내부 보관 디렉토리</strong></h2>
+									<div class="clearfix"></div>
+								</div>
+								<div id="jstree_currentDir"></div>
+								<div class="x_content">
+									<div>
+										<h6>
+											원본데이터가 담겨져 있는 <code>적절한 디렉토리</code>를 선택해 주세요 
+										</h6>
+									</div>
+									<div id="jstree_fileBrowser"></div>
+									<button onclick="refreshTree('jstree_fileBrowser')" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-refresh"></i></button>
+									<button id="treeCreate_jstree_fileBrowser" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-plus"></i>폴더추가</button>
+									<button id="treeUpdate_jstree_fileBrowser" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-edit"></i>수정</button>
+									<button id="treeDelete_jstree_fileBrowser" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-trash"></i>삭제</button>
+								</div>
+							</div>
+							<!-- //x_panel : 파일 브라우저-->
+
+							<!-- x_panel : 적합한 디렉토리 선택 예시-->
+							<div class="x_panel">
+								<div class="x_title posiRelative">
+									<strong>적합한 디렉토리 선택 예시</strong>
+									<a class="collapse-link"><i class="fa fa-chevron-down floatR"></i></a>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content disp_none">
+								
+								<div id=jstree_showSample_dl></div>
+									<h6>
+									<br>예시와 같이 데이터를 담고있는 최상위 <i class="fa fa-folder"></i><strong> 폴더(catdog) 를 선택</strong>합니다.
+									<br>
+									<br>1깊이 에는 타입이 정의된 <i class="fa fa-folder"></i> cat폴더(고양이 타입)와 <i class="fa fa-folder"></i> dog폴더(강아지 타입) 으로 구성되어 있습니다.
+									<br>2깊이 에는 이미지 타입의 <i class="fa fa-file-image-o"></i> 파일(cat1.png, cat2.png, dog1.png ...)으로 구성되어 있습니다.
+									<br>미리보기를 참고해올바르게 선택이 되었는지 확인하세요. 
+									</h6>
+								</div>
+							</div>
+							<!-- //x_panel : 적합한 디렉토리 선택 예시-->
+							
+							<!-- x_panel : 샘플 데이터-->
+							<div class="x_panel">
+								<div class="x_title posiRelative">
+									<strong>샘플 데이터</strong>
+									<a class="collapse-link" id="dl_sampleData"><i class="fa fa-chevron-down floatR"></i></a>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content disp_none">
+									<div>
+										<h6>
+											기본적으로 제공되는 샘플 데이터 입니다. <code> catdog</code> 폴더 혹은 <code>foxwolf</code>를 선택후 원본데이터를 생성해 주세요 
+										</h6>
+									</div>
+									<div id=jstree_sampleData_dl></div>
+								</div>
+							</div>
+							<!-- //x_panel : 샘플 데이터-->
+							
+							<!-- x_panel : 미리보기-->
+							<div class="x_panel">
+								<div class="x_title posiRelative">
+									<strong>미리보기</strong>
+								</div>
+								<div class="x_content">
+
+									<div>
+										<table id="jstree_dataInfoTable" class="table table-bordered jambo_table">
+										<tr><td>내부 보관 디렉토리 혹은 샘플데이터 에서 <i class="fa fa-folder"></i><strong>폴더</strong> 를 선택해 주세요</td></tr>
+										</table>
+									</div><!-- //테이블 -->
+									<div class="datascroll mgTop_30 mgBottom_10">
+										<table id="jstree_dataSampleTable"
+											class="table table-bordered table-striped table-hover"></table>
+									</div><!-- //테이블 -->
+								</div>
+							</div>
+							<!-- //x_panel : 미리보기-->
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" onclick="fnCreateOriginalData();">원본 데이터
+							생성</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //[학습용 원본 데이터 생성화면 모달 팝업] -->
+
+		<!-- [딥러닝 학습 모달 팝업] -->
+		<div class="modal fade process_6" tabindex="-1" role="dialog" aria-hidden="false">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="clearfix">
+							<div class="textbox">
+								<i class="fa fa-check-circle-o"></i>
+								<p class="main_text">딥러닝 네트워크를 학습시킬 준비가 되셨습니까?</p>
+								<p>데이터와 레이어의 크기에 따라 학습 시간이 오래 소요될 수 있습니다.</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="fnRequestTrain();">학습</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //[딥러닝 학습 모달 팝업] -->
+
+		<!-- [모델테스트 모달 팝업] -->
+		<div class="modal fade testmodal" tabindex="-1" role="dialog" aria-hidden="false">
+			<div class="modal-dialog modal-lg width_1140">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span
+								aria-hidden="true">×</span></button>
+						<h2 class="modal-title" id=""><strong>모델 테스트</strong></h2>
+					</div>
+					<div class="modal-body">
+						<div>
+
+							<div class="clearfix mgTop_15">
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<div class="x_panel popup_tree">
+
+										<div class="x_title"><strong>내부 보관 디렉토리</strong></div>
+										<div class="datascroll mgTop_30 mgBottom_10">
+											<div id="jstree_currentDir2"></div>
+											<div class="x_content">
+												<div id="jstree_fileBrowser2"></div>
+											</div>
+										</div>
+										<!--//x_content-->
+										<button onclick="refreshTree('jstree_fileBrowser2')" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-refresh"></i></button>
+										<button id="treeCreate_jstree_fileBrowser2" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-plus"></i>폴더추가</button>
+										<button id="treeUpdate_jstree_fileBrowser2" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-edit"></i>수정</button>
+										<button id="treeDelete_jstree_fileBrowser2" type="button" class="btn btn-secondary btn-sm"><i class="fa fa-trash"></i>삭제</button>
+									</div>
+									<!--//popup_tree-->
+								</div>
+
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<div class="x_panel">
+										<div class="x_title"><strong>데이터 폴더 미리보기</strong></div>
+										<div class="x_content">
+											<div class="datascroll mgTop_30 mgBottom_10 images_list" id="jstree_dataSampleTable2">
+											</div><!-- //images_list -->
+										</div><!-- //x_content -->
+									</div><!-- //x_panel -->
+								</div>
+							</div>
+
+							<div class="clearfix mgTop_15">
+
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<div class="x_panel">
+										<div class="x_title"><strong>테스트 결과</strong></div>
+										<div class="x_content">
+											<form class="form-horizontal form-label-left">
+												<div class="datascroll">
+												<div class="mgBottom_10" id="modelTestResult"></div>
+												<table class="table table-bordered jambo_table" id="testResultTable">
+												</table>
+												</div>
+											</form>
+										</div>
+										<!--//x_content-->
+									</div>
+									<!--//popup_tree-->
+								</div>
+
+								<div class="col-md-6 col-sm-6 col-xs-12">
+
+									<div class="x_panel">
+										<div class="x_title"><strong>결과비교</strong></div>
+										<div class="x_content">
+											<div class="modelResultChart height_300 posiRelative"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary mg_0" onclick="fn_deeplearningTest();">테스트 요청</button>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<!--// [모델테스트 모달 팝업] -->
+
+	</th:block>
+</body>
+
+</html>
